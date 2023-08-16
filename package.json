@@ -1,0 +1,10 @@
+{
+    "devDependencies": {
+        "esbuild": "0.19.2",
+        "vite": "^4.4.9"
+    },
+    "dependencies": {
+        "glob": "^10.3.3",
+        "three": "^0.155.0"
+    }
+}
