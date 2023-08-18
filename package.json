@@ -1,10 +1,18 @@
 {
+    "private": "true",
+    "type": "module",
+    "scripts": {
+        "build": "node esbuild.js",
+        "watch": "node esbuild.watch.js"
+    },
     "devDependencies": {
         "esbuild": "0.19.2",
-        "vite": "^4.4.9"
+        "log-plugin": "file:../../dev/lib/log-plugin"
     },
     "dependencies": {
-        "glob": "^10.3.3",
+        "@xeokit/xeokit-sdk": "^2.4.0-alpha-53",
+        "babylonjs": "^6.16.2",
+        "playcanvas": "^1.65.1",
         "three": "^0.155.0"
     }
 }

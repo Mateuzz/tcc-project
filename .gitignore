@@ -1,5 +1,7 @@
 tags
-.clang-format
-.vimspector.json
-compile_flags.txt
-bin\obj
+dist_esbuild
+node_modules
+fast
+dist
+models
+oldModels
