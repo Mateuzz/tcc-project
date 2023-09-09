@@ -1,10 +1,6 @@
 import * as esbuild from "esbuild"
-import logPlugin from 'log-plugin'
-import config from "./esbuild-config.json" assert { type: "json" }
+import esbuildConfig from "./esbuildConfig.js"
 
-const ctx = await esbuild.context({
-    ...config,
-    plugins: [logPlugin()]
-})
+const ctx = await esbuild.context(esbuildConfig);
 
 await ctx.watch()

@@ -1,7 +1,4 @@
-import * as esbuild from "esbuild"
-import config from "./esbuild-config.json" assert { type: "json" }
+import * as esbuild from "esbuild";
+import esbuildConfig from "./esbuildConfig.js";
 
-esbuild.build({
-    ...config,
-})
-
+esbuild.build(esbuildConfig)

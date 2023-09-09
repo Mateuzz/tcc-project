@@ -1,0 +1,123 @@
+Cenas
+    # Simples -> pirate Ford (ambient light)
+    # Cena Complexa (floresta) (ambient light)
+        2 -> ambient light + directional light + 5-10 point light
+        3 -> pos processing (fog, motion blur, bloom, bright contrast, fxaa (anti aliasing), hue saturation, sepia, vignetting)
+    # Teste de Animação (skull) => (1 milhao)
+    # teste de sistema de particulas
+
+Metricas 
+    dev tools (memoria ram, memoria ram enquanto carrega, cpu, cpu enquanto carrega)
+    tempo de inicializacao
+    fps
+    - tempo medio (100% truncado, 95% truncado, 99% truncado, low 1%)
+        - periodo de 1 minuto
+        - dois computadores
+        - chrome + firefox
+
+GERAL
+    ?? Checar as propriedades dos materiais PBR
+    1 - Referencial Teorico
+        1.1 - PAULO = Capiutlos de funcionalidades 
+        1.2 - PAULO = Capitulo de biblioteca
+    2 - Resumo
+        2.1 - Finalizar com conclusão
+    3 - Testes
+        3.1 - Numero de Triangulos de cada cena + tamanho e quantidade de texturas
+        3.2 - Criar Library de testar tempo de inicializacao
+        3.3 - Criar library de fps (fps, medio, 1% low, media truncada)
+        3.4 - Configurar camera para cada biblitoeca (fov e pos)
+    4 - Metodologia
+        4.1 - Escrever Capitulo sobre claygl e padronizar o restante (adicionar codigo fonte)
+    5 - Resultados
+        5.1 - Explicar documentacao (api, guia, exemplos, programas, codigo fonte)
+        5.2 - Funcionalidades Presentes
+    6 - Corrigir Ortografia
+    7 - Conclusao
+    8 - Anexo com codigo fonte e link do github
+
+## Modelos 
+	Skull: 1126158 triangles -> Lambert e phong material (apenas reflexao e specular)
+    Pirate Ford:
+    Florest: 
+
+## Fontes carbon
+    playcanvas
+    https://developer.mozilla.org/en-US/docs/Games/Techniques/3D_on_the_web/Building_up_a_basic_demo_with_PlayCanvas/engine
+
+    babylon
+    https://doc.babylonjs.com/features/starterSceneCode
+
+    three
+    https://threejs.org/docs/#manual/en/introduction/Creating-a-scene
+
+## Render Defaults
+	geometrie
+	material
+		light
+			ambient light
+			point light
+		albedo map
+		ambient occlusion map
+		metalic map
+		bump map / normal
+		enviroment map
+		displacement map
+		metalness
+		roughtness
+		flatshading
+
+## Referencial Teorico
+- Adicionar bibliotecas
+- Adicionar novos conceitos de programação grafica
+	- animacao esqueletal,
+	- materials
+	- geometries
+	- iluminação
+	- sombras
+	- lightmaps
+	- physical based rendering
+        - Propriedades dos materiais??
+	- pos processing
+		- fog, blur, cores,
+
+## Categorias Funcionalidades
+    tamanho da biblioteca
+    particulas
+    animacao esqueletal + blending?
+    shadows ?
+    wegl2 support
+    tecnicas de otimizacao?+
+        instanced rendering
+    tipos de editores presentes
+    pos processamneto disponiveis
+        fog, motion blur, outros
+    tipos de luzes suportados
+        point light, spot light, directional light
+    tipos de texturas suportadas
+        + outras propriedades de materiais
+    geometrias pre disponiveis
+    materiais pre prontos (library assets)
+    utilities
+        config da camera (fov, near, perspecive, far, OrbitControl, freeControl)
+        sistema de colisao presente
+        exportar cena em formato proprio
+        renderizacao de fluidos
+        geracao de lightmaps?
+        + outros de cada uma
+    bugs observados
+    skyboxes
+
+ALGUMAS FUNCIONALIDES JA PERCEBIDAS
+    Threejs
+    3d, materials, cameras, lightnings, fogs, animations, shadows, loading
+
+    babylon js
+    3d, amaterial, camera, lights, fogs, animation, post processing, loading, particles
+
+    play
+    3d, materials, animations, lights, shadows, lightmap, occlusion, runtime lightmap, clustered light, particles, loading
+
+
+Calcular fps
+    [https://www.clicktorelease.com/blog/calculating-fps-with-requestIdleCallback/](https://www.clicktorelease.com/blog/calculating-fps-with-requestIdleCallback/)

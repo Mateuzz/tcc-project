@@ -31,7 +31,6 @@ function startScene() {
 
     const dirLight = new Three.DirectionalLight(0xffffff, 10, 5);
     scene.add(dirLight);
-
 }
 
 export {

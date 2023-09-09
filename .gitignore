@@ -1,7 +1,4 @@
 tags
-dist_esbuild
-node_modules
-fast
 dist
-models
+node_modules
 oldModels

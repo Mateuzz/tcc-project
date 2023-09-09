@@ -1,6 +1,6 @@
 import {mixers, scene, camera, renderer, controls, clock, startScene} from "./global.js";
-import {loadModels} from "./models.js"
-import { initStats } from "./webglStats.js";
+import {loadModels, addGltf, addFbx, initLoaders} from "./models.js"
+import {initStats} from "./webglStats.js";
 
 function updateGui() {
     guiElement.innerHTML = `
@@ -53,9 +53,17 @@ function loop() {
     requestAnimationFrame(loop);
 }
 
+const gltfModels = [
+    "../testModels/plane/source/model.gltf"
+];
+
+
 startScene();
-loadModels();
 initStats();
+initLoaders();
+
+// loadModels();
+gltfModels.forEach(model => addGltf(model));
 
 const guiElement = document.querySelector('#count');
 const info = renderer.domElement.getContext('webgl2').info;
@@ -71,6 +79,6 @@ let fpxMax = 0;
 let elapsedSinceAvgCalc = 0;
 let framesSinceAvgCalc = 0;
 
-setInterval(updateGui, 100);
+setInterval(updateGui, 1000);
 setInterval(calcFpsAvg, 1000);
 loop();

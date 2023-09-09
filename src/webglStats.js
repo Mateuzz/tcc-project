@@ -1,16 +1,46 @@
-let primMap;
+// let primMap;
+
+let info = {};
+
+function getInfo() {
+    return info;
+}
 
 function addCount(ctx, type, count) {
     const ctxInfo = ctx.info;
-    const primInfo = primMap[type];
+    // const primInfo = primMap[type];
     ctxInfo.vertCount += count;
-    ctxInfo.primCount[primInfo.ndx] += primInfo.fn(count);
+    // ctxInfo.primCount[primInfo.ndx] += primInfo.fn(count);
+
+    switch (type) {
+        case ctx.POINTS:
+        ctxInfo.primCount[0] += count;
+        break;
+    case ctx.TRIANGLES:
+        ctxInfo.primCount[2] += count / 3 | 0;
+        break;
+    case ctx.TRIANGLE_STRIP:
+    case ctx.TRIANGLE_FAN:
+        ctxInfo.primCount[2] += count - 2;
+        ctxInfo.primCount[2] += count
+        break;
+    case ctx.LINES:
+        ctxInfo.primCount[1] += count / 2 | 0;
+        break;
+    case ctx.LINE_STRIP:
+        ctxInfo.primCount[1] += count - 1;
+        break;
+    case ctx.LINE_LOOP:
+        ctxInfo.primCount[1] += count;
+        break;
+    }
 }
 
 function initStats() {
     WebGL2RenderingContext.prototype.drawArrays = (function (oldFn) {
         return function (type, offset, count) {
             addCount(this, type, count);
+            this.info.hasNonInstaced = true;
             oldFn.call(this, type, offset, count);
         };
     }(WebGL2RenderingContext.prototype.drawArrays));
@@ -18,12 +48,14 @@ function initStats() {
     WebGL2RenderingContext.prototype.drawArraysInstanced = (function (oldFn) {
         return function (mode, first, count, instanceCount) {
             addCount(this, mode, count);
+            this.info.hasInstanced = true;
             oldFn.call(this, mode, first, count, instanceCount);
         };
     })(WebGL2RenderingContext.prototype.drawArraysInstanced);
 
     WebGL2RenderingContext.prototype.drawElements = (function (oldFn) {
         return function (type, count, indexType, offset) {
+            this.info.hasNonInstaced = true;
             addCount(this, type, count);
             oldFn.call(this, type, count, indexType, offset);
         };
@@ -32,25 +64,53 @@ function initStats() {
     HTMLCanvasElement.prototype.getContext = (function (oldFn) {
         return function (type, ...args) {
             const ctx = oldFn.call(this, type, args);
-            if (ctx && type === "webgl2") {
-                if (!primMap) {
-                    primMap = {};
-                    primMap[ctx.POINTS] = {ndx: 0, fn: count => count, };
-                    primMap[ctx.LINE_LOOP] = {ndx: 1, fn: count => count, };
-                    primMap[ctx.LINE_STRIP] = {ndx: 1, fn: count => count - 1, };
-                    primMap[ctx.LINES] = {ndx: 1, fn: count => count / 2 | 0, };
-                    primMap[ctx.TRIANGLE_STRIP] = {ndx: 2, fn: count => count - 2, };
-                    primMap[ctx.TRIANGLE_FAN] = {ndx: 2, fn: count => count - 2, };
-                    primMap[ctx.TRIANGLES] = {ndx: 2, fn: count => count / 3 | 0, };
-                };
-                ctx.info = {
+
+            if (ctx && (type === "webgl2" || type == "webgl")) {
+                // if (!prmMap) {
+                    // primMap = {};
+                    // primMap[ctx.POINTS] = {ndx: 0, fn: count => count, };
+                    // primMap[ctx.LINE_LOOP] = {ndx: 1, fn: count => count, };
+                    // primMap[ctx.LINE_STRIP] = {ndx: 1, fn: count => count - 1, };
+                    // primMap[ctx.LINES] = {ndx: 1, fn: count => count / 2 | 0, };
+                    // primMap[ctx.TRIANGLE_STRIP] = {ndx: 2, fn: count => count - 2, };
+                    // primMap[ctx.TRIANGLE_FAN] = {ndx: 2, fn: count => count - 2, };
+                    // primMap[ctx.TRIANGLES] = {ndx: 2, fn: count => count / 3 | 0, };
+                // };
+                info = ctx.info = {
                     vertCount: 0,
                     primCount: [0, 0, 0],
+                    hasInstanced: false,
+                    hasNonInstaced: false,
                 };
             }
+
             return ctx;
         }
     }(HTMLCanvasElement.prototype.getContext));
+
+    WebGLRenderingContext.prototype.drawArrays = (function (oldFn) {
+        return function (type, offset, count) {
+            addCount(this, type, count);
+            this.info.hasNonInstaced = true;
+            oldFn.call(this, type, offset, count);
+        };
+    }(WebGLRenderingContext.prototype.drawArrays));
+
+    WebGLRenderingContext.prototype.drawArraysInstanced = (function (oldFn) {
+        return function (mode, first, count, instanceCount) {
+            addCount(this, mode, count);
+            this.info.hasInstanced = true;
+            oldFn.call(this, mode, first, count, instanceCount);
+        };
+    })(WebGLRenderingContext.prototype.drawArraysInstanced);
+
+    WebGLRenderingContext.prototype.drawElements = (function (oldFn) {
+        return function (type, count, indexType, offset) {
+            this.info.hasNonInstaced = true;
+            addCount(this, type, count);
+            oldFn.call(this, type, count, indexType, offset);
+        };
+    }(WebGLRenderingContext.prototype.drawElements));
 }
 
-export { initStats };
+export { initStats, getInfo };
