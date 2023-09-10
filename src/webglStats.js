@@ -2,41 +2,16 @@
 
 let info = {};
 
-function getInfo() {
+export function getInfo() {
     return info;
 }
 
-function addCount(ctx, type, count) {
-    const ctxInfo = ctx.info;
-    // const primInfo = primMap[type];
-    ctxInfo.vertCount += count;
-    // ctxInfo.primCount[primInfo.ndx] += primInfo.fn(count);
-
-    switch (type) {
-        case ctx.POINTS:
-        ctxInfo.primCount[0] += count;
-        break;
-    case ctx.TRIANGLES:
-        ctxInfo.primCount[2] += count / 3 | 0;
-        break;
-    case ctx.TRIANGLE_STRIP:
-    case ctx.TRIANGLE_FAN:
-        ctxInfo.primCount[2] += count - 2;
-        ctxInfo.primCount[2] += count
-        break;
-    case ctx.LINES:
-        ctxInfo.primCount[1] += count / 2 | 0;
-        break;
-    case ctx.LINE_STRIP:
-        ctxInfo.primCount[1] += count - 1;
-        break;
-    case ctx.LINE_LOOP:
-        ctxInfo.primCount[1] += count;
-        break;
-    }
+export function prepareInfoFrame() {
+    info.primCount = [0, 0, 0];
+    info.vertCount = 0;
 }
 
-function initStats() {
+export function initStats() {
     WebGL2RenderingContext.prototype.drawArrays = (function (oldFn) {
         return function (type, offset, count) {
             addCount(this, type, count);
@@ -79,8 +54,6 @@ function initStats() {
                 info = ctx.info = {
                     vertCount: 0,
                     primCount: [0, 0, 0],
-                    hasInstanced: false,
-                    hasNonInstaced: false,
                 };
             }
 
@@ -113,4 +86,32 @@ function initStats() {
     }(WebGLRenderingContext.prototype.drawElements));
 }
 
-export { initStats, getInfo };
+function addCount(ctx, type, count) {
+    const ctxInfo = ctx.info;
+    // const primInfo = primMap[type];
+    ctxInfo.vertCount += count;
+    // ctxInfo.primCount[primInfo.ndx] += primInfo.fn(count);
+
+    switch (type) {
+        case ctx.POINTS:
+        ctxInfo.primCount[0] += count;
+        break;
+    case ctx.TRIANGLES:
+        ctxInfo.primCount[2] += count / 3 | 0;
+        break;
+    case ctx.TRIANGLE_STRIP:
+    case ctx.TRIANGLE_FAN:
+        ctxInfo.primCount[2] += count - 2;
+        ctxInfo.primCount[2] += count
+        break;
+    case ctx.LINES:
+        ctxInfo.primCount[1] += count / 2 | 0;
+        break;
+    case ctx.LINE_STRIP:
+        ctxInfo.primCount[1] += count - 1;
+        break;
+    case ctx.LINE_LOOP:
+        ctxInfo.primCount[1] += count;
+        break;
+    }
+}
