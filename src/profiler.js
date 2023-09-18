@@ -11,8 +11,9 @@ export class Profiler {
     deltaMinList;
     deltaMaxList;
     onCalcMeanCallback;
+    handleHighFps;
 
-    constructor(onCalcMeanCallback) {
+    constructor(onCalcMeanCallback, { handleHighFps = true }) {
         this.onCalcMeanCallback = onCalcMeanCallback;
         this.delta = 0;
         this.deltaList = [];
@@ -24,6 +25,7 @@ export class Profiler {
         this.deltaMin = Infinity;
         this.deltaMax = 0;
         this.hasIdleCallbackCalledFrame = false;
+        this.handleHighFps = handleHighFps;
         setInterval(() => {
             this.addDeltaMinMaxMean();
         }, 1000);
@@ -64,12 +66,18 @@ export class Profiler {
         const delta = performance.now() - this.timestamp;
         this.timestamp = performance.now();
 
-        if (!this.hasIdleCallbackCalledFrame) {
+        if (!this.handleHighFps) {
             this.delta = delta;
             this.#updatePerformanceData(delta);
-        }
+        } else {
+            if (!this.hasIdleCallbackCalledFrame) {
+                this.delta = delta;
+                this.#updatePerformanceData(delta);
+            }
 
-        requestIdleCallback(Profiler.prototype.idleCallbackUpdate.bind(this));
+            this.hasIdleCallbackCalledFrame = false;
+            requestIdleCallback(Profiler.prototype.idleCallbackUpdate.bind(this));
+        }
     }
 
     computerAllStats() {

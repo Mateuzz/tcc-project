@@ -26,18 +26,18 @@ function initLoaders() {
     loader.setDRACOLoader(draco);
     loader.setKTX2Loader(ktx2Loader);
     
-    textureLoader = new Three.TextureLoader();
-    const texture = textureLoader.load("../testModels/plane/textures/gltf_embedded_0.png");
-    texture.colorSpace = Three.SRGBColorSpace;
+    // textureLoader = new Three.TextureLoader();
+    // const texture = textureLoader.load("../testModels/plane/textures/gltf_embedded_0.png");
+    // texture.colorSpace = Three.SRGBColorSpace;
 
-    defaultMaterial = new Three.MeshStandardMaterial({
-        map: texture,
-        color: 0xffffff,
-        metalness: 1.0,
-        roughness: 1,
-        emissiveIntensity: 1,
-        flatShading: true
-    });
+    // defaultMaterial = new Three.MeshStandardMaterial({
+    //     map: texture,
+    //     color: 0xffffff,
+    //     metalness: 1.0,
+    //     roughness: 1,
+    //     emissiveIntensity: 1,
+    //     flatShading: true
+    // });
 }
 
 function loadModels() {
@@ -86,18 +86,15 @@ function addFbx(path) {
 }
 
 function addGltf(path) {
-    loader.load(path, gltf => {
-        console.log(gltf);
-        const model = gltf.scene;
-
-        model.traverse((child) => {
-            if (child.isMesh) {
-                child.material = defaultMaterial;
-            }
+    return new Promise((resolve, reject) => {
+        loader.load(path, gltf => {
+            const model = gltf.scene;
+            scene.add(model);
+            resolve(gltf);
+        }, undefined, error => {
+            reject(error);
         })
-
-        scene.add(model);
-    });
+    })
 }
 
 export { initLoaders, loadModels, addGltf, addFbx };

@@ -11,6 +11,16 @@ export function prepareInfoFrame() {
     info.vertCount = 0;
 }
 
+export function renderStatsHtml() {
+    return `
+        <h2>Render Stats</h2>
+        <p>Polygons: ${info.vertCount}</p>
+        <p>Triangles: ${info.primCount[2]}</p>
+        <p>Lines: ${info.primCount[1]}</p>
+        <p>Points: ${info.primCount[0]}</p>
+    `;
+}
+
 export function initStats() {
     WebGL2RenderingContext.prototype.drawArrays = (function (oldFn) {
         return function (type, offset, count) {

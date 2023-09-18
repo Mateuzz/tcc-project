@@ -1,0 +1,19 @@
+{
+    "libraryName": "Three",
+    "sceneName": "PirateFord",
+    "data": {
+        "startUpTest": {
+            "sceneStartupMS": 50,
+            "modelLoadingMS": 552
+        },
+        "renderingTest": {
+            "totalMS": 2003,
+            "totalFrames": 124,
+            "fpsAVG": 195.3781512605043,
+            "fpsTruncatedAVG": 210.67415730337046,
+            "fpsMaxAVG": 428.57142857142844,
+            "fpsMinAVG": 72.28915662650603,
+            "fps1Low": 18.548387096774192
+        }
+    }
+}
