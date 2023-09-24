@@ -24,14 +24,24 @@ GERAL
         2.1 - Finalizar com conclusão
     3 - Testes
         3.1 - Numero de Triangulos de cada cena + tamanho e quantidade de texturas (OK)
-        3.2 - Criar Library de testar tempo de inicializacao ()
+        3.2 - Criar Library de testar tempo de inicializacao (OK)
         3.3 - Criar library de fps (fps, medio, 1% low, media truncada) (OK)
-        3.4 - Configurar camera para cada biblitoeca (fov e pos) e gui ()
+        3.4 - Configurar camera para cada biblitoeca (fov e pos) e gui (OK)
+        3.5 - Checar uso de memória ram e cpu ao inicializar biblioteca ()
+        3.6 - Checar estatisticas de cada biblioteca ao longo de 1 minuto
+            Teste Pirate Ford
+            Teste Floresta
+            Teste Floresta com 5 luzes
+            Teste Floresta com post processing ?
+            Teste Skull
     4 - Metodologia
-        4.1 - Escrever Capitulo sobre claygl e padronizar o restante (adicionar codigo fonte)
+        4.1 - Escrever Capitulo sobre claygl e padronizar o restante (adicionar codigo fonte) (OK)
     5 - Resultados
         5.1 - Explicar documentacao (api, guia, exemplos, programas, codigo fonte)
-        5.2 - Funcionalidades Presentes
+        5.2 - Explicar estatisticas de Github
+        5.3 - Funcionalidades Presentes
+        5.4 - Explicar tamanho das bibliotecas
+        5.5 - Testes de performance
     6 - Corrigir Ortografia
     7 - Conclusao
     8 - Anexo com codigo fonte e link do github
@@ -43,13 +53,16 @@ GERAL
 
 ## Fontes carbon
     playcanvas
-    https://developer.mozilla.org/en-US/docs/Games/Techniques/3D_on_the_web/Building_up_a_basic_demo_with_PlayCanvas/engine
+    https://developer.mozilla.org/en-US/docs/Games/Techniques/3D_on_the_web/Building_up_a_basic_demo_with_PlayCanvas/engine (2023)
 
     babylon
-    https://doc.babylonjs.com/features/starterSceneCode
+    https://doc.babylonjs.com/features/starterSceneCode (s.d)
 
     three
-    https://threejs.org/docs/#manual/en/introduction/Creating-a-scene
+    https://threejs.org/docs/#manual/en/introduction/Creating-a-scene (s.d)
+
+    Claygl
+    https://github.com/pissang/claygl (2018)
 
 ## Render Defaults
 	geometrie

@@ -1,7 +1,8 @@
-import {mixers, scene, camera, renderer, controls, clock, startScene} from "./global.js";
-import {loadModels, addGltf, addFbx, initLoaders} from "./models.js"
+import { mixers, scene, camera, renderer, controls, clock, startScene } from "./global.js";
+import { loadModels, addGltf, addFbx, initLoaders } from "./models.js"
 import { postResult, serializeResult } from "results/performanceSerializer.js";
 import ProfilerController from "profilerControler";
+
 
 const initializeData = {
     startupTime: -1,
@@ -21,7 +22,7 @@ function loop() {
     // RenderStats.prepareInfoFrame();
 
     renderer.render(scene, camera);
-    
+
     profilerController.update();
 
     requestAnimationFrame(loop);
@@ -54,8 +55,8 @@ const profilerController = new ProfilerController({
             libraryName: "Three",
             sceneName: "PirateFord",
             initializeData: initializeData,
-            performanceData: stats,
-        })
+            performanceData: stats
+        });
         const res = await postResult(result);
         if (res) {
             console.log("Result posted:\n", res);

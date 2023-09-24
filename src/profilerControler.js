@@ -19,6 +19,7 @@ export default class ProfilerController {
                 gui.innerHTML = profileGui(fps, fpsMin, fpsMax);
             }, { handleHighFps });
 
+
             console.log("Profiling...");
 
             setTimeout(() => {
