@@ -10,8 +10,8 @@ let loader;
 let fbxLoader;
 let draco;
 let ktx2Loader;
-let defaultMaterial;
-let textureLoader;
+// let defaultMaterial;
+// let textureLoader;
 
 function initLoaders() {
     loader = new GLTFLoader();
@@ -40,50 +40,50 @@ function initLoaders() {
     // });
 }
 
-function loadModels() {
-    const pathModel = [
-        "../models/gltf/Soldier.glb"
-    ]
+// function loadModels() {
+//     const pathModel = [
+//         "../models/gltf/Soldier.glb"
+//     ]
 
-    const loader = new GLTFLoader();
+//     const loader = new GLTFLoader();
 
-    for (const path of pathModel) {
-        for (let i = 0; i < 20; ++i) {
+//     for (const path of pathModel) {
+//         for (let i = 0; i < 20; ++i) {
 
-            loader.load(path, gltf => {
-                const model = gltf.scene;
-                scene.add(model);
+//             loader.load(path, gltf => {
+//                 const model = gltf.scene;
+//                 scene.add(model);
 
-                model.traverse(obj => {
-                    if (obj.isMesh)
-                        obj.castShadow = true;
-                });
+//                 model.traverse(obj => {
+//                     if (obj.isMesh)
+//                         obj.castShadow = true;
+//                 });
 
-                const row = Math.floor(i / 7);
-                const col = i - row * 7;
-                model.position.x = -5 + col * 2.0;
-                model.position.z = 0 + row * 2.0;
+//                 const row = Math.floor(i / 7);
+//                 const col = i - row * 7;
+//                 model.position.x = -5 + col * 2.0;
+//                 model.position.z = 0 + row * 2.0;
 
-                const skeleton = new Three.SkeletonHelper(model);
-                skeleton.visible = true;
-                scene.add(skeleton);
+//                 const skeleton = new Three.SkeletonHelper(model);
+//                 skeleton.visible = true;
+//                 scene.add(skeleton);
 
-                const mixer = new Three.AnimationMixer(model);
-                const run = mixer.clipAction(gltf.animations[3])
-                run.play();
+//                 const mixer = new Three.AnimationMixer(model);
+//                 const run = mixer.clipAction(gltf.animations[3])
+//                 run.play();
 
-                mixers.push(mixer);
-            });
-        }
-    }
-}
+//                 mixers.push(mixer);
+//             });
+//         }
+//     }
+// }
 
-function addFbx(path) {
-    fbxLoader.load(path, fbx => {
-        console.log(fbx);
-        scene.add(fbx);
-    });
-}
+// function addFbx(path) {
+//     fbxLoader.load(path, fbx => {
+//         console.log(fbx);
+//         scene.add(fbx);
+//     });
+// }
 
 function addGltf(path) {
     return new Promise((resolve, reject) => {

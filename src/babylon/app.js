@@ -1,7 +1,6 @@
 import * as Babylon from 'babylonjs';
 import {GLTFFileLoader} from 'babylonjs-loaders'
-import { initStats } from 'webglStats';
-import ProfilerController from 'profilerControler';
+// import ProfilerController from 'profilerControler';
 
 // initStats();
 
@@ -10,7 +9,7 @@ Babylon.SceneLoader.RegisterPlugin(new GLTFFileLoader());
 const canvas = document.querySelector('#canvas');
 const engine = new Babylon.Engine(canvas, true);
 
-const profilerController = new ProfilerController(5);
+// const profilerController = new ProfilerController(5);
 
 function createScene() {
     const scene = new Babylon.Scene(engine);
@@ -40,7 +39,7 @@ const scene = createScene();
 engine.runRenderLoop(() => {
     scene.render();
 
-    profilerController.update();
+//     profilerController.update();
 })
 
 window.addEventListener('resize', () => engine.resize);

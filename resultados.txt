@@ -1,0 +1,162 @@
+Tamanho da Biblioteca
+
+Babylon
+    npm = 70m
+    allmodules = 194m
+
+    included no minify = 6.7m
+    included minify = 4.8m
+    gzip = 1.1m
+
+Three
+    npm = 25m
+
+    included no minify = 1.2m
+    included minify = 644k
+    gzip = 176k
+
+Clagl
+    npm = 12 m
+
+    included no minify = 644kb
+    included minify = 304k
+    gzip = 88k
+
+Playcanvas
+    npm = 52 m
+
+    engine only
+        no minified = 2.2m
+        Minifief = 1.3m
+        gzipo = 328kb
+
+    editor
+        export normal (min) + = 1.534m
+        gzip = (780k)
+
+Funcionalidaes Presentes
+
+   Three
+        Geometrias Primitivas
+            Retas
+            Arcos
+            Box, Capsula, Circulo, cone, cilindro, dodecaedro, icosaedro, bordas
+            axial, octaedro, plano, poliedro, anel, formato, esferas, tetraedro,
+            torusKnot, tubo, wireframe
+
+            decals, parametric, convex,
+            text
+
+        Texto
+            text geometry
+            fontes
+
+        luzes
+            ambiente, direcional, hemisferico (above), ponto, retangulo, spot
+        sombras
+            ponto, directional, spot
+
+        materials
+            basic material (color, ambient oclussion, enviroment, lightmap, map, specular
+                        reflectiv, specular)
+            lambert (+bump map, + displacement map, emissive,
+                     +flashading)
+            
+            Phong Material (+shinness)
+
+            standart material (+roughtness, metalic)
+
+            Physical material (+clearcoat, transparencia sem afetar reflexao
+                        , sheen (fibras ou roupas), metalic)
+
+    extra
+            NormalMaterial (normal vectors colorsing)
+            depth materialA (near and far)
+            shadow material (only shadows)
+            
+    
+            custom shader material
+
+        Fog
+            suporta
+                cor, near, far
+            fogexp2
+
+        animation
+            suporta
+            blend (suporta)
+                additive and normal
+                weight
+
+        audio (supporta simples)
+            sem direcao
+            positional audio
+
+        cameras
+            ortho
+            perspective
+            controles
+                first person
+                fly control
+                orbit controlh
+                suporte a touch (sim)
+
+        loaders
+            3D Rhinoceros
+            Draco compression
+            Font loader(json)
+            gltf (gltf internal\external + glb)
+            ktx2 texture loader
+            lDraw lego loadear
+            mmd (pmd, pmx, vmd, vpd)
+            mtl (.mtl)
+            obj
+            pcd (point cloud data)
+            pdb (protein molecules)
+            svg (2d)
+            tga (raster graphics image)
+
+        pos processing (addons)
+            glitch, fxaa(fast  aliasing)a, deep of filea, deep of field, crossfade, 
+            backgrounds, procedural noise, sao (scalable ambient occlusion)
+            smaa(wireframes), sobel(edge detection), ssaa (anti aliasing high quality)
+            (ssao( screen space ambient occlusion)), taa(temporal anti aliasing),
+            bloom, film, outline, halftonepass, after image, bokeh (desfoque lente)
+        27 no total
+
+        exporters
+            draco
+            exr (imagem high professional)
+            gltf
+            obj
+            ply (simple 3d)
+            stl (surface geometry, sem cor ou material)
+
+        editor
+            adicionar objetos (materials, modelos, luzes, cameras)
+            posicionar objetos
+            exportar cena como json
+        
+        playground
+            editor de nós, scripts, materiais e objetos
+
+            
+            
+            
+
+            
+
+   Babylon
+
+   Claygl
+
+   Playcanvas
+
+
+Qualidade da Documentação
+
+Performance
+
+Tempo de inicializacao
+
+Desenvolvimento do Projeto

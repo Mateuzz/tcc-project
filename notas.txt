@@ -28,6 +28,7 @@ GERAL
         3.3 - Criar library de fps (fps, medio, 1% low, media truncada) (OK)
         3.4 - Configurar camera para cada biblitoeca (fov e pos) e gui (OK)
         3.5 - Checar uso de memória ram e cpu ao inicializar biblioteca ()
+        3.6 - Verificar tempo de inicialização para playcanvas (OK)
         3.6 - Checar estatisticas de cada biblioteca ao longo de 1 minuto
             Teste Pirate Ford
             Teste Floresta
@@ -39,8 +40,8 @@ GERAL
     5 - Resultados
         5.1 - Explicar documentacao (api, guia, exemplos, programas, codigo fonte)
         5.2 - Explicar estatisticas de Github
-        5.3 - Funcionalidades Presentes
-        5.4 - Explicar tamanho das bibliotecas
+        5.3 - Funcionalidades Presentes (next)
+        5.4 - Explicar tamanho das bibliotecas (+-)
         5.5 - Testes de performance
     6 - Corrigir Ortografia
     7 - Conclusao
@@ -120,6 +121,9 @@ GERAL
         + outros de cada uma
     bugs observados
     skyboxes
+
+    categorias 2
+
 
 ALGUMAS FUNCIONALIDES JA PERCEBIDAS
     Threejs

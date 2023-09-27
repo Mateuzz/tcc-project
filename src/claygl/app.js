@@ -1,12 +1,12 @@
 import * as Clay from "claygl";
 import ProfilerController from "profilerControler";
-import * as RenderStats from "webglStats";
+// import * as RenderStats from "webglStats";
 
 // RenderStats.initStats();
 
 const canvas = document.getElementById("canvas");
-const profilerController = new ProfilerController(4);
-const renderStatsElement = document.querySelector(".render-stats");
+// const profilerController = new ProfilerController(4);
+// const renderStatsElement = document.querySelector(".render-stats");
 
 /** @type {Clay.light.Directional} */
 let light;
@@ -64,7 +64,7 @@ Clay.application.create(canvas, {
                 //     clone.position.set(col * 3, 0, +8 - row * 3);
                 // }
 
-            console.log("Finished loading");
+            // console.log("Finished loading");
         })
 
         return model;
@@ -76,6 +76,6 @@ Clay.application.create(canvas, {
 
         control.update(app.frameTime);
 
-        profilerController.update();
-    }
+        // profilerController.update();
+}
 })
