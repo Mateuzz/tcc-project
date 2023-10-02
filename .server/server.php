@@ -7,82 +7,73 @@ function connect(string $host, string $user, string $pass, string $db) : ?mysqli
     return $mysqli;
 }
 
-function addRenderingEntry(mysqli $db, array $data) : bool {
-    $library = $data["libraryName"];
-    $scene = $data["sceneName"];
-    $testData = $data["data"]["renderingTest"];
-    $totalMs = $testData["totalMS"];
-    $totalFrames = $testData["totalFrames"];
-    $fpsAvg = $testData["fpsAVG"];
-    $fpsTruncatedAvg = $testData["fpsTruncatedAVG"];
-    $fpsMax = $testData["fpsMaxAVG"];
-    $fpsMin = $testData["fpsMinAVG"];
-    $fpsLow = $testData["fps1Low"];
+function addRenderingEntry(mysqli $db, string $library, string $scene, array $data) : bool {
+    $totalMs = $data["profilingTime"];
+    $totalFrames = $data["totalFrames"];
+    $fpsAvg = $data["fpsAVG"];
+    $fpsTruncatedAvg = $data["fpsTruncatedAVG"];
+    $fpsMax = $data["fpsMaxAVG"];
+    $fpsMin = $data["fpsMinAVG"];
+    $fpsLow = $data["fps1Low"];
 
-    $query = "insert into rendering_stats 
-    (library_name, scene_name, fps_low, fps_min_avg,
-    fps_max_avg, fps_truncated_avg, fps_avg, total_frames, total_ms)
-    values (?,?,?,?,?,?,?,?,?)";
+    $query = "insert into rendering 
+              (library, scene, fps_low, fps_min_avg,
+              fps_max_avg, fps_truncated_avg, fps_avg, total_frames, total_ms)
+              values (?,?,?,?,?,?,?,?,?)";
 
     $stmt = $db->prepare($query);
-    $stmt->bind_param("sssssssss", $library, $scene, $fpsLow, $fpsMin, $fpsMax, $fpsTruncatedAvg, $fpsAvg, $totalFrames, $totalMs);
+    $stmt->bind_param("sssssssss", $library, $scene, $fpsLow, $fpsMin, $fpsMax,     
+                      $fpsTruncatedAvg, $fpsAvg, $totalFrames, $totalMs);
     return $stmt->execute();
 }
 
-function addInitializationEntry(mysqli $db, array $data) : bool {
-    $library = $data["libraryName"];
-    $scene = $data["sceneName"];
-    $sceneStartupMS = $data["data"]["startUpTest"]["sceneStartupMS"];
-    $modelLoadingMS = $data["data"]["startUpTest"]["modelLoadingMS"];
-
-    $query = "insert into initialization_stats 
-        (library_name, scene_name, scene_startup_ms, model_loading_ms) 
-        values (?,?,?,?)";
-
-    $stmt = $db->prepare($query);
-    $stmt->bind_param("ssss", $library, $scene, $sceneStartupMS, $modelLoadingMS);
-    return $stmt->execute();
+function addStartupTimeEntry(mysqli $db, string $library, string $scene, int $startupTime) : bool {
+    $query = "insert into startup (library, scene, ms) values (?,?,?)";
+    $s = $db->prepare($query);
+    $s->bind_param("ssi", $library, $scene, $startupTime);
+    return $s->execute();
 }
 
-function addEntries(string $json) : bool {
+function addSceneLoadingEntry(mysqli $db, string $library, string $scene, int $loadingTime) : bool {
+    $query = "insert into model_loading (library, scene, ms) values (?,?,?)";
+    $s = $db->prepare($query);
+    $s->bind_param("ssi", $library, $scene, $loadingTime);
+    return $s->execute();
+}
+
+function addEntries(string $json) : string {
     $db = connect("localhost", "root", "123", "tcc");
-    $jsonData = json_decode($json, true);
+    $data = json_decode($json, true);
+    $result = "";
 
-    $result = addRenderingEntry($db, $jsonData);
-    $result |= addInitializationEntry($db, $jsonData);
+    $library = $data["library"];
+    $scene = $data["scene"];
+
+    if (!empty($data["startupTime"])) {
+        addStartupTimeEntry($db, $library, $scene, $data["startupTime"]);
+        $result .= "Added startup time = {$data["startupTime"]}\n";
+    }
+    if (!empty($data["sceneLoadingTime"])) {
+        addSceneLoadingEntry($db, $library, $scene, $data["sceneLoadingTime"]);
+        $result .= "Added scene loading time = {$data["sceneLoadingTime"]}\n";
+    }
+    if (!empty($data["performanceData"])) {
+        addRenderingEntry($db, $library, $scene, $data["performanceData"]);
+        $dataString = print_r($data, true);
+        $result .= "Added rendering data = $dataString\n";
+    }
 
     return $result;
 }
 
-/* $configFile = file_get_contents("config.json"); */
-/* $config = json_decode($configFile, true); */
-
 header("Access-Control-Allow-Origin: *");
 
-if (isset($_POST['data']) && isset($_POST['library']) && isset($_POST['scene'])) {
+if (isset($_POST['data'])) {
     $json = $_POST['data'];
-    $library = $_POST['library'];
-    $scene = $_POST['scene'];
+    if (!($result = addEntries($json))) {
+        http_response_code(400);
+        die("");
+    }
 
-    /* $testId = $config[$library][$scene]++; */
-    /* $filename = "$library-$scene-$testId"; */
-    /* $file = fopen($filename, "w"); */
-    /* fwrite($file, $json, strlen($json)); */
-    /* fclose($file); */
-
-    if (!addEntries($json)) {
-        http_response_code(500);
-        die("Failed");
-    };
-
-    /* $newConfig = json_encode($config, JSON_PRETTY_PRINT); */
-    /* $file = fopen("config.json", "w"); */
-    /* fwrite($file, $newConfig, strlen($newConfig)); */
-    /* fclose($file); */
-
-    /* echo "$filename Created with data"; */
-    echo $json . "\n";
+    echo $result;
 }
-
-
-?>

@@ -32,17 +32,14 @@ for (let i = 2; i < argv.length; ++i) {
 /** 
 * @type {esbuild.BuildOptions} 
 */
-let esbuildConfig =  {
+export default  esbuildConfig =  {
     entryPoints: entries,
     bundle: true,
-    minify: true,
-    outbase: "src",
+    minify: false,
+    outbase: "./",
     nodePaths: ["src"],
     platform: "browser",
     outdir: "dist",
     format: "esm",
     plugins: [ logPlugin(entries) ]
 };
-
-
-export default esbuildConfig;

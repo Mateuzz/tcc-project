@@ -13,7 +13,7 @@ let ktx2Loader;
 // let defaultMaterial;
 // let textureLoader;
 
-function initLoaders() {
+export function initLoaders() {
     loader = new GLTFLoader();
     fbxLoader = new FBXLoader();
     draco = new DRACOLoader();
@@ -85,7 +85,7 @@ function initLoaders() {
 //     });
 // }
 
-function addGltf(path) {
+export function addGltf(path) {
     return new Promise((resolve, reject) => {
         loader.load(path, gltf => {
             const model = gltf.scene;
@@ -97,4 +97,3 @@ function addGltf(path) {
     })
 }
 
-export { initLoaders, loadModels, addGltf, addFbx };

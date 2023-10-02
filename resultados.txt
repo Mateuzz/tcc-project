@@ -2,7 +2,7 @@ Tamanho da Biblioteca
 
 Babylon
     npm = 70m
-    allmodules = 194m
+    + addons = 194m
 
     included no minify = 6.7m
     included minify = 4.8m
@@ -10,6 +10,7 @@ Babylon
 
 Three
     npm = 25m
+    + addons = 27mb
 
     included no minify = 1.2m
     included minify = 644k
@@ -17,6 +18,7 @@ Three
 
 Clagl
     npm = 12 m
+    + addons = 13m
 
     included no minify = 644kb
     included minify = 304k
@@ -47,16 +49,20 @@ Funcionalidaes Presentes
             decals, parametric, convex,
             text
 
+            criação de custom geometries
+
         Texto
             text geometry
-            fontes
 
         luzes
             ambiente, direcional, hemisferico (above), ponto, retangulo, spot
         sombras
             ponto, directional, spot
+            config
+                blur samples
+                mapsize
 
-        materials
+        tipos de materials
             basic material (color, ambient oclussion, enviroment, lightmap, map, specular
                         reflectiv, specular)
             lambert (+bump map, + displacement map, emissive,
@@ -68,11 +74,12 @@ Funcionalidaes Presentes
 
             Physical material (+clearcoat, transparencia sem afetar reflexao
                         , sheen (fibras ou roupas), metalic)
+            shader material
 
-    extra
-            NormalMaterial (normal vectors colorsing)
-            depth materialA (near and far)
-            shadow material (only shadows)
+            extra
+                NormalMaterial (normal vectors colorsing)
+                depth materialA (near and far)
+                shadow material (only shadows)
             
     
             custom shader material
@@ -81,7 +88,7 @@ Funcionalidaes Presentes
             suporta
                 cor, near, far
             fogexp2
-
+'
         animation
             suporta
             blend (suporta)
@@ -98,8 +105,13 @@ Funcionalidaes Presentes
             controles
                 first person
                 fly control
-                orbit controlh
+                orbit control (target pos)
                 suporte a touch (sim)
+
+        assets
+            materials 
+                agua (2d)
+                sky
 
         loaders
             3D Rhinoceros
@@ -116,7 +128,7 @@ Funcionalidaes Presentes
             svg (2d)
             tga (raster graphics image)
 
-        pos processing (addons)
+        pos processing (extra package)
             glitch, fxaa(fast  aliasing)a, deep of filea, deep of field, crossfade, 
             backgrounds, procedural noise, sao (scalable ambient occlusion)
             smaa(wireframes), sobel(edge detection), ssaa (anti aliasing high quality)
@@ -125,11 +137,12 @@ Funcionalidaes Presentes
         27 no total
 
         exporters
+            para json
             draco
             exr (imagem high professional)
             gltf
             obj
-            ply (simple 3d)
+            ply:E  (simple 3d)
             stl (surface geometry, sem cor ou material)
 
         editor
@@ -140,23 +153,511 @@ Funcionalidaes Presentes
         playground
             editor de nós, scripts, materiais e objetos
 
-            
-            
-            
+        otimizacoes
+            meshe combining + animatino
+            offscreencanvas (web worker)
 
-            
+        Versao do WebGL = 2
+
 
    Babylon
+        Geometrias primitivas
+            box
+            tiledbox
+            spheere
+            disc
+            fita
+            torus
+            torusknot
+            lineSystem
+            lines
+            dashedLines
+            extrude
+            lathe
+            tiledPlae
+            plane
+            ground
+            tileGround
+            polygon
+            extrudePlygon
+            tubo
+            poliedro
+            geodesico
+            poliedro de goldberg
+            decal
+            capsula
+            texto
+            curvas
+            path
+
+            criação de custom geometries
+
+        renderer utils
+            meshe glow
+            meshe highlight
+            morphin meshes
+            edge detection
+            trails meshes
+            explosions
+            logarithm deep buffer bug fix
+
+
+        texto
+            text geometry
+
+
+
+        luzes
+            ponto,
+            directional
+            spot
+            hemispheric,
+
+        sombras
+            config
+                size 1024
+            soft shadows
+                poissom sampling
+                exponential shadow map
+                blur exponential shadow map
+                close exponential shadow map
+                percentage close filtering (pcf)
+                contact hardening shadow ()
+            objetos transparents can cast shadow
+            cascated shadow map (high quality)
+
+        tipos materials
+            shader material
+            standart material
+                diffuse
+                specular
+                emissive
+                ambient (by background)
+                bump
+                normal map
+            PBR material
+                metallic
+                roughness
+                enviroment
+                albedo
+                oclusion texture
+                clear coat
+                refraction
+                    + tranlucency (dense refraction)
+                scaterring
+                iridescence (oil/rainwbow)
+                anisotropy
+                sheen
+
+        multiplo material por meshes + material por face
+        dinamic texture
+        video texture
+        procedural texture
+            brick, cloud, fire, grass, marble, road, wood
+
+        GUI
+            sim
+
+
+        input
+            Keyboard (DeviceType: BABYLON.DeviceType.Keyboard, Inputs: number)
+            Mouse (DeviceType: BABYLON.DeviceType.Mouse, Inputs: BABYLON.PointerInput)
+            Touch (DeviceType: BABYLON.DeviceType.Pointer, Inputs: BABYLON.PointerInput)
+            DualShock Gamepad (DeviceType: BABYLON.DeviceType.DualShock, Inputs: BABYLON.DualShockInput)
+            Xbox Gamepad, One or 360 (DeviceType: BABYLON.DeviceType.Xbox, Inputs: BABYLON.XboxInput)
+            Switch Gamepad, L+R JoyCon Grip or Pro Controller (DeviceType: BABYLON.DeviceType.Switch, Inputs: BABYLON.SwitchInput)
+            Generic/Other Gamepad (DeviceType: BABYLON.DeviceType.Generic, Inputs: number)
+            virtual joystick
+            
+        skyboxes
+        cubemaps
+            
+        VR
+            suporta
+
+        fog 
+        audio
+            global
+            spatial
+
+
+        Animation
+            baking
+            blending
+            weight
+            
+        cameras
+            universal
+            arc rotate (orbit control)
+            follow camera
+            virtual joystick 
+            device orientation cameras (inclinação de mobile)
+            
+        assets
+        loaders
+            gltf
+            stl
+            obj
+            .babylon
+            com programas
+                blender
+                3dsmax
+                cheeta3d
+                maya
+                adobe mixamo
+
+        post processing
+            light scatering post process
+            pass
+            black and white
+            directional blur
+            convolution
+            fxaa e msaa
+            highlights
+            tonemap
+            ssao
+            depth of field
+            chromatic aberration
+            bloom
+            motion blur
+            screen space reflections
+
+            edge_blur
+            distortion
+            grain_amount
+            grain_texture
+            
+            custom(s)
+            chaining
+
+            colorgrading
+            colorCurves
+            contrast
+            exposure
+            vignette
+            glow
+            grain
+            sharpening
+
+
+        exporters
+            para gltf
+            para babylon
+            
+        editor
+
+
+        otimizacoes
+            instanced rendering
+            merging meshe
+            levels of detal for meshes
+                + creation of simple meshes
+            oclusion queries
+            
+            shadows
+                percentage closer filtering
+                contact hardening shadow
+
+            Animation
+                baking
+
+        extras
+            sistema de colisao de meshes
+               bounding box
+            sistema de fisica
+                rigidt body + force
+            sistemas de particulas
+                solido
+
+                renderizacao de fluidos
+            Sistema de GUI
+            Sistemas de navegação de meshes
+
 
    Claygl
+        material
+            cubo
+            esfera
+            plano
+            parametric 
+            cilindro
+            cone
+            plano
+            sfera
+            tubo
+            spot
+
+        texto
+            sem suporte
+            
+        luzes
+            directional
+            spot
+            ponto
+            ambiente
+            ambiente_cubemap_light
+
+        sombras
+            suporta
+
+        input
+            camera gamepad
+
+        tipos de materials
+            Um material
+            suporta
+                shader
+                trasnparencia
+                cor
+                EmissaoCor
+                alpha
+                roughness
+                metallness
+                emissionIntensit
+                alphaCutoof
+
+                diffusemap
+                metalMap
+                roughMap
+                normalMap
+                emissiveMap
+
+        fog 
+            nao suporta
+
+        animation
+            suporta
+            blend (suporta)
+            
+            position, rotation, scale
+        
+        audio
+            nao suporta
+
+        cameras
+            ortho + per
+            controles
+                free control
+                orbit control
+
+        skybox + skydome
+
+        assets
+            nao tem
+
+        loaders
+            gltf
+
+        exporter
+            nao tem
+
+        pos processing (extra packages)
+            bloom
+            screen space ambient occlusion
+            screen space reflection
+            depth of field
+            color correction
+            aces tone mapping
+            fxaa
+            temporal anti aliasing
+            progressive enhancement, ssao, ssr, shadow
+            edges
+            ssaa (superosampling)
+
+        no editor
+
+        otimizacoes
+            instanced rendering
+        
+
+        extras
+            sistemas de particulas simples
+            
 
    Playcanvas
+
+        geometrias
+            box, capsula, cone
+            cilindro, plano, esfera
+
+        texto (nao suporta)
+
+        luzes
+            direcional
+            omni (ponto)
+            spot
+            ambient
+
+        bake lightmap
+            suporta
+        
+        skybox
+
+        sombras
+            atlas resolution   
+            filters
+                cpf 1 3 5x
+            tonemap
+                linear, filmic, heji,
+                aces aces2
+
+        materials
+            phong material
+                ambient + texture
+                diffse + texture
+                specular + texture
+                emissive + tex
+                opacity
+                normal + bump + texture
+                paralax map
+                enviroment Map
+                    reflection
+                    refraction
+                lithmap baked
+
+            physical
+                metalness
+                glossiness
+                iridesnce
+                sheen
+                clearcoat
+
+            multiplo material por meshe (sim)
+
+        GUI
+            sim
+
+        animation
+
+        input
+           
+        camera
+
+        assets
+
+        loaders
+
+        editor
+
+        exporter
+
+        otimizacoes
+            aabb for frustum culling
+            batching -> combinação de meshes
+
+            
+
+        fog (sim)
+
+        pos processing
+            gamma
+            exposicoa
+            
 
 
 Qualidade da Documentação
 
+Three
+    API DOCS com comentários plenamente explicado
+    Tutorial de usuário abrangente
+
+
+    Projetos Prontos
+        Amplos projetos prontos
+
+    Tutoriais e livros extras
+        Ampla disponibilidade de tutoriais, links e livros
+
+    Comunidade
+        Discord, Forum , Twitter
+
+Babylon
+    API Docs com comentarios explicada
+    Tutorial de Usuário perfeitamente abrangente
+    Projetos disponiveis pelo site e comunidade
+
+    Comunidade
+        Forum
+        Blog no Medium 
+        Youtube
+
+
+PC
+    API DOcs totalmente explicada
+    tutorial de usuario abrangente
+    amplos projetos disponiveis pela comunidade
+
+    Comunidade
+        Forum
+        Discord
+    
+Claygl
+
+    API DOCS comentada
+    Tutorial de Usuario pouco abrangente
+    Poucos Projetos 
+
+    Comunidade
+        Nenhuma
+
+
+Desenvolvimento do Projeto
+    Three
+            153 open pull request (14600 closed)
+            338 issues (11551 closed)
+            38 authros 128 commits num mes (+ 3132 - 6617)
+
+            total 1736 contribuidores 
+            total used by 228.190
+            total 42147 commits
+
+            pr 112 merged 15 open
+            issues 54 closed 19 new
+
+
+    ClayGL
+        1191 commits
+        no used by
+        11 contribuidores
+
+        pr 4 open 49 closed
+        issues 37 open 48 closed
+
+        last change 31/10/2021
+
+
+
+    Babylon
+        Total
+            41373 commits
+            4614 used by
+            485 contribuidores
+
+        92 open issues (2834 closed)
+        8 open pr (11371 closed)
+    
+        20 authors 234 commits num mes (41932 + 31638-)
+        pr 117 merged 3 open
+        issues 19 closed 5 new
+
+
+
+    Playcanvas
+        10885 commits
+        used by 1
+        119 contribuidores
+
+        issues 525 open 1416 closed
+        24 open 3674 closed
+
+        pr 55 merged 7 open
+        issues 17 closed 22 new
+
+        12 authors 56 commits (+4645 - 4255)
+
+
 Performance
+    
 
 Tempo de inicializacao
 
-Desenvolvimento do Projeto

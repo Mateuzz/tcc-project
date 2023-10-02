@@ -11,6 +11,9 @@ const engine = new Babylon.Engine(canvas, true);
 
 // const profilerController = new ProfilerController(5);
 
+
+Babylon.MeshBuilder
+
 function createScene() {
     const scene = new Babylon.Scene(engine);
     const camera = new Babylon.ArcRotateCamera("camera", 0, 0, 10, new Babylon.Vector3(0, 0, 0), scene);
@@ -21,7 +24,7 @@ function createScene() {
 
     // const light = new Babylon.DirectionalLight("light", new Babylon.Vector3(0, 5, 0), scene);
 
-    // const shadowGenerator = new Babylon.ShadowGenerator(1024, light);
+    const shadowGenerator = new Babylon.ShadowGenerator(1024, light);
     // shadowGenerator.usePoissonSampling = true;
     
     Babylon.SceneLoader.ImportMesh("", "models/PirateFord/", "pirateFort.glb", scene, (meshes) => {

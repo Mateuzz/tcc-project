@@ -82,12 +82,11 @@ export class Profiler {
 
     computerAllStats() {
         const profilingTime = performance.now() - this.startTime;
-        const currentFps = 1000 / this.delta;
-        const fpsMean = 1000 / mean(this.deltaList);
-        const fpsMaxMean = 1000 / mean(this.deltaMinList);
-        const fpsMinMean = 1000 / mean(this.deltaMaxList);
+        const fpsAVG = 1000 / mean(this.deltaList);
+        const fpsMaxAVG = 1000 / mean(this.deltaMinList);
+        const fpsMinAVG = 1000 / mean(this.deltaMaxList);
         const totalFrames = this.deltaList.length
-        const fpsTruncatedMean = 1000 / truncatedMean(this.deltaList, 80);
+        const fpsTruncatedAVG = 1000 / truncatedMean(this.deltaList, 80);
 
         const fps1Low = (() => {
             const count = this.deltaList.length * 0.01;
@@ -102,13 +101,12 @@ export class Profiler {
 
         return { 
             profilingTime,
-            currentFps,
-            fpsMean,
             totalFrames,
-            fpsTruncatedMean,
+            fpsAVG,
+            fpsTruncatedAVG,
             fps1Low,
-            fpsMaxMean,
-            fpsMinMean,
+            fpsMaxAVG,
+            fpsMinAVG,
         }
     }
 }

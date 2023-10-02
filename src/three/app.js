@@ -1,7 +1,5 @@
 import { mixers, scene, camera, renderer, controls, clock, startScene } from "./global.js";
-import { loadModels, addGltf, addFbx, initLoaders } from "./models.js"
-// import { postResult, serializeResult } from "results/performanceSerializer.js";
-// import ProfilerController from "profilerControler";
+import { initLoaders, startScene, addGltf } from "./models.js"
 
 // const initializeData = {
 //     startupTime: -1,
