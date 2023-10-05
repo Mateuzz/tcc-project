@@ -8,17 +8,24 @@
     <meta name="author" content="Mateus Freitas">
 
     <link rel="stylesheet" href="styles.css">
+    <script type="module" src="src/Settings.js" defer></script>
     <script type="module" src="dist/babylon/app.js" defer></script>
 
     <title>Babylon.js Sandbox</title>
-
-    <script>
-        
-    </script>
 </head>
 
 <body>
-    <div id="render-stats"></div>
+    <div class="stats">
+        <button class="init">Start Application</button>
+        <form class="options" id="options">
+            <label for="scene">Name</label>
+            <input type="text" name="scene" id="scene">
+            <label for="scene">Path</label>
+            <input type="text" name="path" id="path">
+            <label for="scene">Profiling Time in seconds</label>
+            <input type="number" name="time" id="time">
+        </form>
+    </div>
     <canvas id="canvas"></canvas>
 </body>
 

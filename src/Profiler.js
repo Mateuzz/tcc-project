@@ -1,4 +1,4 @@
-import {mean, truncatedMean} from "./util";
+import { mean, truncatedMean } from "./util";
 
 export class Profiler {
     delta;
@@ -26,19 +26,25 @@ export class Profiler {
         this.deltaMax = 0;
         this.hasIdleCallbackCalledFrame = false;
         this.handleHighFps = handleHighFps;
-        setInterval(() => {
+        this.intervalID = setInterval(() => {
             this.addDeltaMinMaxMean();
         }, 1000);
     }
 
+    destroy() {
+        clearInterval(this.intervalID);
+    }
+
     addDeltaMinMaxMean() {
-        this.onCalcMeanCallback(this);
+        if (this.onCalcMeanCallback) {
+            this.onCalcMeanCallback(this);
+        }
         this.deltaMinList.push(this.deltaMin);
         this.deltaMaxList.push(this.deltaMax);
         this.deltaMin = Infinity;
         this.deltaMax = 0;
     }
-
+ 
     getFps() {
         return {
             fps: 1000 / this.delta,
@@ -48,7 +54,7 @@ export class Profiler {
     }
 
     #updatePerformanceData(delta) {
-        if (delta > this.deltaMax) 
+        if (delta > this.deltaMax)
             this.deltaMax = delta;
         else if (delta < this.deltaMin)
             this.deltaMin = delta;
@@ -56,7 +62,7 @@ export class Profiler {
         this.deltaList.push(delta);
     }
 
-    idleCallbackUpdate(d) { 
+    idleCallbackUpdate(d) {
         this.delta = this.elapsedGoal - d.timeRemaining();
         this.hasIdleCallbackCalledFrame = true;
         this.#updatePerformanceData(this.delta);
@@ -99,7 +105,7 @@ export class Profiler {
             return total / count;
         })();
 
-        return { 
+        return {
             profilingTime,
             totalFrames,
             fpsAVG,

@@ -35,7 +35,11 @@ canvas {
 }
 
 .stats button {
-    background-color: blue;
+    font-size: 1.1em;
+    background-color: red;
     border-radius: 4px;
+    color: white;
     padding: 0.4em;
+    text-shadow: black 1px 1px 1px;
+    border: 1px solid white;
 }

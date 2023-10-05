@@ -1,5 +1,18 @@
 <?php
 
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: *");
+
+$json = file_get_contents("php://input");
+$result = addEntries($json);
+
+if (!$result) {
+    echo "Entry could not be added";
+} else {
+    echo $result;
+}
+
+
 function connect(string $host, string $user, string $pass, string $db) : ?mysqli {
     $mysqli = new mysqli($host, $user, $pass, $db);
     if ($mysqli->connect_error) 
@@ -45,7 +58,6 @@ function addEntries(string $json) : string {
     $db = connect("localhost", "root", "123", "tcc");
     $data = json_decode($json, true);
     $result = "";
-
     $library = $data["library"];
     $scene = $data["scene"];
 
@@ -64,16 +76,4 @@ function addEntries(string $json) : string {
     }
 
     return $result;
-}
-
-header("Access-Control-Allow-Origin: *");
-
-if (isset($_POST['data'])) {
-    $json = $_POST['data'];
-    if (!($result = addEntries($json))) {
-        http_response_code(400);
-        die("");
-    }
-
-    echo $result;
 }

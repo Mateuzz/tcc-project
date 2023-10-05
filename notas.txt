@@ -1,3 +1,12 @@
+PirateFord/pirateFort.glb
+floresta/Demo_01.glb
+Skull.glb
+
+PirateFord
+PirateFordPerto
+Floresta
+Floresta com mais luzes
+
 Cenas
     # Simples -> pirate Ford (ambient light)
     # Cena Complexa (floresta) (ambient light)
@@ -5,6 +14,7 @@ Cenas
         3 -> pos processing (fog, motion blur, bloom, bright contrast, fxaa (anti aliasing), hue saturation, sepia, vignetting)
     # Teste de Animação (skull) => (1 milhao)
     # teste de sistema de particulas
+
 
 Metricas 
     dev tools (memoria ram, memoria ram enquanto carrega, cpu, cpu enquanto carrega)
@@ -30,11 +40,15 @@ GERAL
         3.5 - Checar uso de memória ram e cpu ao inicializar biblioteca ()
         3.6 - Verificar tempo de inicialização para playcanvas (OK)
         3.6 - Checar estatisticas de cada biblioteca ao longo de 1 minuto
-            Teste Pirate Ford
-            Teste Floresta
-            Teste Floresta com 5 luzes
-            Teste Floresta com post processing ?
-            Teste Skull
+            Teste Pirate Ford (perto longe)
+            Teste Floresta (perto longe)
+            Floresta merged (perto longe)
+            Teste Floresta com 5 luzes  (perto)
+            teste Floresta com 5 luzes + sombras? (perto)
+            Teste Floresta com post processing (perto)
+                anti aliasing,
+                algum outro efeito famoso
+            Teste Skull animada
     4 - Metodologia
         4.1 - Escrever Capitulo sobre claygl e padronizar o restante (adicionar codigo fonte) (OK)
     5 - Resultados
@@ -49,8 +63,9 @@ GERAL
 
 ## Modelos 
 	Skull: 1126158 triangles -> Lambert e phong material (apenas reflexao e specular)
-    Florest: 2076694 triangles -> 1 texturas x256
-    Pirate Ford: 90334 triangles -> 4 1024x 1 512x 
+    Florest: 2076694 triangles -> 1 texturas x256 (1228 meshes)
+    FlorestMerged: 2076694 triangles -> 1 texturas x256 (1 meshe)
+    Pirate Ford: 90334 triangles -> 4 1024x 1 512x  (2 fontes de luzes ponto + 1 direcional) (7)
 
 ## Fontes carbon
     playcanvas
@@ -75,7 +90,7 @@ GERAL
 		ambient occlusion map
 		metalic map
 		bump map / normal
-		enviroment map
+		enviroment map - three
 		displacement map
 		metalness
 		roughtness
@@ -96,34 +111,127 @@ GERAL
 		- fog, blur, cores,
 
 ## Categorias Funcionalidades
-    tamanho da biblioteca
-    particulas
-    animacao esqueletal + blending?
+materiais
+
+
+TABELA 1
+
+PROPRIEDADES MATERIAIS ()
+    transparencia (alpha)
+        trasnparencia mode (opaque, alpha test, alpha blend, alpha blend e test)
+        alpha mode (combine, add, substract, multi, pre multi, one one, maximixed)
+        albedo com alpha
+    stencil - three
+
+    textures
+        albedo
+        diffuse - three - claygl
+        alpha map - only three
+        metalic - three - claygl
+        roughness - three - clay
+        reflection - no
+        refraction - no
+        reflectivity  - no 
+        micro_surface - no
+        bump - three
+        emissive - three - claygl
+        opacity - no three
+        ambient - three
+        albedo - no three
+        lightmap - three
+        detailmap - no thre
+        iridesnceMap - three
+        anisotropic - no three
+        sheen - three
+        specular - only three
+        transmissionMap(trasnparencia com reflexao) - only three
+        enviromentMap - only three
+        normal map - three - claygl
+        clear coat - three
+        clear Coat normal map - Babylon n - three sim
+        paralax map - no threee
+        decal texture - no three
+        occlusion texture (extra) - only three
+        displacementMap = only three
+
+        video texture - no three
+        procedural texture - no three
+
+    lightnings e colors
+        reflectivity number - three
+        refraction number - three
+        clay - alpha - 
+
+    metalic
+        metalic level - three
+        roughness level - three
+        index of refraction - three
+        opacity = three
+    
+    other levels
+        enviroment so level-
+        specular so level- 
+        directItensity - no three
+        thickness- three
+        transmission(trasnparencia com reflexao) - only three
+
+    transparent shadow material - baby - three(com material)
+    multi material per mesh - baby
+    material per face = baby
+    custom shader material - baby + three
+
+
+RENDERING MODE
+    Wireframe - three
+    Point cloud
+    flatShading - three
+    smoothShading
+
+
+PostProcessing
+    tonemapping - babylon three
+
+
+
+
+    particulas (sim ou nao)
+    animacao esqueletal + blending? + weight?
     shadows ?
-    wegl2 support
+        transparent material
+        filters
+    
+        texture sizing
+        samples
+        filter (pfc)?
+
+    wegl2 support (sim ou nao)
     tecnicas de otimizacao?+
         instanced rendering
+        merge meshes
+        bake lightmaps
+
     tipos de editores presentes
+        babylon + three + playcanvas
     pos processamneto disponiveis
-        fog, motion blur, outros
+        fog, motion blur, deep of field
+        anti aliasing 2 tipos, bloom, tonemaPapping
     tipos de luzes suportados
-        point light, spot light, directional light
-    tipos de texturas suportadas
-        + outras propriedades de materiais
+        point light, spot light, directional light, ambient light
     geometrias pre disponiveis
-    materiais pre prontos (library assets)
+    library assets
+        materiais pre prontos
+        texturas pre prontas
+        
     utilities
         config da camera (fov, near, perspecive, far, OrbitControl, freeControl)
         sistema de colisao presente
-        exportar cena em formato proprio
+        exportar cena (formatos)
         renderizacao de fluidos
-        geracao de lightmaps?
         + outros de cada uma
     bugs observados
-    skyboxes
-
-    categorias 2
-
+    enviroment
+        skybox?
+        cubemap?
 
 ALGUMAS FUNCIONALIDES JA PERCEBIDAS
     Threejs

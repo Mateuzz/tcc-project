@@ -1,0 +1,545 @@
+   Three
+        Geometrias Primitivas
+            Retas
+            Arcos
+            Box, Capsula, Circulo, cone, cilindro, dodecaedro, icosaedro, bordas
+            axial, octaedro, plano, poliedro, anel, formato, esferas, tetraedro,
+            torusKnot, tubo, wireframe
+
+            decals, parametric, convex,
+            text
+
+            criação de custom geometries
+
+        Texto
+            text geometry
+
+        luzes
+            ambiente, direcional, hemisferico (above), ponto, retangulo, spot
+        sombras
+            ponto, directional, spot
+            config
+                blur samples
+                mapsize
+
+        tipos de materials
+            basic material (color, ambient oclussion, enviroment, lightmap, map, specular
+                        reflectiv, specular)
+            lambert (+bump map, + displacement map, emissive,
+                     +flashading)
+            
+            Phong Material (+shinness)
+
+            standart material (+roughtness, metalic)
+
+            Physical material (+clearcoat, transparencia sem afetar reflexao
+                        , sheen (fibras ou roupas), metalic)
+            shader material
+
+            extra
+                NormalMaterial (normal vectors colorsing)
+                depth materialA (near and far)
+                shadow material (only shadows)
+            
+    
+            custom shader material
+
+        Fog
+            suporta
+                cor, near, far
+            fogexp2
+'
+        animation
+            suporta
+            blend (suporta)
+                additive and normal
+                weight
+
+        audio (supporta simples)
+            sem direcao
+            positional audio
+
+        cameras
+            ortho
+            perspective
+            controles
+                first person
+                fly control
+                orbit control (target pos)
+                suporte a touch (sim)
+
+        assets
+            materials 
+                agua (2d)
+                sky
+
+        loaders
+            3D Rhinoceros
+            Draco compression
+            Font loader(json)
+            gltf (gltf internal\external + glb)
+            ktx2 texture loader
+            lDraw lego loadear
+            mmd (pmd, pmx, vmd, vpd)
+            mtl (.mtl)
+            obj
+            pcd (point cloud data)
+            pdb (protein molecules)
+            svg (2d)
+            tga (raster graphics image)
+
+        pos processing (extra package)
+            glitch, fxaa(fast  aliasing)a, deep of filea, deep of field, crossfade, 
+            backgrounds, procedural noise, sao (scalable ambient occlusion)
+            smaa(wireframes), sobel(edge detection), ssaa (anti aliasing high quality)
+            (ssao( screen space ambient occlusion)), taa(temporal anti aliasing),
+            bloom, film, outline, halftonepass, after image, bokeh (desfoque lente)
+        27 no total
+
+        exporters
+            para json
+            draco
+            exr (imagem high professional)
+            gltf
+            obj
+            ply:E  (simple 3d)
+            stl (surface geometry, sem cor ou material)
+
+        editor
+            adicionar objetos (materials, modelos, luzes, cameras)
+            posicionar objetos
+            exportar cena como json
+        
+        playground
+            editor de nós, scripts, materiais e objetos
+
+        otimizacoes
+            meshe combining + animatino
+            offscreencanvas (web worker)
+
+        Versao do WebGL = 2
+
+
+
+======================================================================================
+
+
+
+   Babylon
+        Geometrias primitivas
+            box
+            tiledbox
+            spheere
+            disc
+            fita
+            torus
+            torusknot
+            lineSystem
+            lines
+            dashedLines
+            extrude
+            lathe
+            tiledPlae
+            plane
+            ground
+            tileGround
+            polygon
+            extrudePlygon
+            tubo
+            poliedro
+            geodesico
+            poliedro de goldberg
+            decal
+            capsula
+            texto
+            curvas
+            path
+
+            criação de custom geometries
+
+        renderer utils
+            meshe glow
+            meshe highlight
+            morphin meshes
+            edge detection
+            trails meshes
+            explosions
+            logarithm deep buffer bug fix
+
+
+        texto
+            text geometry
+
+
+
+        luzes
+            ponto,
+            directional
+            spot
+            hemispheric,
+
+        sombras
+            config
+                size 1024
+            soft shadows
+                poissom sampling
+                exponential shadow map
+                blur exponential shadow map
+                close exponential shadow map
+                percentage close filtering (pcf)
+                contact hardening shadow ()
+            objetos transparents can cast shadow
+            cascated shadow map (high quality)
+
+        tipos materials
+            shader material
+            standart material
+                diffuse
+                specular
+                emissive
+                ambient (by background)
+                bump
+                normal map
+            PBR material
+                metallic
+                roughness
+                enviroment
+                albedo
+                oclusion texture
+                clear coat
+                refraction
+                    + tranlucency (dense refraction)
+                scaterring
+                iridescence (oil/rainwbow)
+                anisotropy
+                sheen
+
+        multiplo material por meshes + material por face
+        dinamic texture
+        video texture
+        procedural texture
+            brick, cloud, fire, grass, marble, road, wood
+
+        GUI
+            sim
+
+
+        input
+            Keyboard (DeviceType: BABYLON.DeviceType.Keyboard, Inputs: number)
+            Mouse (DeviceType: BABYLON.DeviceType.Mouse, Inputs: BABYLON.PointerInput)
+            Touch (DeviceType: BABYLON.DeviceType.Pointer, Inputs: BABYLON.PointerInput)
+            DualShock Gamepad (DeviceType: BABYLON.DeviceType.DualShock, Inputs: BABYLON.DualShockInput)
+            Xbox Gamepad, One or 360 (DeviceType: BABYLON.DeviceType.Xbox, Inputs: BABYLON.XboxInput)
+            Switch Gamepad, L+R JoyCon Grip or Pro Controller (DeviceType: BABYLON.DeviceType.Switch, Inputs: BABYLON.SwitchInput)
+            Generic/Other Gamepad (DeviceType: BABYLON.DeviceType.Generic, Inputs: number)
+            virtual joystick
+            
+        skyboxes
+        cubemaps
+            
+        VR
+            suporta
+
+        fog 
+        audio
+            global
+            spatial
+
+
+        Animation
+            baking
+            blending
+            weight
+            
+        cameras
+            universal
+            arc rotate (orbit control)
+            follow camera
+            virtual joystick 
+            device orientation cameras (inclinação de mobile)
+            
+        assets
+        loaders
+            gltf
+            stl
+            obj
+            .babylon
+            com programas
+                blender
+                3dsmax
+                cheeta3d
+                maya
+                adobe mixamo
+
+        post processing
+            light scatering post process
+            pass
+            black and white
+            directional blur
+            convolution
+            fxaa e msaa
+            highlights
+            tonemap
+            ssao
+            depth of field
+            chromatic aberration
+            bloom
+            motion blur
+            screen space reflections
+
+            edge_blur
+            distortion
+            grain_amount
+            grain_texture
+            
+            custom(s)
+            chaining
+
+            colorgrading
+            colorCurves
+            contrast
+            exposure
+            vignette
+            glow
+            grain
+            sharpening
+
+
+        exporters
+            para gltf
+            para babylon
+            
+        editor
+
+
+        otimizacoes
+            instanced rendering
+            merging meshe
+            levels of detal for meshes
+                + creation of simple meshes
+            oclusion queries
+            
+            shadows
+                percentage closer filtering
+                contact hardening shadow
+
+            Animation
+                baking
+
+        extras
+            sistema de colisao de meshes
+               bounding box
+            sistema de fisica
+                rigidt body + force
+            sistemas de particulas
+                solido
+
+                renderizacao de fluidos
+            Sistema de GUI
+            Sistemas de navegação de meshes
+
+
+            
+
+
+
+
+
+======================================================================================
+
+   Claygl
+        material
+            cubo
+            esfera
+            plano
+            parametric 
+            cilindro
+            cone
+            plano
+            sfera
+            tubo
+            spot
+
+        texto
+            sem suporte
+            
+        luzes
+            directional
+            spot
+            ponto
+            ambiente
+            ambiente_cubemap_light
+
+        sombras
+            suporta
+
+        input
+            camera gamepad
+
+        tipos de materials
+            Um material
+            suporta
+                shader
+                trasnparencia
+                cor
+                EmissaoCor
+                alpha
+                roughness
+                metallness
+                emissionIntensit
+                alphaCutoof
+
+                diffusemap
+                metalMap
+                roughMap
+                normalMap
+                emissiveMap
+
+        fog 
+            nao suporta
+
+        animation
+            suporta
+            blend (suporta)
+            
+            position, rotation, scale
+        
+        audio
+            nao suporta
+
+        cameras
+            ortho + per
+            controles
+                free control
+                orbit control
+
+        skybox + skydome
+
+        assets
+            nao tem
+
+        loaders
+            gltf
+
+        exporter
+            nao tem
+
+        pos processing (extra packages)
+            bloom
+            screen space ambient occlusion
+            screen space reflection
+            depth of field
+            color correction
+            aces tone mapping
+            fxaa
+            temporal anti aliasing
+            progressive enhancement, ssao, ssr, shadow
+            edges
+            ssaa (superosampling)
+
+        no editor
+
+        otimizacoes
+            instanced rendering
+        
+
+        extras
+            sistemas de particulas simples
+            
+
+
+
+
+
+
+======================================================================================
+
+
+
+
+
+
+
+
+
+   Playcanvas
+
+        geometrias
+            box, capsula, cone
+            cilindro, plano, esfera
+
+        texto (nao suporta)
+
+        luzes
+            direcional
+            omni (ponto)
+            spot
+            ambient
+
+        bake lightmap
+            suporta
+        
+        skybox
+
+        sombras
+            atlas resolution   
+            filters
+                cpf 1 3 5x
+            tonemap
+                linear, filmic, heji,
+                aces aces2
+
+        materials
+            phong material
+                ambient + texture
+                diffse + texture
+                specular + texture
+                emissive + tex
+                opacity
+                normal + bump + texture
+                paralax map
+                enviroment Map
+                    reflection
+                    refraction
+                lithmap baked
+
+            physical
+                metalness
+                glossiness
+                iridesnce
+                sheen
+                clearcoat
+
+            multiplo material por meshe (sim)
+
+        GUI
+            sim
+
+        animation
+
+        input
+           
+        camera
+
+        assets
+
+        loaders
+
+        editor
+
+        exporter
+
+        otimizacoes
+            aabb for frustum culling
+            batching -> combinação de meshes
+
+            
+
+        fog (sim)
+
+        pos processing
+            gamma
+            exposicoa
+            
+
+
