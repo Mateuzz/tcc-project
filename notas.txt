@@ -123,73 +123,63 @@ PROPRIEDADES MATERIAIS ()
         albedo com alpha
     stencil - three
 
+    propriedas (sem suporte, parcial (sem textura), total (com textura))
+
     textures
-        albedo
-        diffuse - three - claygl
+        albedo -
+        diffuse - three - claygl - pc
         alpha map - only three
-        metalic - three - claygl
-        roughness - three - clay
-        reflection - no
-        refraction - no
-        reflectivity  - no 
-        micro_surface - no
+        metalic - three - claygl - pc
+        roughness - three - clay -pc
+        refraction - three parcial - pc
+        reflectivity () - three parcial  - pc parcial
         bump - three
-        emissive - three - claygl
-        opacity - no three
-        ambient - three
-        albedo - no three
-        lightmap - three
-        detailmap - no thre
-        iridesnceMap - three
-        anisotropic - no three
-        sheen - three
-        specular - only three
-        transmissionMap(trasnparencia com reflexao) - only three
-        enviromentMap - only three
-        normal map - three - claygl
-        clear coat - three
-        clear Coat normal map - Babylon n - three sim
-        paralax map - no threee
-        decal texture - no three
-        occlusion texture (extra) - only three
-        displacementMap = only three
+        emissive - three - claygl - pc
+        opacity - three parcial - pc
+        albedo - no three - pc only color
+        lightmap - three - pc
+        detailmap - no thre - pc 
+        iridesnceMap (+ thick)- three (+ thick)- pc (+iridesnceThick)
+        anisotropic - no three - pc only intensity 
+        sheen (baby + gloss)- three - pc(+ sheengloos, + sheenglossmapUv)
+        specular (baby parcial )- only three -  pc
+        transmissionMap(trasnparencia com reflexao) - only three - 
+        enviromentMap (baby)- only three - pc - 
+        normal map - three - claygl - pc
+        clear coat (+gloss + bump) - three (+ normal + rough)- pc(+ gloss, + glossuv)
+        clear Coat normal map - Babylon n - three sim - pc
+        paralax map - no threee - 
+        decal texture - no three - 
+        (ao) occlusion texture  - three - pc - 
+        displacementMap = only three - 
+        thickNessMap = baby - three parcial - pc
 
         video texture - no three
         procedural texture - no three
 
-    lightnings e colors
-        reflectivity number - three
-        refraction number - three
-        clay - alpha - 
-
-    metalic
-        metalic level - three
-        roughness level - three
-        index of refraction - three
-        opacity = three
-    
     other levels
-        enviroment so level-
-        specular so level- 
         directItensity - no three
-        thickness- three
-        transmission(trasnparencia com reflexao) - only three
+        transludency - baby - 
+        scattering - baby
 
-    transparent shadow material - baby - three(com material)
-    multi material per mesh - baby
-    material per face = baby
-    custom shader material - baby + three
+    custom shader material - baby + three - claygl - pc
+
+# transparent shadow material - baby - three(com material)
+#multi material per mesh - baby
+#material per face = baby
+
+
 
 
 RENDERING MODE
-    Wireframe - three
-    Point cloud
-    flatShading - three
-    smoothShading
+    Wireframe - baby three pc
+    flatShading - baby three
+    Point cloud baby
+    smoothShading baby
 
 
 PostProcessing
-    tonemapping - babylon three
+    tonemapping - babylon three pc
 
 
 
