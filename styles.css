@@ -17,20 +17,25 @@ canvas {
     color: white;
     border: 2px solid white;
     position: absolute;
-    padding: 1em;
+    padding: 1.0em;
 }
 
-.stats > * + * {
-    margin-top: 1em;
+fieldset {
+    padding: 0 1em 1em 1em;
+    margin-bottom: 0.5em;
+    --flow-space: 0.4em;
+}
+
+input, label {
+    display: block;
+}
+
+.flow > * + * {
+    margin-top: var(--flow-space, 1em);
 }
 
 .profiler-stats {
     right: 0;
-    top: 0;
-}
-
-.render-stats {
-    left: 0;
     top: 0;
 }
 
@@ -42,4 +47,5 @@ canvas {
     padding: 0.4em;
     text-shadow: black 1px 1px 1px;
     border: 1px solid white;
+    width: 100%;
 }

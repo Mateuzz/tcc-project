@@ -1,0 +1,28 @@
+diffuse ok
+specular ok
+
+metalic ok
+rough ok 
+refraction ok
+enviroment/reflection ok
+bump
+normal ok
+displacement ok
+emissive ok
+opactiy ok
+sheen
+transmission
+clearCoat
+paralax
+decal
+ao
+thickness
+
+iridescence
+anisotropic
+
+
+https://www.a23d.co/blog/what-are-decals/, c2023
+Threejs Docs,
+Babylonjs Docsk
+https://www.pluralsight.com/blog/film-games/understanding-ambient-occlusion

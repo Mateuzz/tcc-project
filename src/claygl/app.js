@@ -3,10 +3,10 @@ import {
     getConfiguration,
     makeProfilerController,
     createSendInitDataButton,
+    makeConfigurationGui,
 } from "testHelper";
 
 const canvas = document.getElementById("canvas");
-const button = document.querySelector(".init");
 let firstLoop = true;
 let profilerController;
 const testInfo = {
@@ -30,6 +30,7 @@ Clay.application.create(canvas, {
     width: canvas.clientWidth,
     height: canvas.clientHeight,
 
+
     graphic: {
         shadow: false,
         tonemapping: false,
@@ -40,8 +41,8 @@ Clay.application.create(canvas, {
         camera = app.createCamera([0, 2, 5], [0, 0, 0]);
         camera.near = 0.1;
         camera.far = 1000;
-        // camera.position.set(8.3, 131, 372);
         camera.fov = 55;
+
 
         // light = app.createDirectionalLight([0.1, -1, 0]);
         // const l1 = app.createPointLight([2, 3, -4.5], 28, "#fff", 1);
@@ -79,6 +80,8 @@ Clay.application.create(canvas, {
             firstLoop = false;
             defaultClock.end();
 
+            makeConfigurationGui();
+            const button = document.querySelector(".init");
             button.onclick = () => {
                 const config = getConfiguration();
                 const modelPath = "models/" + config.path;
@@ -86,20 +89,24 @@ Clay.application.create(canvas, {
                 testInfo.profilingTimeInSeconds = config.time;
                 testInfo.scene = config.scene;
 
+                camera.position.set(config.camerax, config.cameray, config.cameraz);
+
                 console.log(new Date());
                 defaultClock.begin("sceneLoadingTime");
 
                 app.loadModel(modelPath).then((model) => {
                     
                     const lights = [];
-                    if (config.scene.includes("Pirate")) {
+                    if (config.scene.includes("pirate")) {
                         lights.push(
                             app.createPointLight([2, 3, -4.5], 28, "#fff", 1),
                             app.createPointLight([1, 4.5, -1.1], 28, "#fff", 1)
                         );
                         light = app.createDirectionalLight([0, 0, -1], "#fff", 1);
-                    } else {
+                    } else if (config.scene.includes("florest")) {
                         light = app.createDirectionalLight([-0.7, -0.2, 0.5], "#fff", 1);
+                    } else {
+                        light = app.createDirectionalLight([0, 0, 0,], "#fff", 1);
                     }
                     lights.push(light);
 
@@ -116,7 +123,6 @@ Clay.application.create(canvas, {
 
                     createSendInitDataButton(testInfo, initData);
                     profilerController = makeProfilerController(testInfo);
-                    // createDirectionalLightControl();
                 });
 
                 button.remove();

@@ -1,3 +1,72 @@
+
+TODO 
+    TESTES
+        Descobrir como usar pcf em todas bibliotecas, a ativar sombras e pos processing
+
+        pirate longe ok
+        pirate perto ok
+        floresta perto ok
+        floresta longe ok 
+        floresta merged perto ok
+        floresta com 50 luzes
+        floresta com 50 luzes + sombras
+        floresta com anti aliasing  fxaa
+        skull animation ok
+        uso de memoria e cpu em todos os testes
+
+    REFERENCIAL TEORICO
+        fisica, realidade virtual, webgl2, navegação de meshes
+
+        unity
+            ambient occlusion
+            anti-aliasing
+            bloom
+            chromatic aberration
+            color adjustment
+            color curves
+            fog
+            depth of field
+            lens distortion
+            motion blur
+            screen space reflection
+            tonemapping
+            vignette
+
+            nao temm ssao 
+            nem lookup tables
+
+            fog (); anti-aliasing (); color curves (); depth of field (); chromatic aberration(); bloom (); motion blur (); tonemapping (); vignette (); ssao (); ssr (); color curves ();
+            lens distortion ();
+
+
+Fkog
+Anti-Aliasing (FXAA)
+Anti-Aliasing (MSAA)
+Anti-Aliasing (SMAA)
+Anti-Aliasing (TAA)
+Color Curves
+Exposure
+Bloom
+Vignette
+Depth of Field
+SSAO
+SSR
+Tone Mapping
+Blur
+Motion Blur
+Chromatic Aberration
+Lens Distortion
+Lookup Tables
+
+    CONCLUSOES
+
+    ANEXO
+        explicacao de todos os addons de cada biblioteca
+        link do codigo fonte
+
+
+
+
 PirateFord/pirateFort.glb
 floresta/Demo_01.glb
 Skull.glb
@@ -158,7 +227,7 @@ PROPRIEDADES MATERIAIS ()
         procedural texture - no three
 
     other levels
-        directItensity - no three
+        directItensity - only baby -no three
         transludency - baby - 
         scattering - baby
 
@@ -169,20 +238,135 @@ PROPRIEDADES MATERIAIS ()
 #material per face = baby
 
 
+TABELA LUZES
+    
+
+TABELA 2
+Sombras
+
+Geração de Lightmaps - pc - babylon(nao gera) - three (nao gera)
+
+Shadow
+    smoothing
+        PCF - three pc babylon claygl
+
+    Splitting
+        CSM - Cascated - pc babylon
+
+    filtering
+        esm - babylon
+        csm
+        vsm - three - claygl
+        savsm
+        smsr
+
+    soft
+        pcss  - babylon
+        vssm
+        ssss
+        fiv
 
 
-RENDERING MODE
-    Wireframe - baby three pc
-    flatShading - baby three
-    Point cloud baby
-    smoothShading baby
+Shadow atlas resolution config - pc three claygl babylon
+NUmber of samples (configurable?) - pc - three
 
 
-PostProcessing
+TABELA 3  EFEITOS
+    blackwhite, blur, fxaa(antialiasing), tonemap
+    imagem (contraste, exposicao, vignette, colorgrading, gamma)
+    outros imagens (inverted, high contrast, posterize)
+    ssao
+    msaa(antialiasing)
+    bloom
+    depth of field
+    chromatic aberration
+    color curve
+    glow
+    grain
+    sharpening
+    motion blur
+    ssr (screen space reflectins)
+    fog
+
+    Anti-aliasing
+        fxxaa, msaa, 
+    Bloom
+    Blur
+    
+
+
+    
+    baby
+        wireframe, flatshading
+    three
+        wireframe, flashading
+    pc
+        wireframe
+    claygl
+
+tabela FUNCIONALIDES EXTRAS
+    animation all
+    particulas babylonjs threejs (plugin)
+    audio (threejs babylonjs playcanvas)
+    gui editor (babylonjs playcanvas)
+    sistema de colisao (babylonjs playcanvas three (plugin))
+    VR (three pc babylon)
+    Path Finding (threejs (plugin), babylonjs)
+    editor grafico ()
+    editor de materials e objetos em nos ()
+    debugger/ inspector 
+
+    
+    
+rendering utilities
+    flatshading
+    renderizar texto
+    particulas
+    fluids rendering
+    path tracing
+
+
+
+
+TABELA 4 PostProcessing
     tonemapping - babylon three pc
 
 
+TABELA 5 OTHER RENDERING UTILITIES
+    animation all
+    particulas babylonjs, three-js (thirdy parthy),
 
+
+TABELA 6 pos processing
+
+TABELA 7 UNIQUE UTILITIES
+    babylonjs
+    ASSETS
+        video texture
+        dinamic textures (brick, cloud, fire, grass, marble, road wood, road, starfield, perlinnoise, marble,)
+        materials (water, fire, lava, terrain)
+        particles (fluids,)
+
+    MESHES
+        glow,, highlight, morph, explode, trails, logarithm deep buffer
+
+    playcanvas
+        
+        
+
+TABELA 8 Otimizacoes
+    babylonjs
+        oclusion queries, instanced, meshe merging, level of details
+    three
+        meshe merging, instanced, level of details
+    pc
+        texture compression, instanced, meshe mergin, 
+    claygl
+        instanced rendering, 
+
+        
+
+    
 
     particulas (sim ou nao)
     animacao esqueletal + blending? + weight?
@@ -222,6 +406,9 @@ PostProcessing
     enviroment
         skybox?
         cubemap?
+
+OUTRAS UTILIDADES
+    
 
 ALGUMAS FUNCIONALIDES JA PERCEBIDAS
     Threejs

@@ -1,3 +1,22 @@
+DRACO
+3d rhinoceros
+gltf / glb
+ktx2 texture
+ldraw lego
+mtl
+obj
+pcd (point cloud data)
+    pdb (protein molecules)
+svg (2d)
+    tga (raster graphics)
+stl
+.babylon baby proprio
+.json (three proprio) (addon)
+.json (pc proprio)
+
+
+Texto
+
    Three
         Geometrias Primitivas
             Retas
@@ -41,7 +60,7 @@
                 depth materialA (near and far)
                 shadow material (only shadows)
             
-    
+
             custom shader material
 
         Fog
@@ -122,6 +141,12 @@
 
 
 ======================================================================================
+
+
+lathe
+shape
+extrude
+polyedron
 
 
 
@@ -261,7 +286,7 @@
         assets
         loaders
             gltf
-            stl
+            stl (addon)
             obj
             .babylon
             com programas
@@ -305,9 +330,9 @@
             sharpening
 
 
-        exporters
+        exporterskl
             para gltf
-            para babylon
+            para kbabylon
             
         editor
 

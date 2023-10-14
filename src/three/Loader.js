@@ -2,8 +2,6 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 // import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader.js";
 import { KTX2Loader } from "three/examples/jsm/loaders/KTX2Loader.js";
-import * as BufferGeometryUtils from "three/examples/jsm/utils/BufferGeometryUtils.js"
-import * as Three from "three";
 
 let loader;
 let draco;
@@ -77,16 +75,7 @@ export function initLoaders(renderer) {
 //     }
 // }
 
-// function addFbx(path) {
-//     fbxLoader.load(path, fbx => {
-//         console.log(fbx);
-//         scene.add(fbx);
-//     });
-// }
-
 export function addGltf(path, scene) {
-    let number = 0;
-
     return new Promise((resolve, reject) => {
         loader.load(
             path,
@@ -97,7 +86,6 @@ export function addGltf(path, scene) {
                         ++number;
                     }
                 })
-                console.log("Meshes =", number);
                 resolve(gltf);
             },
             undefined,

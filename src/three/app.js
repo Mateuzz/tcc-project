@@ -1,7 +1,7 @@
 import * as Three from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
-import { createSendInitDataButton, getConfiguration, makeProfilerController } from "testHelper.js";
+import { createSendInitDataButton, getConfiguration, makeConfigurationGui, makeProfilerController } from "testHelper.js";
 import { addGltf, initLoaders } from "./Loader.js";
 
 let scene;
@@ -9,6 +9,7 @@ let renderer;
 let camera;
 let controls;
 let mixers = [];
+let clock;
 
 startScene();
 initLoaders(renderer);
@@ -18,6 +19,7 @@ const testInfo = {
     library: "Three",
 };
 
+makeConfigurationGui();
 const button = document.querySelector(".init");
 let profilerController;
 
@@ -28,10 +30,11 @@ button.onclick = () => {
     testInfo.profilingTimeInSeconds = config.time;
     testInfo.scene = config.scene;
 
+    camera.position.set(config.camerax, config.cameray, config.cameraz);
+
     defaultClock.begin("sceneLoadingTime");
-    console.log(new Date());
+    console.log("Date of scene beginning loading:", new Date());
     addGltf(modelPath, scene).then((gltf) => {
-            
         defaultClock.end();
 
         const initData = {
@@ -41,9 +44,22 @@ button.onclick = () => {
 
         console.table(initData);
 
+        if (config.scene.toLowerCase().includes("skull")) {
+            const dirLight = new Three.DirectionalLight(0xffffff, 1);
+            dirLight.rotation.set(0, 0.5, 1);
+            scene.add(dirLight);
+
+            console.log("Animations:", gltf.animations);
+            const mixer = new Three.AnimationMixer(gltf.scene);
+            const run = mixer.clipAction(gltf.animations[0]);
+            run.play();
+
+            mixers.push(mixer);
+        }
+
         createSendInitDataButton(testInfo, initData);
         profilerController = makeProfilerController(testInfo);
-        
+
         loop();
     });
 
@@ -59,40 +75,33 @@ function startScene() {
 
     scene = new Three.Scene();
     camera = new Three.PerspectiveCamera(fov, width / height, near, far);
-    renderer = new Three.WebGLRenderer();
+    renderer = new Three.WebGLRenderer({ powerPreference: "high-performance" });
     controls = new OrbitControls(camera, renderer.domElement);
-    // clock = new Three.Clock();
+    clock = new Three.Clock();
 
-    camera.position.set(8.3, 131, 372);
 
     // renderer.shadowMap.enabled = true;
 
     renderer.setSize(width, height);
     document.body.appendChild(renderer.domElement);
 
-    // const dirLight = new Three.DirectionalLight(0xffffff, 1);
-    // dirLight.rotation.set(-0.7, -0.2, 0.5);
     // dirLight.castShadow = true;
     // dirLight.shadow.mapSize.width = 1024;
     // dirLight.shadow.mapSize.height = 1024;
-    // scene.add(dirLight);
+
 }
 
 function loop() {
-    // const delta = clock.getDelta();
+    const delta = clock.getDelta();
 
-    // for (const mixer of mixers)
-        //     mixer.update(delta);
+    for (const mixer of mixers)
+        mixer.update(delta);
 
     controls.update(0.16);
-
-    // renderGui.innerHTML = RenderStats.renderStatsHtml();
-    // RenderStats.prepareInfoFrame();
 
     renderer.render(scene, camera);
 
     profilerController.update();
-
 
     requestAnimationFrame(loop);
 }

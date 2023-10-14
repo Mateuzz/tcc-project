@@ -8,7 +8,7 @@ export default class ProfilerController {
     #createElements() {
         const gui = document.createElement("div");
         const button = document.createElement("button");
-        gui.classList.add("stats", "profiler-stats");
+        gui.classList.add("stats", "profiler-stats", "flow");
         button.innerText = "Start Profiling";
 
         gui.append(button);
