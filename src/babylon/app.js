@@ -5,7 +5,7 @@ import { createSendInitDataButton, getConfiguration, makeConfigurationGui, makeP
 Babylon.SceneLoader.RegisterPlugin(new GLTFFileLoader());
 
 const canvas = document.querySelector("#canvas");
-const engine = new Babylon.Engine(canvas, true);
+const engine = new Babylon.Engine(canvas, false);
 
 let camera;
 const scene = createScene();
@@ -16,15 +16,17 @@ window.addEventListener("resize", () => engine.resize);
 
 const testInfo = {
     library: "Babylon",
-    animation: true,
 };
 
+makeConfigurationGui(onStartScene);
+
 const modelPath = "models/";
-makeConfigurationGui();
 const button = document.querySelector(".init");
+const options = document.querySelector(".options");
 let profilerController;
 
-button.onclick = () => {
+function onStartScene() {
+    button.disabled = true;
     const config = getConfiguration();
     const modelName = config.path;
 
@@ -35,8 +37,66 @@ button.onclick = () => {
 
     console.log(new Date());
     defaultClock.begin("sceneLoadingTime");
+    // Babylon.SceneLoader.LoadAssetContainer(modelPath, modelName, scene, (container) => {
+    //     button.remove();
+    //     options.remove();
+
+    //     defaultClock.end();
+
+    //     const initData = {
+    //         startupTime: defaultClock.get("startupTime"),
+    //         sceneLoadingTime: defaultClock.get("sceneLoadingTime"),
+    //     }
+
+    //     console.table(initData);
+
+    //     if (config.shadows) {
+    //         const dirLight = new Babylon.DirectionalLight("dirlight", new Babylon.Vector3(0, 0, 0), scene);
+    //         dirLight.position.set(100, 100, 100);
+    //         let shadowGenerator = new Babylon.ShadowGenerator(512, dirLight);
+
+    //         shadowGenerator.useExponentialShadowMap = false;
+    //         shadowGenerator.usePercentageCloserFiltering = true;
+            
+    //         .forEach(mesh => {
+    //             shadowGenerator.getShadowMap().renderList.push(mesh);
+    //             mesh.receiveShadows = true;
+    //         })
+    //     }
+
+    //     if (config.postProcessing) {
+    //         new Babylon.FxaaPostProcess("fxaa", 1.0, camera);
+    //     }
+
+    //     if (config.manyLights) {
+    //         for (let i = 0; i < 50; ++i) {
+    //             const light = new Babylon.PointLight("light" + i, new Babylon.Vector3(0.01 * i, 0, 0), scene);
+    //         }
+    //     }
+
+    //     if (config.scene.toLowerCase().includes("skull")) {
+    //         new Babylon.DirectionalLight("light", new Babylon.Vector3(0, 0, -1), scene);
+    //     }
+
+    //     createSendInitDataButton(testInfo, initData);
+    //     profilerController = makeProfilerController(testInfo);
+
+    //     container.addAllToScene();
+
+    //     engine.runRenderLoop(() => {
+    //         scene.render();
+    //         profilerController.update();
+    //     });
+    // }, undefined, (scene, message, exception) => {
+    //     alert(message);
+    //     button.disabled = false;
+    // });
+
     Babylon.SceneLoader.ImportMesh("", modelPath, modelName, scene, (meshes, particles, skeletons, animations) => {
         defaultClock.end();
+
+        button.remove();
+        options.remove();
 
         const initData = {
             startupTime: defaultClock.get("startupTime"),
@@ -44,6 +104,23 @@ button.onclick = () => {
         }
 
         console.table(initData);
+
+        if (config.shadows) {
+            const light = new Babylon.DirectionalLight("light", new Babylon.Vector3(0.3, -0.5, -0.2), scene);
+            light.position.set(150, 150, 150);
+            let shadowGenerator = new Babylon.ShadowGenerator(512, light);
+            shadowGenerator.useExponentialShadowMap = false;
+            shadowGenerator.usePercentageCloserFiltering = true;
+            shadowGenerator.filteringQuality = Babylon.ShadowGenerator.QUALITY_MEDIUM;
+            meshes.forEach(mesh => {
+                shadowGenerator.getShadowMap().renderList.push(mesh);
+                mesh.receiveShadows = true;
+            })
+        }
+
+        if (config.postProcessing) {
+            new Babylon.FxaaPostProcess("fxaa", 1.0, camera);
+        }
 
         if (config.scene.toLowerCase().includes("skull")) {
             new Babylon.DirectionalLight("light", new Babylon.Vector3(0, 0, -1), scene);
@@ -56,10 +133,11 @@ button.onclick = () => {
             scene.render();
             profilerController.update();
         });
+    }, undefined, (scene, message, exception) => {
+        alert(message);
+        button.disabled = false;
     });
-
-    button.remove();
-};
+}
 
 function createScene() {
     const scene = new Babylon.Scene(engine);
@@ -77,9 +155,8 @@ function createScene() {
 
     camera.useBouncingBehavior = false;
     camera.attachControl(canvas, true);
-    
-    // const light = new Babylon.SpotLight("light", new Babylon.Vector3(0, 5, 0), new Babylon.Vector3(-0.4, -1, -0.5), 2, 2, scene);
 
+    // const light = new Babylon.SpotLight("light", new Babylon.Vector3(0, 5, 0), new Babylon.Vector3(-0.4, -1, -0.5), 2, 2, scene);
 
     // const shadowGenerator = new Babylon.ShadowGenerator(1024, light);
     // shadowGenerator.usePoissonSampling = true;

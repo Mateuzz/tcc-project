@@ -81,11 +81,6 @@ export function addGltf(path, scene) {
             path,
             (gltf) => {
                 scene.add(gltf.scene);
-                gltf.scene.traverse(child => {
-                    if (child.isMesh) {
-                        ++number;
-                    }
-                })
                 resolve(gltf);
             },
             undefined,

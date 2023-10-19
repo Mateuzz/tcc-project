@@ -23,10 +23,10 @@ canvas {
 fieldset {
     padding: 0 1em 1em 1em;
     margin-bottom: 0.5em;
-    --flow-space: 0.4em;
+    --flow-space: 0.6em;
 }
 
-input, label {
+input:not([type="checkbox"]) {
     display: block;
 }
 
@@ -48,4 +48,8 @@ input, label {
     text-shadow: black 1px 1px 1px;
     border: 1px solid white;
     width: 100%;
+}
+
+.stats button[disabled] {
+    background-color: grey;
 }

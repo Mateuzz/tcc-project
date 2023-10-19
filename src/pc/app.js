@@ -14,7 +14,7 @@ window.INPUT_SETTINGS = {
 };
 
 window.CONTEXT_OPTIONS = {
-    antialias: true,
+    antialias: false,
     alpha: false,
     preserveDrawingBuffer: false,
     preferWebGl2: true,
@@ -22,8 +22,8 @@ window.CONTEXT_OPTIONS = {
 };
 
 const canvas = document.querySelector("#canvas");
-
 const devices = createInputDevices(canvas);
+
 const app = new pc.Application(canvas, {
     elementInput: devices.elementInput,
     keyboard: devices.keyboard,
@@ -33,6 +33,9 @@ const app = new pc.Application(canvas, {
 
 let profilerController;
 let firstLoop = true;
+let button;
+let options;
+let camera;
 
 window.pc = pc;
 window.app = app;
@@ -42,82 +45,40 @@ app.setCanvasResolution(pc.RESOLUTION_AUTO);
 
 window.addEventListener("resize", () => app.resizeCanvas());
 
+function promisify(thisArg, fn) {
+    return function result(...args) {
+        return new Promise((resolve, reject) => {
+            fn.call(thisArg, ...args, (err, asset) => {
+                if (err) reject(err)
+                else resolve(asset);
+            })
+        })
+    }
+}
+
 app.assets.loadFromUrl("models/OrbitCamera.js", "script", (err) => {
-    const camera = new pc.Entity("camera");
+    camera = new pc.Entity("camera");
     camera.addComponent("camera", {
         clearColor: new pc.Color(0.1, 0.1, 0.1),
         farClip: 1000,
         nearClip: 0.1,
         fov: 55,
-   });
+    });
 
     camera.addComponent("script");
     camera.script.create("orbitCamera", {});
     camera.script.create("orbitCameraInputMouse", {});
-
     app.root.addChild(camera);
 
     app.on("update", (_dt) => {
         if (firstLoop) {
-            firstLoop = false;
             defaultClock.end();
 
-            makeConfigurationGui();
-            const button = document.querySelector(".init");
+            firstLoop = false;
 
-
-            button.onclick = () => {
-                const config = getConfiguration();
-                const modelPath = "models/" + config.path;
-
-                testInfo.profilingTimeInSeconds = config.time;
-                testInfo.scene = config.scene;
-
-                camera.setPosition(config.camerax, config.cameray, config.cameraz);
-
-                console.log(new Date());
-                defaultClock.begin("sceneLoadingTime");
-
-                app.assets.loadFromUrl(modelPath, "container", (_err, asset) => {
-                    const scene = asset.resource.instantiateRenderEntity();
-                    app.root.addChild(scene);
-
-                    if (config.scene.toLowerCase().includes("skull")) {
-                        const animation = asset.resource.animations[0];
-                        scene.addComponent("anim");
-                        scene.anim.assignAnimation("Initial State", animation._resources[0]);
-
-                        const light = new pc.Entity("dirlight");
-                        light.addComponent("light", {
-                            type: "directional",
-                            color: new pc.Color(1, 1, 1),
-                        });
-
-                        app.root.addChild(light);
-                    } else {
-                        const lights = scene.findComponents("light");
-                        lights.forEach(light => {
-                            light.enabled = true;
-                            light.castShadows = false;
-                        });
-                    }
-
-
-                    defaultClock.end();
-
-                    const initData = {
-                        startupTime: defaultClock.get("startupTime"),
-                        sceneLoadingTime: defaultClock.get("sceneLoadingTime"),
-                    }
-
-                    console.table(initData);
-
-                    createSendInitDataButton(testInfo, initData);
-                    profilerController = makeProfilerController(testInfo);
-                });
-
-                button.remove();
-            };
+            makeConfigurationGui(onStartScene);
+            button = document.querySelector(".init");
+            options = document.querySelector(".options");
         }
 
         profilerController?.update();
@@ -125,6 +86,91 @@ app.assets.loadFromUrl("models/OrbitCamera.js", "script", (err) => {
 
     app.start();
 });
+
+function onStartScene() {
+    button.disabled = true;
+
+    const config = getConfiguration();
+    const modelPath = "models/" + config.path;
+
+    testInfo.profilingTimeInSeconds = config.time;
+    testInfo.scene = config.scene;
+
+    camera.setPosition(config.camerax, config.cameray, config.cameraz);
+
+    console.log(new Date());
+    defaultClock.begin("sceneLoadingTime");
+
+    app.assets.loadFromUrl(modelPath, "container", (error, asset) => {
+        if (error) {
+            alert(error);
+            button.disabled = false;
+            return;
+        }
+
+        const scene = asset.resource.instantiateRenderEntity();
+        app.root.addChild(scene);
+
+        defaultClock.end();
+
+        if (config.scene.toLowerCase().includes("skull")) {
+            const animation = asset.resource.animations[0];
+            scene.addComponent("anim");
+            scene.anim.assignAnimation("Initial State", animation._resources[0]);
+
+            const light = new pc.Entity("dirlight");
+            light.addComponent("light", {
+                type: "directional",
+                color: new pc.Color(1, 1, 1),
+            });
+
+            app.root.addChild(light);
+        } else {
+            const lights = scene.findComponents("light");
+            lights.forEach(light => {
+                // light.shadowDistance = 160;
+                light.isStatic = true;
+                light.enabled = true;
+                light.castShadows = false;
+                // light.shadowBias = 0.1;
+            });
+        }
+
+        if (config.shadows) {
+            const lightSettings = app.scene.lighting;
+            lightSettings.shadowsEnabled = true;
+            lightSettings.shadowAtlasResolution = 512;
+            lightSettings.shadowType = pc.SHADOW_PCF3;
+
+            const light = new pc.Entity("dirlight"); 
+            light.addComponent("light", {
+                type: "directional",
+                color: new pc.Color(1, 1, 1),
+                isStatic: true,
+                castShadows: true,
+                shadowDistance: 500,
+                shadowBias: 0.1,
+            });
+            light.setPosition(150, 150, 150);
+            app.root.addChild(light);
+        }
+
+
+        const initData = {
+            startupTime: defaultClock.get("startupTime"),
+            sceneLoadingTime: defaultClock.get("sceneLoadingTime"),
+        }
+
+        console.table(initData);
+
+        createSendInitDataButton(testInfo, initData);
+        profilerController = makeProfilerController(testInfo);
+
+        button.remove();
+        options.remove();
+    });
+
+}
 
 function createInputDevices(canvas) {
     var devices = {

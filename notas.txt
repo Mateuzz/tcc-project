@@ -1,18 +1,17 @@
 
 TODO 
     TESTES
-        Descobrir como usar pcf em todas bibliotecas, a ativar sombras e pos processing
+        pirate longe
+        pirate perto
+        florest perto
+        floresta longe
+        floresta merged perto (merged 1 dir light)
+        floresta com 28 luzes  - baby
+        floresta com 1 point light + shadow + pcf (floresta_dark + gen 1 point light)
+        floresta com fxaa  - pc
+        skull animation
 
-        pirate longe ok
-        pirate perto ok
-        floresta perto ok
-        floresta longe ok 
-        floresta merged perto ok
-        floresta com 50 luzes
-        floresta com 50 luzes + sombras
-        floresta com anti aliasing  fxaa
-        skull animation ok
-        uso de memoria e cpu em todos os testes
+        + uso de memoria e cpu carregamento
 
     REFERENCIAL TEORICO
         fisica, realidade virtual, webgl2, navegação de meshes

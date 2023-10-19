@@ -16,7 +16,7 @@ export function makeProfilerController({
     });
 }
 
-export function makeConfigurationGui() {
+export function makeConfigurationGui(callback) {
     const gui = document.createElement("div");
     gui.classList.add("stats");
     gui.innerHTML = `
@@ -33,23 +33,35 @@ export function makeConfigurationGui() {
             <input type="number" name="camera-z" id="camera-z" value="5">
         </fieldset>
 
-        <fieldset class="flow">
+        <fieldset class="flow" id="scene-options">
             <legend> Scene configuration </legend>
             <label for="scene">Name</label>
-            <input type="text" name="scene" id="scene">
+            <input type="text" name="scene" id="scene" autofocus required>
 
             <label for="scene">Path</label>
-            <input type="text" name="path" id="path">
+            <input type="text" name="path" id="path" required>
 
             <label for="scene">Profiling Time in seconds</label>
-            <input type="number" name="time" id="time" value="30">
+            <input type="number" name="time" id="time" value="30" required>
+
+            <label for="many-lights">Many Lights</label>
+            <input type="checkbox" name="config[]" id="many-lights" value="many-lights">
+
+            <label for="postprocessing">Post Processing</label>
+            <input type="checkbox" name="config[]" id="postprocessing" value="postprocessing">
+
+            <label for="shadows">Shadows</label>
+            <input type="checkbox" name="config[]" id="shadows" value="shadows">
         </fieldset>
         <button type"submit" class="init">Start Application</button>
     </form>
     `;
 
     const form = gui.querySelector("form");
-    form.addEventListener("submit", e => e.preventDefault());
+    form.onsubmit = (e) => {
+        e.preventDefault();
+        callback();
+    };
 
     document.body.insertAdjacentElement("afterbegin", gui);
 }
@@ -62,6 +74,9 @@ export function getConfiguration() {
     let camerax = options.querySelector("#camera-x");
     let cameray = options.querySelector("#camera-y");
     let cameraz = options.querySelector("#camera-z");
+    let manyLights = options.querySelector("#many-lights").checked;
+    let postProcessing = options.querySelector("#postprocessing").checked;
+    let shadows = options.querySelector("#shadows").checked;
 
     scene = scene.value;
     path = path.value;
@@ -70,9 +85,7 @@ export function getConfiguration() {
     cameray = cameray.value;
     cameraz = cameraz.value;
 
-    options.remove();
-
-    return { scene, path, time, camerax, cameray, cameraz };
+    return { scene, path, time, camerax, cameray, cameraz, manyLights, postProcessing, shadows };
 }
 
 export function createSendInitDataButton(
