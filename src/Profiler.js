@@ -87,6 +87,7 @@ export class Profiler {
     }
 
     computerAllStats() {
+        this.deltaList.sort().reverse();
         const profilingTime = performance.now() - this.startTime;
         const fpsAVG = 1000 / mean(this.deltaList);
         const fpsMaxAVG = 1000 / mean(this.deltaMinList);
@@ -102,7 +103,7 @@ export class Profiler {
                 total += this.deltaList[i];
             }
 
-            return total / count;
+            return 1000 / (total / count);
         })();
 
         return {

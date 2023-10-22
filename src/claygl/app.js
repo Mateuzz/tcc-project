@@ -1,5 +1,5 @@
 import * as Clay from "claygl";
-import ClayAdvancedRenderer from "claygl-advanced-renderer";
+// import ClayAdvancedRenderer from "claygl-advanced-renderer";
 
 import {
     getConfiguration,
@@ -17,14 +17,8 @@ const testInfo = {
 
 /** @type {Clay.light.Directional} */
 let light;
-/** */
-let spots = [];
-/** @type {Clay.Mesh} */
-let cube;
 /** @type {Clay.camera.Perspective} */
 let camera;
-/** @type {Clay.Mesh} */
-let model;
 /** @type {Clay.OrbitControl} */
 let control;
 
@@ -35,7 +29,6 @@ let button;
 let options;
 
 let shadowMap;
-let advancedRenderer;
 
 Clay.application.create(canvas, {
     width: canvas.clientWidth,
@@ -50,19 +43,20 @@ Clay.application.create(canvas, {
     autoRender: false,
 
     init(app) {
-        // this._advancedRenderer = new ClayAdvancedRenderer(app.renderer, app.scene, app.timeline, {
+        app.renderer.antialias = false;
+
+        // this.advancedRenderer = new ClayAdvancedRenderer(app.renderer, app.scene, app.timeline, {
         //     postEffect: {
         //         enable: true,
-        //         FXAA: {
-        //             enable: true,
-        //         },
+        //         FXAA: { enable: true },
 
         //         bloom: { enable: false },
-        //         colorCorrection: { enable: false },
+        //         colorCorrection: { enable: false,
+        //             exposure: 1,
+        //         },
         //     }
         // });
 
-        app.renderer.antialias = false;
 
         // this.dRenderer = new Clay.deferred.Renderer({
         //     shadowMapPass: this.shadowMap,
@@ -120,10 +114,10 @@ Clay.application.create(canvas, {
 
         control.update(app.frameTime);
 
-        // this._advancedRenderer.render();
+        // this.advancedRenderer.render();
         // this.dRenderer.render(app.renderer, app.scene, camera);
 
-        shadowMap?.render(app.renderer, app.scene, camera);
+        // shadowMap?.render(app.renderer, app.scene, camera);
         app.renderer.render(app.scene, camera);
 
         profilerController?.update();
@@ -210,7 +204,7 @@ function onStartScene(app) {
                 })
             }
             lights.push(light);
-        } else {
+        } else if (config.scene.toLowerCase().includes("skull")) {
             lights.push(app.createDirectionalLight([0, 0, 0,], "#fff", 1));
         }
 

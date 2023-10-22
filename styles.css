@@ -26,7 +26,7 @@ fieldset {
     --flow-space: 0.6em;
 }
 
-input:not([type="checkbox"]) {
+input {
     display: block;
 }
 

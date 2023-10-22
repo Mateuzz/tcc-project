@@ -50,6 +50,9 @@ export function makeConfigurationGui(callback) {
             <label for="postprocessing">Post Processing</label>
             <input type="checkbox" name="config[]" id="postprocessing" value="postprocessing">
 
+            <label for="colors">Color Curves (like pc)</label>
+            <input type="checkbox" name="config[]" id="colors" value="colors">
+
             <label for="shadows">Shadows</label>
             <input type="checkbox" name="config[]" id="shadows" value="shadows">
         </fieldset>
@@ -67,25 +70,19 @@ export function makeConfigurationGui(callback) {
 }
 
 export function getConfiguration() {
-    const options = document.querySelector(".options");
-    let scene = options.querySelector("#scene");
-    let path = options.querySelector("#path");
-    let time = options.querySelector("#time");
-    let camerax = options.querySelector("#camera-x");
-    let cameray = options.querySelector("#camera-y");
-    let cameraz = options.querySelector("#camera-z");
-    let manyLights = options.querySelector("#many-lights").checked;
-    let postProcessing = options.querySelector("#postprocessing").checked;
-    let shadows = options.querySelector("#shadows").checked;
-
-    scene = scene.value;
-    path = path.value;
-    time = time.value;
-    camerax = camerax.value;
-    cameray = cameray.value;
-    cameraz = cameraz.value;
-
-    return { scene, path, time, camerax, cameray, cameraz, manyLights, postProcessing, shadows };
+    return {
+        options : document.querySelector(".options"),
+        scene : options.querySelector("#scene").value,
+        path : options.querySelector("#path").value,
+        time : options.querySelector("#time").value,
+        camerax : options.querySelector("#camera-x").value,
+        cameray : options.querySelector("#camera-y").value,
+        cameraz : options.querySelector("#camera-z").value,
+        manyLights : options.querySelector("#many-lights").checked,
+        postProcessing : options.querySelector("#postprocessing").checked,
+        shadows : options.querySelector("#shadows").checked,
+        colors : options.querySelector("#colors").checked,
+    }
 }
 
 export function createSendInitDataButton(

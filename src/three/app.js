@@ -58,9 +58,6 @@ function onStartScene() {
         console.table(initData);
 
         if (config.shadows) {
-            renderer.shadowMap.enabled = true;
-            renderer.shadowMap.type = Three.PCFShadowMap;
-
             // const pointLight = new Three.PointLight(0xffffff, 5, 200, 0);
             // pointLight.position.set(40, 40, 40);
             // pointLight.castShadow = true;
@@ -69,13 +66,15 @@ function onStartScene() {
             // pointLight.shadow.mapSize.width = 512;
             // pointLight.shadow.mapSize.height = 512;
             // scene.add(pointLight);
+            //
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = Three.PCFSoftShadowMap;
 
             const dirLight = new Three.DirectionalLight(0xffffff, 1);
-            dirLight.shadow.bias = 0.1;
             dirLight.castShadow = true;
             dirLight.shadow.mapSize.width = 512;
             dirLight.shadow.mapSize.height = 512;
-            dirLight.shadow.camera.near = 0.1;
+            dirLight.shadow.camera.near = 1;
             dirLight.shadow.camera.far = 600;
             dirLight.shadow.camera.left = -150;
             dirLight.shadow.camera.right = 150;
@@ -100,17 +99,30 @@ function onStartScene() {
 
         }
 
-        if (config.postProcessing) {
-            composer = new EffectComposer(renderer);
+        function createComposer() {
+            const composer = new EffectComposer(renderer);
+            composer.addPass(new RenderPass(scene, camera));
+            return composer;
+        }
 
-            const render = new RenderPass(scene, camera);
+        if (config.colors) {
+            // composer = createComposer();
+            renderer.toneMapping = Three.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 2;
+            // const gamma = new ShaderPass(GammaCorrectionShader);
+
+            // composer.addPass(gamma)
+        }
+
+        if (config.postProcessing) {
+            composer = composer || createComposer();
+
             const fxaa = new ShaderPass(FXAAShader);
 
             const pixelRatio = renderer.getPixelRatio();
             fxaa.material.uniforms["resolution"].value.x = 1 / (width * pixelRatio);
             fxaa.material.uniforms["resolution"].value.y = 1 / (height * pixelRatio);
 
-            composer.addPass(render)
             composer.addPass(fxaa);
         }
 

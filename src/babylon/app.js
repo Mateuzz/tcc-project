@@ -5,7 +5,10 @@ import { createSendInitDataButton, getConfiguration, makeConfigurationGui, makeP
 Babylon.SceneLoader.RegisterPlugin(new GLTFFileLoader());
 
 const canvas = document.querySelector("#canvas");
-const engine = new Babylon.Engine(canvas, false);
+const engine = new Babylon.Engine(canvas, false, {
+    antialias: false,
+    powerPreference: "high-performance",
+});
 
 let camera;
 const scene = createScene();
@@ -78,8 +81,8 @@ function onStartScene() {
     //         new Babylon.DirectionalLight("light", new Babylon.Vector3(0, 0, -1), scene);
     //     }
 
-    //     createSendInitDataButton(testInfo, initData);
-    //     profilerController = makeProfilerController(testInfo);
+        // createSendInitDataButton(testInfo, initData);
+        // profilerController = makeProfilerController(testInfo);
 
     //     container.addAllToScene();
 
@@ -105,12 +108,26 @@ function onStartScene() {
 
         console.table(initData);
 
+        if (config.colors) {
+            scene.imageProcessingConfiguration.toneMappingEnabled = true;
+            scene.imageProcessingConfiguration.toneMappingType = Babylon.ImageProcessingConfiguration.TONEMAPPING_ACES;
+            scene.imageProcessingConfiguration.exposure = 2;
+            scene.imageProcessingConfiguration.isEnabled = true;
+        }
+
         if (config.shadows) {
             const light = new Babylon.DirectionalLight("light", new Babylon.Vector3(0.3, -0.5, -0.2), scene);
             light.position.set(150, 150, 150);
             let shadowGenerator = new Babylon.ShadowGenerator(512, light);
             shadowGenerator.useExponentialShadowMap = false;
             shadowGenerator.usePercentageCloserFiltering = true;
+            shadowGenerator.useBlurExponentialShadowMap = false;
+            shadowGenerator.usePoissonSampling = false;
+            shadowGenerator.useKernelBlur = false;
+            shadowGenerator.useContactHardeningShadow = false;
+            shadowGenerator.useCloseExponentialShadowMap = false;
+            shadowGenerator.useBlurCloseExponentialShadowMap = false;
+            shadowGenerator.useOpacityTextureForTransparentShadow = false;
             shadowGenerator.filteringQuality = Babylon.ShadowGenerator.QUALITY_MEDIUM;
             meshes.forEach(mesh => {
                 shadowGenerator.getShadowMap().renderList.push(mesh);
@@ -141,6 +158,13 @@ function onStartScene() {
 
 function createScene() {
     const scene = new Babylon.Scene(engine);
+    scene.imageProcessingConfiguration.toneMappingEnabled = false;
+    scene.imageProcessingConfiguration.exposure = 1;
+    scene.imageProcessingConfiguration.colorGradingEnabled = false;
+    scene.imageProcessingConfiguration.colorCurvesEnabled = false;
+    scene.imageProcessingConfiguration.ditheringEnabled = false;
+    scene.imageProcessingConfiguration.vignetteEnabled = false;
+    scene.imageProcessingConfiguration.isEnabled = false;
 
     camera = new Babylon.ArcRotateCamera(
         "camera",

@@ -34,7 +34,7 @@ for (let i = 2; i < argv.length; ++i) {
 let esbuildConfig = {
   entryPoints: entries,
   bundle: true,
-  minify: false,
+  minify: true,
   outbase: "src",
   nodePaths: ["src"],
   platform: "browser",

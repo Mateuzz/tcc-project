@@ -1,17 +1,83 @@
 
+
+
+
+
+
+
+
+
+
+https://developer.download.nvidia.com/SDK/10/direct3d/Source/VarianceShadowMapping/Doc/VarianceShadowMapping.pdf
+https://developer.nvidia.com/gpugems/gpugems/part-ii-lighting-and-shadows/chapter-11-shadow-map-antialiasing
+https://doc.babylonjs.com/features/featuresDeepDive/lights/shadows
+
+
+explicar o que é draw call.
+
+EXPLICAR METODOLOGIA
+    tecnicas de otimizacao (instanced, merging, lod e basis testures compression)
+	propriedades dos materiais pbr, efeitos de pos processamento e filtros de sombras disponiveis, tecnicas de otimizacao, formatos de importacao , e por fim funcionalidades extras
+	animacao, particulas, lightmaps gerar, renderizacao de texto e gui, fisica, realidade virtual, editor de cena, visualizador / depurador, exportador, webgl2, path tracing, navmesh
+	
+    audio, física, realidade virtual, depurador de cena, exportador de cena, suporte a webgl2, navegação de meshes
+
+
 TODO 
     TESTES
-        pirate longe
-        pirate perto
-        florest perto
-        floresta longe
-        floresta merged perto (merged 1 dir light)
-        floresta com 28 luzes  - baby
-        floresta com 1 point light + shadow + pcf (floresta_dark + gen 1 point light)
-        floresta com fxaa  - pc
-        skull animation
+        pirate longe    pirate_longe
+        pirate perto     pirate_perto
+        florest perto    floresta_perto
+        floresta longe   floreta_longe
+        floresta merged distancia media (merged 1 dir light) floresta_merged 
+        floresta com 28 luzes distancia media - baby       floresta_28 (no baby)
+        floresta dark + directional light + sombra      floresta_sombra 
+        floresta com fxaa  - pc         floresta_fxaa (no pc)
+        skull animation         skull
 
         + uso de memoria e cpu carregamento
+
+
+USO DE MEMORIA
+Three
+	pirate 15-20% -> 7.2mb
+	floresta 55-60% - 17.6mb
+	floresta_merged 15-20 6.4mb
+	floresta28luzes 37-45 11.6mb
+	floresta_sombra 50-55 17.9
+	floresta_colors 50-60 8.5mb
+	floresta_fxaaA 60-70 10mb
+	skull_animation 25-30 7mb
+
+PC
+	pirate 18-25 - 10mb
+	floresta 45-50% - 20mb
+	floresta_merged 22-27 11mb
+	floresta28luzes 16-25  18mb
+	floresta_sombra 60-67 35mb
+	skull_animation 21-28 27mb
+
+BABYLON
+	pirate 15-20% -> 15.2mb
+	floresta 50-56 - 23.3mb
+	floresta_merged 18-22 11.8mb
+	floresta_sombra 60-65 27.8mb
+	floresta_colors 47-55 23.6mb
+	floresta_fxaa 47-55 26.6mb
+	skull_animation 20-25 16.6mb
+
+CLAYGL
+	pirate 17 23 -> 5.7mb
+	floresta 50-55 - 15.5mb
+	floresta_merged 17-24 5.4mb
+	floresta28luzes 40-50 8.5mb
+	floresta_sombra 100% 16.0mb
+	floresta_colors 100% 34mb
+	floresta_fxaaA 100% 28.3mb
+	skull_animation 21-28 9mb
+
+	
+
 
     REFERENCIAL TEORICO
         fisica, realidade virtual, webgl2, navegação de meshes
