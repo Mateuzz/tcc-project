@@ -23,7 +23,7 @@ const testInfo = {
 
 makeConfigurationGui(onStartScene);
 
-const modelPath = "models/";
+const modelPath = PREFIX_PATH;
 const button = document.querySelector(".init");
 const options = document.querySelector(".options");
 let profilerController;

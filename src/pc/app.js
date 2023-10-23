@@ -91,7 +91,7 @@ function onStartScene() {
     button.disabled = true;
 
     const config = getConfiguration();
-    const modelPath = "models/" + config.path;
+    const modelPath = PREFIX_PATH + config.path;
 
     testInfo.profilingTimeInSeconds = config.time;
     testInfo.scene = config.scene;

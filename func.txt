@@ -1,0 +1,28 @@
+claygl biblioteca muito simples
+    nao tem audio, nem fisica, nem editor, exportador nem webgl2
+Ja a biblioteca threejs tambem tem falta de muitas das funciondalidae
+    fisica, particulas, navegação de meshes mas pode ser compesado com plugin
+
+
+muito importante
+    animacao
+
+jogos
+        particulas three so com plugin
+        lightmaps so playcanvas
+        audio clay nao tem
+        fisica three plugin clay n
+        navMesh thre plugin clayg n
+
+ajudar desenvolvimento
+    editor clay n
+    depurador three plugin clay n
+
+misc
+    exportar clay n
+
+util
+    vr clay n
+    gui three n clayu nj
+    webgl2 clay n
+    path tracing three babylonjs plugin
