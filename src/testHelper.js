@@ -104,9 +104,7 @@ export function createSendProfilingDatabutton({ library, scene }, performanceDat
     const stats = document.querySelector(".stats");
     const button = document.createElement("button");
 
-    button.innerText = "Post Profiler Data";
     button.onclick = () => {
-        console.log("Inside on click");
         postJson({ library, scene, performanceData });
         button.remove();
     };

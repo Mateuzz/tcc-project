@@ -57,6 +57,33 @@ function onStartScene() {
 
         console.table(initData);
 
+        function enableShadows() {
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = Three.PCFSoftShadowMap;
+
+            gltf.scene.traverse(node => {
+                if (node.isMesh) {
+                    node.castShadow = true;
+                    node.receiveShadow = true;
+                }
+            });
+        }
+
+        function lightConfigShadow(light, d) {
+            light.castShadow = true;
+            light.shadow.mapSize.width = 512;
+            light.shadow.mapSize.height = 512;
+            light.shadow.camera.near = 1;
+            light.shadow.camera.far = 600;
+
+            if (d) {
+                light.shadow.camera.top = d;
+                light.shadow.camera.right = d;
+                light.shadow.camera.left = -d;
+                light.shadow.camera.bottom - d;
+            }
+        }
+
         if (config.shadows) {
             // const pointLight = new Three.PointLight(0xffffff, 5, 200, 0);
             // pointLight.position.set(40, 40, 40);
@@ -66,36 +93,13 @@ function onStartScene() {
             // pointLight.shadow.mapSize.width = 512;
             // pointLight.shadow.mapSize.height = 512;
             // scene.add(pointLight);
-            //
-            renderer.shadowMap.enabled = true;
-            renderer.shadowMap.type = Three.PCFSoftShadowMap;
+
+            enableShadows();
 
             const dirLight = new Three.DirectionalLight(0xffffff, 1);
-            dirLight.castShadow = true;
-            dirLight.shadow.mapSize.width = 512;
-            dirLight.shadow.mapSize.height = 512;
-            dirLight.shadow.camera.near = 1;
-            dirLight.shadow.camera.far = 600;
-            dirLight.shadow.camera.left = -150;
-            dirLight.shadow.camera.right = 150;
-            dirLight.shadow.camera.top = 150;
-            dirLight.shadow.camera.bottom = -150;
+            lightConfigShadow(dirlight, 150);
             dirLight.position.set(150, 150, 150);
             scene.add(dirLight);
-
-            gltf.scene.traverse(node => {
-                // if (node.isLight) {
-                //     node.castShadow = true;
-                //     node.shadow.mapSize.width = 2048;
-                //     node.shadow.mapSize.height = 2048;
-                //     node.shadow.camera.near = 0.1;
-                //     node.shadow.camera.far = 1000;
-                // }
-                if (node.isMesh) {
-                    node.castShadow = true;
-                    node.receiveShadow = true;
-                }
-            });
 
         }
 
@@ -137,6 +141,18 @@ function onStartScene() {
             run.play();
 
             mixers.push(mixer);
+        }
+
+        if (config.scene.toLowerCase().includes("sponza")) {
+            const spot = new Three.PointLight(0xffffff, 1, 100, 0);
+            spot.position.set(1, 1, 1);
+            enableShadows();
+            lightConfigShadow(spot);
+            scene.add(spot);
+
+            if (DEBUG_MODE === 1) {
+                scene.add(new Three.PointLightHelper(spot, 10));
+            }
         }
 
         createSendInitDataButton(testInfo, initData);

@@ -117,7 +117,7 @@ Clay.application.create(canvas, {
         // this.advancedRenderer.render();
         // this.dRenderer.render(app.renderer, app.scene, camera);
 
-        // shadowMap?.render(app.renderer, app.scene, camera);
+        shadowMap?.render(app.renderer, app.scene, camera);
         app.renderer.render(app.scene, camera);
 
         profilerController?.update();

@@ -1,5 +1,4 @@
 import * as esbuild from "esbuild";
-import logPlugin from "log-plugin";
 import * as Path from "node:path";
 import { argv } from "node:process";
 
@@ -40,7 +39,6 @@ let esbuildConfig = {
   platform: "browser",
   outdir: "dist",
   format: "esm",
-  plugins: [logPlugin(entries)],
 };
 
 export default esbuildConfig;

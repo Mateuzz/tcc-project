@@ -136,11 +136,29 @@ function onStartScene() {
             });
         }
 
-        if (config.shadows) {
+
+        function enableShadows() {
             const lightSettings = app.scene.lighting;
             lightSettings.shadowsEnabled = true;
             lightSettings.shadowAtlasResolution = 512;
             lightSettings.shadowType = pc.SHADOW_PCF3;
+        }
+
+        if (config.scene.toLowerCase().includes("sponza")) {
+            enableShadows();
+            const point = new pc.Entity("point");
+            point.addComponent("light", {
+                type: "omni",
+                color: new pc.Color(1, 1, 1),
+                isStatic: true,
+                castShadows: true,
+                shadowDistance: 500,
+            });
+            app.root.addChild(point);
+        }
+
+        if (config.shadows) {
+            enableShadows();
 
             const light = new pc.Entity("dirlight"); 
             light.addComponent("light", {
