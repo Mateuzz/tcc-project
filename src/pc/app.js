@@ -118,13 +118,15 @@ function onStartScene() {
             scene.addComponent("anim");
             scene.anim.assignAnimation("Initial State", animation._resources[0]);
 
-            const light = new pc.Entity("dirlight");
-            light.addComponent("light", {
-                type: "directional",
-                color: new pc.Color(1, 1, 1),
-            });
+            app.scene.ambientLight = new pc.Color(1, 1, 1);
 
-            app.root.addChild(light);
+            // const light = new pc.Entity("dirlight");
+            // light.addComponent("light", {
+            //     type: "directional",
+            //     color: new pc.Color(1, 1, 1),
+            // });
+
+            // app.root.addChild(light);
         } else {
             const lights = scene.findComponents("light");
             lights.forEach(light => {

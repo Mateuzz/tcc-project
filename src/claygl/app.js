@@ -205,7 +205,8 @@ function onStartScene(app) {
             }
             lights.push(light);
         } else if (config.scene.toLowerCase().includes("skull")) {
-            lights.push(app.createDirectionalLight([0, 0, 0,], "#fff", 1));
+            // lights.push(app.createDirectionalLight([0, 0, 0,], "#fff", 1));
+            lights.push(app.createAmbientLight("#fff", 1));
         }
 
         if (!config.shadows) 

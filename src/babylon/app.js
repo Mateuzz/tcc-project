@@ -140,7 +140,8 @@ function onStartScene() {
         }
 
         if (config.scene.toLowerCase().includes("skull")) {
-            new Babylon.DirectionalLight("light", new Babylon.Vector3(0, 0, -1), scene);
+            // new Babylon.DirectionalLight("light", new Babylon.Vector3(0, 0, -1), scene);
+            new Babylon.HemisphericLight("light", new Babylon.Vector3(0, 0, 0), scene);
         }
 
         createSendInitDataButton(testInfo, initData);

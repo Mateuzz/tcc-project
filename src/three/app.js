@@ -4,6 +4,7 @@ import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
 import { FXAAShader } from "three/examples/jsm/shaders/FXAAShader.js";
+import { ExposureShader } from "three/examples/jsm/shaders/ExposureShader.js"
 
 import { createSendInitDataButton, getConfiguration, makeConfigurationGui, makeProfilerController } from "testHelper.js";
 import { addGltf, initLoaders } from "./Loader.js";
@@ -106,12 +107,12 @@ function onStartScene() {
         }
 
         if (config.colors) {
-            // composer = createComposer();
+            composer = createComposer();
             renderer.toneMapping = Three.ACESFilmicToneMapping;
             renderer.toneMappingExposure = 2;
-            // const gamma = new ShaderPass(GammaCorrectionShader);
+            const exposure = new ShaderPass(ExposureShader);
 
-            // composer.addPass(gamma)
+            composer.addPass(exposure);
         }
 
         if (config.postProcessing) {
@@ -127,9 +128,11 @@ function onStartScene() {
         }
 
         if (config.scene.toLowerCase().includes("skull")) {
-            const dirLight = new Three.DirectionalLight(0xffffff, 1);
-            dirLight.rotation.set(0, 0.5, 1);
-            scene.add(dirLight);
+            const light = new Three.AmbientLight(0xffffff, 1);
+            scene.add(light);
+            // const dirLight = new Three.DirectionalLight(0xffffff, 1);
+            // dirLight.rotation.set(0, 0.5, 1);
+            // scene.add(dirLight);
 
             console.log("Animations:", gltf.animations);
             const mixer = new Three.AnimationMixer(gltf.scene);
