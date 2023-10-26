@@ -4,9 +4,11 @@ import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
 import { FXAAShader } from "three/examples/jsm/shaders/FXAAShader.js";
+import { ExposureShader } from "three/examples/jsm/shaders/ExposureShader.js"
 
-import { createSendInitDataButton, getConfiguration, makeConfigurationGui, makeProfilerController } from "testHelper.js";
+import { createSendInitDataButton, getConfiguration, makeConfigurationGui, makeProfilerController, makeStatsGui } from "testHelper.js";
 import { addGltf, initLoaders } from "./Loader.js";
+import {getInfo, initStats, prepareInfoFrame, renderStatsHtml} from "webglStats.js";
 
 let scene;
 let renderer;
@@ -18,6 +20,8 @@ let width;
 let height;
 let composer;
 
+initStats();
+
 startScene();
 initLoaders(renderer);
 defaultClock.end();
@@ -25,6 +29,10 @@ defaultClock.end();
 const testInfo = {
     library: "Three",
 };
+
+// const statsGui = makeStatsGui();
+// const info = getInfo();
+// initStats();
 
 makeConfigurationGui(onStartScene);
 const button = document.querySelector(".init");
@@ -95,11 +103,10 @@ function onStartScene() {
             // scene.add(pointLight);
 
             enableShadows();
-
-            const dirLight = new Three.DirectionalLight(0xffffff, 1);
-            lightConfigShadow(dirlight, 150);
-            dirLight.position.set(150, 150, 150);
-            scene.add(dirLight);
+            const light = new Three.DirectionalLight(0xffffff, 1);
+            lightConfigShadow(light, 150);
+            light.position.set(150, 150, 150);
+            scene.add(light);
 
         }
 
@@ -110,12 +117,12 @@ function onStartScene() {
         }
 
         if (config.colors) {
-            // composer = createComposer();
+            composer = createComposer();
             renderer.toneMapping = Three.ACESFilmicToneMapping;
             renderer.toneMappingExposure = 2;
-            // const gamma = new ShaderPass(GammaCorrectionShader);
+            const exposure = new ShaderPass(ExposureShader);
 
-            // composer.addPass(gamma)
+            composer.addPass(exposure)
         }
 
         if (config.postProcessing) {
@@ -130,29 +137,18 @@ function onStartScene() {
             composer.addPass(fxaa);
         }
 
-        if (config.scene.toLowerCase().includes("skull")) {
+        if (/skull|desert/i.test(config.scene)) {
             const dirLight = new Three.DirectionalLight(0xffffff, 1);
             dirLight.rotation.set(0, 0.5, 1);
             scene.add(dirLight);
-
+        }
+        if (config.scene.toLowerCase().includes("skull")) {
             console.log("Animations:", gltf.animations);
             const mixer = new Three.AnimationMixer(gltf.scene);
             const run = mixer.clipAction(gltf.animations[0]);
             run.play();
 
             mixers.push(mixer);
-        }
-
-        if (config.scene.toLowerCase().includes("sponza")) {
-            const spot = new Three.PointLight(0xffffff, 1, 100, 0);
-            spot.position.set(1, 1, 1);
-            enableShadows();
-            lightConfigShadow(spot);
-            scene.add(spot);
-
-            if (DEBUG_MODE === 1) {
-                scene.add(new Three.PointLightHelper(spot, 10));
-            }
         }
 
         createSendInitDataButton(testInfo, initData);
@@ -190,6 +186,8 @@ function startScene() {
 function loop() {
     const delta = clock.getDelta();
 
+    // prepareInfoFrame();
+
     for (const mixer of mixers)
         mixer.update(delta);
 
@@ -201,6 +199,8 @@ function loop() {
         renderer.render(scene, camera);
 
     profilerController.update();
+
+    // statsGui.innerHTML = renderStatsHtml();
 
     requestAnimationFrame(loop);
 }

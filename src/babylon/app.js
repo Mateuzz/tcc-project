@@ -139,8 +139,8 @@ function onStartScene() {
             new Babylon.FxaaPostProcess("fxaa", 1.0, camera);
         }
 
-        if (config.scene.toLowerCase().includes("skull")) {
-            new Babylon.DirectionalLight("light", new Babylon.Vector3(0, 0, -1), scene);
+        if (/skull|desert/i.test(config.scene)) {
+            new Babylon.DirectionalLight("light", new Babylon.Vector3(0, -0.5, -1), scene);
         }
 
         createSendInitDataButton(testInfo, initData);

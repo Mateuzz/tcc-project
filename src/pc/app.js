@@ -113,11 +113,7 @@ function onStartScene() {
 
         defaultClock.end();
 
-        if (config.scene.toLowerCase().includes("skull")) {
-            const animation = asset.resource.animations[0];
-            scene.addComponent("anim");
-            scene.anim.assignAnimation("Initial State", animation._resources[0]);
-
+        if (/skull|desert/i.test(config.scene)) {
             const light = new pc.Entity("dirlight");
             light.addComponent("light", {
                 type: "directional",
@@ -136,25 +132,18 @@ function onStartScene() {
             });
         }
 
+        if (config.scene.toLowerCase().includes("skull")) {
+            const animation = asset.resource.animations[0];
+            scene.addComponent("anim");
+            scene.anim.assignAnimation("Initial State", animation._resources[0]);
+        }
+
 
         function enableShadows() {
             const lightSettings = app.scene.lighting;
             lightSettings.shadowsEnabled = true;
             lightSettings.shadowAtlasResolution = 512;
             lightSettings.shadowType = pc.SHADOW_PCF3;
-        }
-
-        if (config.scene.toLowerCase().includes("sponza")) {
-            enableShadows();
-            const point = new pc.Entity("point");
-            point.addComponent("light", {
-                type: "omni",
-                color: new pc.Color(1, 1, 1),
-                isStatic: true,
-                castShadows: true,
-                shadowDistance: 500,
-            });
-            app.root.addChild(point);
         }
 
         if (config.shadows) {

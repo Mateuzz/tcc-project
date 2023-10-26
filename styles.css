@@ -39,6 +39,11 @@ input {
     top: 0;
 }
 
+.render-stats {
+    left: 0;
+    bottom: 0;
+}
+
 .stats button {
     font-size: 1.1em;
     background-color: red;

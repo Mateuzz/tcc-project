@@ -48,10 +48,10 @@ Clay.application.create(canvas, {
         // this.advancedRenderer = new ClayAdvancedRenderer(app.renderer, app.scene, app.timeline, {
         //     postEffect: {
         //         enable: true,
-        //         FXAA: { enable: true },
+        //         FXAA: { enable: false },
 
         //         bloom: { enable: false },
-        //         colorCorrection: { enable: false,
+        //         colorCorrection: { enable: true,
         //             exposure: 1,
         //         },
         //     }
@@ -117,7 +117,7 @@ Clay.application.create(canvas, {
         // this.advancedRenderer.render();
         // this.dRenderer.render(app.renderer, app.scene, camera);
 
-        shadowMap?.render(app.renderer, app.scene, camera);
+        // shadowMap?.render(app.renderer, app.scene, camera);
         app.renderer.render(app.scene, camera);
 
         profilerController?.update();
@@ -204,8 +204,9 @@ function onStartScene(app) {
                 })
             }
             lights.push(light);
-        } else if (config.scene.toLowerCase().includes("skull")) {
-            lights.push(app.createDirectionalLight([0, 0, 0,], "#fff", 1));
+        } else if (/skull|desert/i.test(config.scene)) {
+            const light = app.createDirectionalLight([0, 0, -1], "#fff", 2);
+            lights.push(light);
         }
 
         if (!config.shadows) 

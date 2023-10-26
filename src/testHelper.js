@@ -1,6 +1,14 @@
 import ProfilerController from "ProfilerController";
 import { postJson } from "fetch";
 
+export function makeStatsGui() {
+    const gui = document.createElement("div");
+    gui.classList.add("stats", "render-stats");
+    gui.innerHTML = "<h2>Stats</h2>";
+    document.documentElement.append(gui);
+    return gui;
+}
+
 export function makeProfilerController({
     library,
     scene,
@@ -91,7 +99,7 @@ export function createSendInitDataButton(
 ) {
     const stats = document.querySelector(".stats");
     const button = document.createElement("button");
-    button.innerText = "Post initialization Data";
+    button.innerText = "Post initialization data";
     button.onclick = () => {
         postJson({ library, scene, startupTime, sceneLoadingTime });
         button.remove();
@@ -104,6 +112,7 @@ export function createSendProfilingDatabutton({ library, scene }, performanceDat
     const stats = document.querySelector(".stats");
     const button = document.createElement("button");
 
+    button.innerText = "Post rendering data";
     button.onclick = () => {
         postJson({ library, scene, performanceData });
         button.remove();
