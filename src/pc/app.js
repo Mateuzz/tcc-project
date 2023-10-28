@@ -119,7 +119,7 @@ function onStartScene() {
                 isStatic: true,
                 castShadows: true,
                 shadowDistance: 500,
-                shadowBias: 0.1,
+                normalBias: 1,
             });
             light.setPosition(150, 150, 150);
             app.root.addChild(light);

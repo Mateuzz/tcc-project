@@ -53,10 +53,21 @@ function onStartScene() {
         }
 
         if (config.colors) {
-            scene.imageProcessingConfiguration.toneMappingEnabled = true;
-            scene.imageProcessingConfiguration.toneMappingType = Babylon.ImageProcessingConfiguration.TONEMAPPING_ACES;
-            scene.imageProcessingConfiguration.exposure = 2;
-            scene.imageProcessingConfiguration.isEnabled = true;
+            // scene.imageProcessingConfiguration.toneMappingEnabled = true;
+            // scene.imageProcessingConfiguration.toneMappingType = Babylon.ImageProcessingConfiguration.TONEMAPPING_ACES;
+
+            const post = new Babylon.ImageProcessingPostProcess("imageProcessing", 1.0, camera);
+            post.colorCurvesEnabled = true;
+            post.toneMappingType = Babylon.ImageProcessingConfiguration.TONEMAPPING_ACES;
+            post.toneMappingEnabled = true;
+            post.colorCurves.globalSaturation = 1.5;
+
+            // scene.imageProcessingConfiguration.exposure = 2;
+            // scene.imageProcessingConfiguration.colorCurves.globalExposure = 2;
+            // scene.imageProcessingConfiguration.colorCurves.globalHue = 0;
+            // scene.imageProcessingConfiguration.colorGradingEnabled = true;
+            // scene.imageProcessingConfiguration.colorCurvesEnabled = true;
+            // scene.imageProcessingConfiguration.isEnabled = true;
         }
 
         if (config.shadows) {

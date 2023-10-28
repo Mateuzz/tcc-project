@@ -1,0 +1,120 @@
+TCC
+
+	Terminar resumo
+	ortografia + revisao
+	conclusao
+	resultados (testes no computador da sala)
+		adicionar merged, fxaa, colors na sala
+		teste com newModels
+
+FORMATAÇÃO
+	unir lista em uma linha
+	adicionar negrito tabela (Fonte e titulo)
+	codigo fonte branco (ou como elemento textual)
+	transformar tabelas em graficos (com borda e tudo)
+	colocar parentes entre datas das fontes das tabelas
+RETIRAR
+	tirar imagens de codigo-fonte
+	remover certas referencias inuteis
+	sumario
+	
+ADICIONAR
+	Explicar todos os testes em anexo
+	colocar imagems para todos os teste em anexo
+	colocar imagem da gui do teste (incluindo bugs)
+	adicionar grafico em linha do fps
+	apresentar erros e bugs
+	falar quais testes foram excluidos e porque
+	uso de memoria ram e cpu nos testes (windows e linux) (grafico de linha)
+	Imagens de mais pos efeitos no ANEXO??
+TESTES a fazer
+	Teste 1 - pirate perto e longe pc 1
+	Teste 1 - pirate perto e longe pc 1 com color correction
+	Teste 2 - floresta longe pc 1 e 2
+	teste 2 - floresta perto pc 1 e 2
+	teste 3 - floresta sombra longe pc  1 e 2
+	teste 4 - floresta28 longe pc 1 e 2
+	teste 5 - floresta perto fxaa pc 1 e 2
+    teste 7 -  floresta  perto ssao pc2
+	teste 8 - floresta perto ssr pc2
+	teste 9 - floresta merged pc 1
+	teste 10 - skull ambient pc 1
+	teste 11 - desert 1 directional pc 2
+	teste 12 - desert 1 directional shadow pc 2
+	teste 13 - desert 4 point light + ambient pc 2
+	chrome - firefox - edge
+	uso de cpu e memoria - somente chrome
+
+Capturar imagens
+	gui dos testes
+	testes para cada biblioteca
+	efeitos de pos processing na internet
+anexo
+	funcionalidades presentes
+		tabela pbr
+		tabela efeitos
+		imagens dos efeitos
+	Informação dos testes de desempenho
+		tabela config testes
+		gui 
+	Testes realizados no firefox
+		tabelas
+	Testes Realizados no Edge
+		tabela
+	Cenas renderizadas
+		imagens para cada teste
+	Falhas de Renderização
+
+	link do github para meu projeto
+
+	
+PERGUNTAR FABRICIA
+	codigo fonte como elemento textual
+	
+
+obs (babylon com poucas luzes, claygl sem suporte a luzes glb + bug na sombras, three no chrome bugado com sombra, playcanvas sem specular, claygl com bug no desert)
+
+imagens dos efeito
+
+
+fog
+https://www.mcmiddleearth.com/community/media/movie-cave.6781/
+
+ssr
+https://docs.flaxengine.com/manual/graphics/post-effects/screen-space-reflections.html
+
+dof
+https://www.lightstalking.com/depth-of-field/
+
+anti aliasing
+https://wiki.batocera.org/anti-aliasing
+
+color curves
+https://www.researchgate.net/profile/Vaibhav-Patel-14/publication/321062066/figure/fig2/AS:612857204994048@1523127952038/Subjective-and-objective-comparison-with-other-tone-mapping-operators.png
+
+bloom
+https://docs.unrealengine.com/udk/Three/Bloom.html
+
+vignete
+https://docs.unrealengine.com/4.27/en-US/RenderingAndGraphics/PostProcessEffects/Vignette/
+
+ssao
+https://dev.epicgames.com/community/learning/tutorials/5PkM/unreal-engine-how-to-use-ssao-with-lumen
+
+motion
+https://motionarray.com/learn/premiere-pro/premiere-pro-motion-blur-tutorial/
+
+blur
+https://unsplash.com/pt-br/fotografias/efeito-bokeh-das-luzes-da-rua-a-noite-l1sqXJXBgd0
+
+chromatic
+https://optography.org/1420-2/
+
+lens
+https://help.shopmoment.com/article/181-superfish-distortion-correction
+
+tables
+https://doc.babylonjs.com/features/featuresDeepDive/postProcesses/usePostProcesses
+
+Posterize
+https://www.creativefabrica.com/pt/product/posterize-effect-photoshop-action/

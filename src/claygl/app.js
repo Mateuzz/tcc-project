@@ -162,7 +162,7 @@ function onStartScene(app) {
             })
         }
 
-        if (config.ssao || config.ssr || config.fxaa) {
+        if (config.ssao || config.ssr || config.fxaa || config.colors) {
             advancedRenderer = makeAdvancedRenderer();
         }
 
