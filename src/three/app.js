@@ -5,6 +5,8 @@ import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
 import { FXAAShader } from "three/examples/jsm/shaders/FXAAShader.js";
 import { ExposureShader } from "three/examples/jsm/shaders/ExposureShader.js"
+import { SSAOPass } from "three/examples/jsm/postprocessing/SSAOPass.js"
+import { SSRPass } from "three/examples/jsm/postprocessing/SSRPass.js"
 
 import { createSendInitDataButton, getConfiguration, makeConfigurationGui, makeProfilerController } from "testHelper.js";
 import { addGltf, initLoaders } from "./Loader.js";
@@ -42,7 +44,7 @@ function onStartScene() {
 
     camera.position.set(config.camerax, config.cameray, config.cameraz);
 
-    console.log("Date of scene beginning loading:", new Date());
+    console.log(new Date());
     defaultClock.begin("sceneLoadingTime");
 
     addGltf(modelPath, scene).then((gltf) => {
@@ -56,18 +58,7 @@ function onStartScene() {
             sceneLoadingTime: defaultClock.get("sceneLoadingTime"),
         }
 
-        console.table(initData);
-
         if (config.shadows) {
-            // const pointLight = new Three.PointLight(0xffffff, 5, 200, 0);
-            // pointLight.position.set(40, 40, 40);
-            // pointLight.castShadow = true;
-            // pointLight.shadow.camera.near = 0.5;
-            // pointLight.shadow.camera.far = 500;
-            // pointLight.shadow.mapSize.width = 512;
-            // pointLight.shadow.mapSize.height = 512;
-            // scene.add(pointLight);
-            //
             renderer.shadowMap.enabled = true;
             renderer.shadowMap.type = Three.PCFSoftShadowMap;
 
@@ -85,13 +76,6 @@ function onStartScene() {
             scene.add(dirLight);
 
             gltf.scene.traverse(node => {
-                // if (node.isLight) {
-                //     node.castShadow = true;
-                //     node.shadow.mapSize.width = 2048;
-                //     node.shadow.mapSize.height = 2048;
-                //     node.shadow.camera.near = 0.1;
-                //     node.shadow.camera.far = 1000;
-                // }
                 if (node.isMesh) {
                     node.castShadow = true;
                     node.receiveShadow = true;
@@ -115,7 +99,21 @@ function onStartScene() {
             composer.addPass(exposure);
         }
 
-        if (config.postProcessing) {
+        if (config.ssao) {
+            composer = composer || createComposer();
+
+            const ssao = new SSAOPass(scene, camera, width, height);
+            composer.addPass(ssao);
+        }
+
+        if (config.ssr) {
+            composer = composer || createComposer();
+
+            const ssr = new SSRPass({ renderer, scene, camera, width, height, isPerspectiveCamera: true, isBouncing: false });
+            composer.addPass(ssr);
+        }
+
+        if (config.fxaa) {
             composer = composer || createComposer();
 
             const fxaa = new ShaderPass(FXAAShader);
@@ -127,14 +125,11 @@ function onStartScene() {
             composer.addPass(fxaa);
         }
 
+
         if (config.scene.toLowerCase().includes("skull")) {
             const light = new Three.AmbientLight(0xffffff, 1);
             scene.add(light);
-            // const dirLight = new Three.DirectionalLight(0xffffff, 1);
-            // dirLight.rotation.set(0, 0.5, 1);
-            // scene.add(dirLight);
 
-            console.log("Animations:", gltf.animations);
             const mixer = new Three.AnimationMixer(gltf.scene);
             const run = mixer.clipAction(gltf.animations[0]);
             run.play();

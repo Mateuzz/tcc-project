@@ -38,17 +38,23 @@ export function makeConfigurationGui(callback) {
             <label for="scene">Name</label>
             <input type="text" name="scene" id="scene" autofocus required>
 
-            <label for="scene">Path</label>
+            <label for="path">Path</label>
             <input type="text" name="path" id="path" required>
 
-            <label for="scene">Profiling Time in seconds</label>
+            <label for="time">Profiling Time in seconds</label>
             <input type="number" name="time" id="time" value="30" required>
 
             <label for="many-lights">Many Lights</label>
             <input type="checkbox" name="config[]" id="many-lights" value="many-lights">
 
-            <label for="postprocessing">Post Processing</label>
-            <input type="checkbox" name="config[]" id="postprocessing" value="postprocessing">
+            <label for="fxaa">FXAA</label>
+            <input type="checkbox" name="config[]" id="fxaa" value="fxaa">
+
+            <label for="ssao">SSAO</label>
+            <input type="checkbox" name="config[]" id="ssao" value="ssao">
+
+            <label for="ssr">SSR</label>
+            <input type="checkbox" name="config[]" id="ssr" value="ssr">
 
             <label for="colors">Color Curves (like pc)</label>
             <input type="checkbox" name="config[]" id="colors" value="colors">
@@ -79,7 +85,9 @@ export function getConfiguration() {
         cameray : options.querySelector("#camera-y").value,
         cameraz : options.querySelector("#camera-z").value,
         manyLights : options.querySelector("#many-lights").checked,
-        postProcessing : options.querySelector("#postprocessing").checked,
+        fxaa : options.querySelector("#fxaa").checked,
+        ssao : options.querySelector("#ssao").checked,
+        ssr : options.querySelector("#ssr").checked,
         shadows : options.querySelector("#shadows").checked,
         colors : options.querySelector("#colors").checked,
     }
@@ -106,7 +114,6 @@ export function createSendProfilingDatabutton({ library, scene }, performanceDat
 
     button.innerText = "Post Profiler Data";
     button.onclick = () => {
-        console.log("Inside on click");
         postJson({ library, scene, performanceData });
         button.remove();
     };

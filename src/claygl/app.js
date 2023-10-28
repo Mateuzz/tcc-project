@@ -1,5 +1,5 @@
 import * as Clay from "claygl";
-// import ClayAdvancedRenderer from "claygl-advanced-renderer";
+import ClayAdvancedRenderer from "claygl-advanced-renderer";
 
 import {
     getConfiguration,
@@ -9,26 +9,20 @@ import {
 } from "testHelper";
 
 const canvas = document.getElementById("canvas");
-let firstLoop = true;
 let profilerController;
+let firstLoop = true;
+
 const testInfo = {
     library: "claygl",
 };
 
-/** @type {Clay.light.Directional} */
 let light;
-/** @type {Clay.camera.Perspective} */
 let camera;
-/** @type {Clay.OrbitControl} */
 let control;
-
-/** @type {HTMLButtonElement} */
 let button;
-
-/** @type {HTMLFormElement} */
 let options;
-
 let shadowMap;
+let advancedRenderer;
 
 Clay.application.create(canvas, {
     width: canvas.clientWidth,
@@ -45,59 +39,15 @@ Clay.application.create(canvas, {
     init(app) {
         app.renderer.antialias = false;
 
-        // this.advancedRenderer = new ClayAdvancedRenderer(app.renderer, app.scene, app.timeline, {
-        //     postEffect: {
-        //         enable: true,
-        //         FXAA: { enable: true },
-
-        //         bloom: { enable: false },
-        //         colorCorrection: { enable: false,
-        //             exposure: 1,
-        //         },
-        //     }
-        // });
-
-
-        // this.dRenderer = new Clay.deferred.Renderer({
-        //     shadowMapPass: this.shadowMap,
-        // })
-
-
         camera = app.createCamera([0, 2, 5], [0, 0, 0]);
         camera.near = 0.1;
         camera.far = 1000;
         camera.fov = 55;
 
-
-        // light = app.createDirectionalLight([0.1, -1, 0]);
-        // const l1 = app.createPointLight([2, 3, -4.5], 28, "#fff", 1);
-        // const l2 = app.createPointLight([1, 4.5, -1.1], 28, "#fff", 1);
-
-        // l1.castShadow = false;
-        // l2.castShadow = false;
-        // light.castShadow = false;
-        // light = app.createAmbientLight("#fff", 1);
-        // app.createPointLight([0, 10, 0], 4, "#00f", 0.5);
-        // app.createAmbientLight(null, 0.2);
-
         control = new Clay.plugin.OrbitControl({
             target: camera,
             domElement: app.container,
         });
-
-        // const model = app.loadModel("models/PirateFord/pirateFort.glb");
-        // model.then(result => {
-        //     // for (let i = 0; i < 10; ++i) {
-        //         //     const clone = app.cloneNode(result.rootNode);
-        //         //     const row = Math.floor(i / 3);
-        //         //     const col = i - row * 3;
-        //         //     clone.position.set(col * 3, 0, +8 - row * 3);
-        //         // }
-
-        //     // console.log("Finished loading");
-        // })
-
-        // return model;
     },
 
     loop(app) {
@@ -105,27 +55,26 @@ Clay.application.create(canvas, {
             firstLoop = false;
             defaultClock.end();
 
-            makeConfigurationGui(() => {
-                onStartScene(app);
-            });
+            makeConfigurationGui(() => { onStartScene(app); });
             button = document.querySelector(".init");
             options = document.querySelector(".options");
         }
 
         control.update(app.frameTime);
 
-        // this.advancedRenderer.render();
-        // this.dRenderer.render(app.renderer, app.scene, camera);
-
-        // shadowMap?.render(app.renderer, app.scene, camera);
-        app.renderer.render(app.scene, camera);
+        if (advancedRenderer) {
+            advancedRenderer.render();
+        } else {
+            shadowMap?.render(app.renderer, app.scene, camera);
+            app.renderer.render(app.scene, camera);
+        }
 
         profilerController?.update();
 
     },
 });
 
-function addLights(app) {
+function add28FlorestLights(app) {
   const positions = [
     [ 0, 47.5852554372089, 0 ],
     [ 54.43538583264144, 47.58525466918945, 0 ],
@@ -179,38 +128,63 @@ function onStartScene(app) {
         options.remove();
 
         const lights = [];
+        const sceneName = config.scene.toLowerCase();
 
-        if (config.manyLights) {
-            addLights(app);
-        } else if (config.scene.includes("pirate")) {
+        if (sceneName.includes("pirate")) {
             lights.push(
                 app.createPointLight([2, 3, -4.5], 28, "#fff", 1),
                 app.createPointLight([1, 4.5, -1.1], 28, "#fff", 1)
             );
             light = app.createDirectionalLight([0, 0, -1], "#fff", 1);
             lights.push(light);
-        } else if (config.scene.includes("florest")) {
-            light = app.createDirectionalLight([0.3, -0.5, -0.2], "#fff", 1);
-            if (config.shadows) {
+        } else if (sceneName.includes("florest")) {
+            if (config.manyLights) {
+                add28FlorestLights(app);
+            } else {
+                light = app.createDirectionalLight([0.3, -0.5, -0.2], "#fff", 1);
+                lights.push(light);
+            }
+        } else if (sceneName.includes("skull")) {
+            lights.push(app.createAmbientLight("#fff", 1));
+        }
+
+        function makeAdvancedRenderer() {
+            return new ClayAdvancedRenderer(app.renderer, app.scene, app.timeline, {
+                postEffect: {
+                    enable: true,
+                    bloom: { enable: false },
+                    shadow: { enable: config.shadows },
+                    FXAA: { enable: config.fxaa },
+                    colorCorrection: { enable: config.colors, exposure: 1, },
+                    screenSpaceAmbientOcclusion: { enable: config.ssao, },
+                    screenSpaceReflection: { enable: config.ssr, }
+                }
+            })
+        }
+
+        if (config.ssao || config.ssr || config.fxaa) {
+            advancedRenderer = makeAdvancedRenderer();
+        }
+
+        if (!config.shadows)  {
+            lights.forEach(light => light.castShadow = false);
+        }
+        else {
+            if (!advancedRenderer)
                 shadowMap = new Clay.prePass.ShadowMap({
                     softShadow: Clay.prePass.ShadowMap.PCF,
                 });
 
+            model.meshes.forEach(mesh => {
+                mesh.castShadow = true;
+                mesh.receiveShadow = true;
+            })
+
+            lights.forEach(light => {
                 light.castShadow = true;
                 light.shadowResolution = 512;
-                model.meshes.forEach(mesh => {
-                    mesh.castShadow = true;
-                    mesh.receiveShadow = true;
-                })
-            }
-            lights.push(light);
-        } else if (config.scene.toLowerCase().includes("skull")) {
-            // lights.push(app.createDirectionalLight([0, 0, 0,], "#fff", 1));
-            lights.push(app.createAmbientLight("#fff", 1));
+            });
         }
-
-        if (!config.shadows) 
-            lights.forEach(light => light.castShadow = false);
 
         const initData = {
             startupTime: defaultClock.get("startupTime"),
