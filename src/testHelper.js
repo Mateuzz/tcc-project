@@ -114,7 +114,7 @@ export function createSendProfilingDatabutton({ library, scene }, performanceDat
 
     button.innerText = "Post Profiler Data";
     button.onclick = () => {
-        postJson({ library, scene, performanceData });
+        postJson({ library, scene, browser: BROWSER_NAME, performanceData });
         button.remove();
     };
 

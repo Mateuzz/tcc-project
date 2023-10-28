@@ -74,12 +74,25 @@ PERGUNTAR FABRICIA
 
 obs (babylon com poucas luzes, claygl sem suporte a luzes glb + bug na sombras, three no chrome bugado com sombra, playcanvas sem specular, claygl com bug no desert)
 
+
+USO DE CPU
+pc
+pirate 15 10mb
+floresta 48 17.5mb
+sombra 55 35mb
+
+
+
+
+
+
+
+
 imagens dos efeito
 
 
 fog
 https://www.mcmiddleearth.com/community/media/movie-cave.6781/
-
 ssr
 https://docs.flaxengine.com/manual/graphics/post-effects/screen-space-reflections.html
 
