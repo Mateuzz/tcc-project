@@ -45,17 +45,6 @@ app.setCanvasResolution(pc.RESOLUTION_AUTO);
 
 window.addEventListener("resize", () => app.resizeCanvas());
 
-function promisify(thisArg, fn) {
-    return function result(...args) {
-        return new Promise((resolve, reject) => {
-            fn.call(thisArg, ...args, (err, asset) => {
-                if (err) reject(err)
-                else resolve(asset);
-            })
-        })
-    }
-}
-
 app.assets.loadFromUrl("models/OrbitCamera.js", "script", (err) => {
     camera = new pc.Entity("camera");
     camera.addComponent("camera", {
@@ -113,24 +102,7 @@ function onStartScene() {
 
         defaultClock.end();
 
-        if (/skull|desert/i.test(config.scene)) {
-            const light = new pc.Entity("dirlight");
-            light.addComponent("light", {
-                type: "directional",
-                color: new pc.Color(1, 1, 1),
-            });
-
-            app.root.addChild(light);
-        } else {
-            const lights = scene.findComponents("light");
-            lights.forEach(light => {
-                // light.shadowDistance = 160;
-                light.isStatic = true;
-                light.enabled = true;
-                light.castShadows = false;
-                // light.shadowBias = 0.1;
-            });
-        }
+        const sceneName = config.scene.toLowerCase();
 
         if (config.scene.toLowerCase().includes("skull")) {
             const animation = asset.resource.animations[0];
@@ -146,31 +118,68 @@ function onStartScene() {
             lightSettings.shadowType = pc.SHADOW_PCF3;
         }
 
-        if (config.shadows) {
-            enableShadows();
+        function makeDesertLights() {
+            const positions = [
+                [120, 30, 120],
+                [-120, 30, 120],
+                [-120, 30, -120],
+                [120, 30, -120],
+            ];
 
-            const light = new pc.Entity("dirlight"); 
-            light.addComponent("light", {
-                type: "directional",
-                color: new pc.Color(1, 1, 1),
-                isStatic: true,
-                castShadows: true,
-                shadowDistance: 500,
-                shadowBias: 0.1,
+            positions.forEach(pos => {
+                const lightComponent = newLight(pos, "omni").light
+                lightComponent.range = 1000;
+                lightComponent.intensity = 1;
             });
-            light.setPosition(150, 150, 150);
-            app.root.addChild(light);
+
+            app.scene.ambientLight = new pc.Color(0, 0, 0.3, 0);
         }
 
+        function newLight(pos, type = "directional", color = new pc.Color(1, 1, 1)) {
+            const light = new pc.Entity("light");
+            light.addComponent("light", {
+                type,
+                color,
+                isStatic: true,
+                castShadows: config.shadows,
+                shadowDistance: 500,
+                normalBias: 1,
+            });
+            light.setPosition(pos[0], pos[1], pos[2]);
+            app.root.addChild(light);
+            return light;
+        }
+
+        if (sceneName.includes("florest") && config.shadows) {
+            newLight([150, 150, 150]);
+        } else if (sceneName.includes("skull")) {
+            const animation = asset.resource.animations[0];
+            scene.addComponent("anim");
+            scene.anim.assignAnimation("Initial State", animation._resources[0]);
+
+            app.scene.ambientLight = new pc.Color(1, 1, 1);
+        } else if (sceneName.includes("desert")) {
+            if (config.manyLights) {
+                makeDesertLights();
+            } else {
+                newLight([150, 150, 150]);
+            }
+        } else {
+            const lights = scene.findComponents("light");
+            lights.forEach(light => {
+                light.isStatic = true;
+                light.enabled = true;
+                light.castShadows = false;
+            });
+        }
 
         const initData = {
             startupTime: defaultClock.get("startupTime"),
             sceneLoadingTime: defaultClock.get("sceneLoadingTime"),
         }
 
-        console.table(initData);
-
-        createSendInitDataButton(testInfo, initData);
+        // createSendInitDataButton(testInfo, initData);
+        testInfo.initData = initData;
         profilerController = makeProfilerController(testInfo);
 
         button.remove();

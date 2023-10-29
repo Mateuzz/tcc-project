@@ -2,4 +2,5 @@ tags
 dist
 node_modules
 oldModels
-new 
+new
+"models/desert.glb" 

@@ -12,13 +12,19 @@ export function makeStatsGui() {
 export function makeProfilerController({
     library,
     scene,
+    initData,
     handleHighFps = true,
     profilingTimeInSeconds = 5,
 }) {
     return new ProfilerController({
         profilingTimeInSeconds,
         onFinish: (performanceData) => {
-            createSendProfilingDatabutton({ library, scene }, performanceData);
+            postJson({ library, scene, browser: BROWSER_NAME, performanceData });
+            if (initData) {
+                postJson({ library, scene, ...initData });
+            }
+            const stats = document.querySelector(".config-stats");
+            stats.insertAdjacentHTML("beforeend", "<h3>Posted rendering data</h3>");
         },
         handleHighFps,
     });
@@ -26,7 +32,8 @@ export function makeProfilerController({
 
 export function makeConfigurationGui(callback) {
     const gui = document.createElement("div");
-    gui.classList.add("stats");
+    gui.classList.add("stats", "config-stats");
+    gui.id = "config-box";
     gui.innerHTML = `
     <form class="options flow" id="options">
         <fieldset class="flow">
@@ -46,17 +53,23 @@ export function makeConfigurationGui(callback) {
             <label for="scene">Name</label>
             <input type="text" name="scene" id="scene" autofocus required>
 
-            <label for="scene">Path</label>
+            <label for="path">Path</label>
             <input type="text" name="path" id="path" required>
 
-            <label for="scene">Profiling Time in seconds</label>
-            <input type="number" name="time" id="time" value="30" required>
+            <label for="time">Profiling Time in seconds</label>
+            <input type="number" name="time" id="time" value="12" required>
 
             <label for="many-lights">Many Lights</label>
             <input type="checkbox" name="config[]" id="many-lights" value="many-lights">
 
-            <label for="postprocessing">Post Processing</label>
-            <input type="checkbox" name="config[]" id="postprocessing" value="postprocessing">
+            <label for="fxaa">FXAA</label>
+            <input type="checkbox" name="config[]" id="fxaa" value="fxaa">
+
+            <label for="ssao">SSAO</label>
+            <input type="checkbox" name="config[]" id="ssao" value="ssao">
+
+            <label for="ssr">SSR</label>
+            <input type="checkbox" name="config[]" id="ssr" value="ssr">
 
             <label for="colors">Color Curves (like pc)</label>
             <input type="checkbox" name="config[]" id="colors" value="colors">
@@ -87,7 +100,9 @@ export function getConfiguration() {
         cameray : options.querySelector("#camera-y").value,
         cameraz : options.querySelector("#camera-z").value,
         manyLights : options.querySelector("#many-lights").checked,
-        postProcessing : options.querySelector("#postprocessing").checked,
+        fxaa : options.querySelector("#fxaa").checked,
+        ssao : options.querySelector("#ssao").checked,
+        ssr : options.querySelector("#ssr").checked,
         shadows : options.querySelector("#shadows").checked,
         colors : options.querySelector("#colors").checked,
     }
@@ -97,7 +112,7 @@ export function createSendInitDataButton(
     { library, scene },
     { startupTime, sceneLoadingTime }
 ) {
-    const stats = document.querySelector(".stats");
+    const stats = document.querySelector(".config-stats");
     const button = document.createElement("button");
     button.innerText = "Post initialization data";
     button.onclick = () => {
@@ -109,12 +124,12 @@ export function createSendInitDataButton(
 }
 
 export function createSendProfilingDatabutton({ library, scene }, performanceData) {
-    const stats = document.querySelector(".stats");
+    const stats = document.querySelector(".config-stats");
     const button = document.createElement("button");
 
     button.innerText = "Post rendering data";
     button.onclick = () => {
-        postJson({ library, scene, performanceData });
+        postJson({ library, scene, browser: BROWSER_NAME, performanceData });
         button.remove();
     };
 

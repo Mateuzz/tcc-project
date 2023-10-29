@@ -20,7 +20,7 @@ function connect(string $host, string $user, string $pass, string $db) : ?mysqli
     return $mysqli;
 }
 
-function addRenderingEntry(mysqli $db, string $library, string $scene, array $data) : bool {
+function addRenderingEntry(mysqli $db, string $library, string $scene, string $browser, array $data) : bool {
     $totalMs = $data["profilingTime"];
     $totalFrames = $data["totalFrames"];
     $fpsAvg = $data["fpsAVG"];
@@ -31,12 +31,12 @@ function addRenderingEntry(mysqli $db, string $library, string $scene, array $da
 
     $query = "insert into rendering 
               (library, scene, fps_low, fps_min_avg,
-              fps_max_avg, fps_truncated_avg, fps_avg, total_frames, total_ms)
-              values (?,?,?,?,?,?,?,?,?)";
+              fps_max_avg, fps_truncated_avg, fps_avg, total_frames, total_ms, browser)
+              values (?,?,?,?,?,?,?,?,?,?)";
 
     $stmt = $db->prepare($query);
-    $stmt->bind_param("sssssssss", $library, $scene, $fpsLow, $fpsMin, $fpsMax,     
-                      $fpsTruncatedAvg, $fpsAvg, $totalFrames, $totalMs);
+    $stmt->bind_param("ssssssssss", $library, $scene, $fpsLow, $fpsMin, $fpsMax,     
+                      $fpsTruncatedAvg, $fpsAvg, $totalFrames, $totalMs, $browser);
     return $stmt->execute();
 }
 
@@ -60,6 +60,7 @@ function addEntries(string $json) : string {
     $result = "";
     $library = $data["library"];
     $scene = $data["scene"];
+    $browser = $data["browser"];
 
     if (!empty($data["startupTime"])) {
         addStartupTimeEntry($db, $library, $scene, $data["startupTime"]);
@@ -70,7 +71,7 @@ function addEntries(string $json) : string {
         $result .= "Added scene loading time = {$data["sceneLoadingTime"]}\n";
     }
     if (!empty($data["performanceData"])) {
-        addRenderingEntry($db, $library, $scene, $data["performanceData"]);
+        addRenderingEntry($db, $library, $scene, $browser, $data["performanceData"]);
         $dataString = print_r($data, true);
         $result .= "Added rendering data = $dataString\n";
     }

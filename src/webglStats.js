@@ -11,6 +11,13 @@ export function prepareInfoFrame() {
     info.vertCount = 0;
 }
 
+export function statsGui() {
+    const div = document.createElement("div");
+    div.classList.add("stats", "webgl-stats");
+    document.documentElement.append(div);
+    return div;
+}
+
 export function renderStatsHtml() {
     return `
         <h2>Render Stats</h2>
@@ -25,7 +32,6 @@ export function initStats() {
     WebGL2RenderingContext.prototype.drawArrays = (function (oldFn) {
         return function (type, offset, count) {
             addCount(this, type, count);
-            this.info.hasNonInstaced = true;
             oldFn.call(this, type, offset, count);
         };
     }(WebGL2RenderingContext.prototype.drawArrays));
@@ -33,14 +39,12 @@ export function initStats() {
     WebGL2RenderingContext.prototype.drawArraysInstanced = (function (oldFn) {
         return function (mode, first, count, instanceCount) {
             addCount(this, mode, count);
-            this.info.hasInstanced = true;
             oldFn.call(this, mode, first, count, instanceCount);
         };
     })(WebGL2RenderingContext.prototype.drawArraysInstanced);
 
     WebGL2RenderingContext.prototype.drawElements = (function (oldFn) {
         return function (type, count, indexType, offset) {
-            this.info.hasNonInstaced = true;
             addCount(this, type, count);
             oldFn.call(this, type, count, indexType, offset);
         };
@@ -74,7 +78,6 @@ export function initStats() {
     WebGLRenderingContext.prototype.drawArrays = (function (oldFn) {
         return function (type, offset, count) {
             addCount(this, type, count);
-            this.info.hasNonInstaced = true;
             oldFn.call(this, type, offset, count);
         };
     }(WebGLRenderingContext.prototype.drawArrays));
@@ -89,7 +92,6 @@ export function initStats() {
 
     WebGLRenderingContext.prototype.drawElements = (function (oldFn) {
         return function (type, count, indexType, offset) {
-            this.info.hasNonInstaced = true;
             addCount(this, type, count);
             oldFn.call(this, type, count, indexType, offset);
         };

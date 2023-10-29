@@ -1,4 +1,20 @@
+jirate_perto
+	
+pirate_longe
 
+floresta_perto
+floresta_longe
+
+floresta longe sombra
+floresta longe 28 luzes
+floresta longe merged
+
+floresta perto fxaa
+floresta longe colors
+
+skull perto
+
+desert field
 
 10662 objetos
 84.148.766 triangulos
@@ -196,10 +212,11 @@ GERAL
     8 - Anexo com codigo fonte e link do github
 
 ## Modelos 
-	Skull: 1126158 triangles -> Lambert e phong material (apenas reflexao e specular)
+Skull: 1126158 triangles -> Lambert e phong material (apenas reflexao e specular)
     Florest: 2076694 triangles -> 1 texturas x256 (1228 meshes)
     FlorestMerged: 2076694 triangles -> 1 texturas x256 (1 meshe)
     Pirate Ford: 90334 triangles -> 4 1024x 1 512x  (2 fontes de luzes ponto + 1 direcional) (7)
+   
 
 ## Fontes carbon
     playcanvas
