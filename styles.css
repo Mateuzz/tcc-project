@@ -39,6 +39,11 @@ input {
     top: 0;
 }
 
+.webgl-stats {
+    right: 0;
+    bottom: 0;
+}
+
 .stats button {
     font-size: 1.1em;
     background-color: red;

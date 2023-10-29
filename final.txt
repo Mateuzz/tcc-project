@@ -1,3 +1,5 @@
+desert = 42074389 triangles 10662 objetos
+
 TCC
 
 	Terminar resumo

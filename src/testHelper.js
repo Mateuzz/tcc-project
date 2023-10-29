@@ -4,13 +4,19 @@ import { postJson } from "fetch";
 export function makeProfilerController({
     library,
     scene,
+    initData,
     handleHighFps = true,
     profilingTimeInSeconds = 5,
 }) {
     return new ProfilerController({
         profilingTimeInSeconds,
         onFinish: (performanceData) => {
-            createSendProfilingDatabutton({ library, scene }, performanceData);
+            postJson({ library, scene, browser: BROWSER_NAME, performanceData });
+            if (initData) {
+                postJson({ library, scene, ...initData });
+            }
+            const stats = document.querySelector(".config-stats");
+            stats.insertAdjacentHTML("beforeend", "<h3>Posted rendering data</h3>");
         },
         handleHighFps,
     });
@@ -18,7 +24,8 @@ export function makeProfilerController({
 
 export function makeConfigurationGui(callback) {
     const gui = document.createElement("div");
-    gui.classList.add("stats");
+    gui.classList.add("stats", "config-stats");
+    gui.id = "config-box";
     gui.innerHTML = `
     <form class="options flow" id="options">
         <fieldset class="flow">
@@ -42,7 +49,7 @@ export function makeConfigurationGui(callback) {
             <input type="text" name="path" id="path" required>
 
             <label for="time">Profiling Time in seconds</label>
-            <input type="number" name="time" id="time" value="30" required>
+            <input type="number" name="time" id="time" value="12" required>
 
             <label for="many-lights">Many Lights</label>
             <input type="checkbox" name="config[]" id="many-lights" value="many-lights">
@@ -97,7 +104,7 @@ export function createSendInitDataButton(
     { library, scene },
     { startupTime, sceneLoadingTime }
 ) {
-    const stats = document.querySelector(".stats");
+    const stats = document.querySelector(".config-stats");
     const button = document.createElement("button");
     button.innerText = "Post initialization Data";
     button.onclick = () => {
@@ -109,7 +116,7 @@ export function createSendInitDataButton(
 }
 
 export function createSendProfilingDatabutton({ library, scene }, performanceData) {
-    const stats = document.querySelector(".stats");
+    const stats = document.querySelector(".config-stats");
     const button = document.createElement("button");
 
     button.innerText = "Post Profiler Data";

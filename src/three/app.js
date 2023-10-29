@@ -58,22 +58,9 @@ function onStartScene() {
             sceneLoadingTime: defaultClock.get("sceneLoadingTime"),
         }
 
-        if (config.shadows) {
+        function enableShadows() {
             renderer.shadowMap.enabled = true;
             renderer.shadowMap.type = Three.PCFSoftShadowMap;
-
-            const dirLight = new Three.DirectionalLight(0xffffff, 1);
-            dirLight.castShadow = true;
-            dirLight.shadow.mapSize.width = 512;
-            dirLight.shadow.mapSize.height = 512;
-            dirLight.shadow.camera.near = 1;
-            dirLight.shadow.camera.far = 600;
-            dirLight.shadow.camera.left = -150;
-            dirLight.shadow.camera.right = 150;
-            dirLight.shadow.camera.top = 150;
-            dirLight.shadow.camera.bottom = -150;
-            dirLight.position.set(150, 150, 150);
-            scene.add(dirLight);
 
             gltf.scene.traverse(node => {
                 if (node.isMesh) {
@@ -81,7 +68,75 @@ function onStartScene() {
                     node.receiveShadow = true;
                 }
             });
+        }
 
+        function lightConfigShadow(light, d) {
+            light.castShadow = true;
+            light.shadow.mapSize.width = 512;
+            light.shadow.mapSize.height = 512;
+            light.shadow.camera.near = 1;
+            light.shadow.camera.far = 1000;
+            light.shadow.normalBias = 1;
+
+            if (d) {
+                light.shadow.camera.top = d;
+                light.shadow.camera.right = d;
+                light.shadow.camera.left = -d;
+                light.shadow.camera.bottom = -d;
+            }
+        }
+
+        if (config.shadows) 
+            enableShadows();
+
+        function makeDesertLights() {
+            const positions = [
+                [120, 30, 120],
+                [-120, 30, 120],
+                [-120, 30, -120],
+                [120, 30, -120],
+            ];
+
+            positions.forEach(pos => {
+                const light = new Three.PointLight(0xffffff, 1, 1000, 0);
+                light.position.set(...pos);
+                if (config.shadows)
+                    lightConfigShadow(light);
+                scene.add(light);
+            })
+
+            const ambient = new Three.AmbientLight(0x0000ff, 1);
+            scene.add(ambient);
+        }
+
+        const sceneName = config.scene.toLowerCase();
+
+        if (sceneName.includes("florest")) {
+            if (config.shadows) {
+                const dir = new Three.DirectionalLight(0xffffff, 1);
+                dir.position.set(150, 150, 150);
+                lightConfigShadow(dir, 150);
+                scene.add(dir);
+            }
+        } else if (sceneName.includes("skull")) {
+            const light = new Three.AmbientLight(0xffffff, 1);
+            scene.add(light);
+
+            const mixer = new Three.AnimationMixer(gltf.scene);
+            const run = mixer.clipAction(gltf.animations[0]);
+            run.play();
+
+            mixers.push(mixer);
+        } else if (sceneName.includes("desert")) {
+            if (config.manyLights) {
+                makeDesertLights();
+            } else {
+                const dir = new Three.DirectionalLight(0xffffff, 1);
+                dir.position.set(150, 150, 150);
+                scene.add(dir);
+                if (config.shadows) 
+                    lightConfigShadow(dir, 150);
+            }
         }
 
         function createComposer() {
@@ -125,19 +180,9 @@ function onStartScene() {
             composer.addPass(fxaa);
         }
 
+        testInfo.initData = initData;
 
-        if (config.scene.toLowerCase().includes("skull")) {
-            const light = new Three.AmbientLight(0xffffff, 1);
-            scene.add(light);
-
-            const mixer = new Three.AnimationMixer(gltf.scene);
-            const run = mixer.clipAction(gltf.animations[0]);
-            run.play();
-
-            mixers.push(mixer);
-        }
-
-        createSendInitDataButton(testInfo, initData);
+        // createSendInitDataButton(testInfo, initData);
         profilerController = makeProfilerController(testInfo);
 
         loop();

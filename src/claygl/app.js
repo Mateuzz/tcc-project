@@ -130,6 +130,22 @@ function onStartScene(app) {
         const lights = [];
         const sceneName = config.scene.toLowerCase();
 
+        function makeDesertLights() {
+            const positions = [
+                [120, 30, 120],
+                [-120, 30, 120],
+                [-120, 30, -120],
+                [120, 30, -120],
+            ];
+
+            positions.forEach(pos => {
+                const light = app.createPointLight(pos, 1000, "#fff", 1);
+                lights.push(light);
+            })
+
+            lights.push(app.createAmbientLight("#00f", 1));
+        }
+
         if (sceneName.includes("pirate")) {
             lights.push(
                 app.createPointLight([2, 3, -4.5], 28, "#fff", 1),
@@ -146,6 +162,12 @@ function onStartScene(app) {
             }
         } else if (sceneName.includes("skull")) {
             lights.push(app.createAmbientLight("#fff", 1));
+        } else if (sceneName.includes("desert")) {
+            if (config.manyLights) {
+                makeDesertLights();
+            } else {
+                lights.push(app.createDirectionalLight([0, 0, 1], "#fff", 1));
+            }
         }
 
         function makeAdvancedRenderer() {
@@ -191,9 +213,8 @@ function onStartScene(app) {
             sceneLoadingTime: defaultClock.get("sceneLoadingTime"),
         };
 
-        console.table(initData);
-
-        createSendInitDataButton(testInfo, initData);
+        // createSendInitDataButton(testInfo, initData);
+        testInfo.initData = initData;
         profilerController = makeProfilerController(testInfo);
     }).catch(err => {
         alert(err);
