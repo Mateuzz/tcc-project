@@ -107,6 +107,48 @@ claygl
 	sombra 100 20
 	all 100 29
 	skull 20 24
+    
+
+USO DE CPU (windows)
+
+pc
+pirate 5 20
+floresta 20 37
+sombra 30 52
+28 15 36
+skull 5 40
+desert  100 100
+
+
+three
+pirate 5 6.6mb
+pirate_colors 5  8mb
+floresta 20 20mb	
+sombra 30 33mb
+28 20 30mb
+all 45 36mb
+skull fazer 5 24mb
+desert 100 42mb
+
+baby
+pirate 5 16
+pirate colors 5 18
+all 35 48
+floresta 20 45
+sombra 45 50
+28 20 67
+skull 5 27
+desert 100 126
+
+claygl
+pirate 5 15
+pirate_colors 5  28mb
+floresta 30 28
+sombra 45 30mb
+28 30 33mb
+all 90 37mb
+skull  5 22mb
+desert 100 35mb
 
 
 
