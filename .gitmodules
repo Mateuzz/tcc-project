@@ -1,0 +1,3 @@
+[submodule "chart-generator"]
+	path = chart-generator
+	url = git@github.com:Mateuzz/chart-generator.git
