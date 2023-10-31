@@ -77,12 +77,11 @@ PERGUNTAR FABRICIA
 obs (babylon com poucas luzes, claygl sem suporte a luzes glb + bug na sombras, three no chrome bugado com sombra, playcanvas sem specular, claygl com bug no desert)
 
 
-USO DE CPU
+USO DE CPU (linux)
 pc
-pirate 15 10mb
-floresta 48 17.5mb
-sombra 55 35mb
-
+three
+babylon
+claygl
 
 
 
@@ -133,3 +132,51 @@ https://doc.babylonjs.com/features/featuresDeepDive/postProcesses/usePostProcess
 
 Posterize
 https://www.creativefabrica.com/pt/product/posterize-effect-photoshop-action/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+PBR
+
+
+Albedo https://visao.ca/what-are-pbr-materials/
+Metalness https://www.a23d.co/blog/different-maps-in-pbr-textures/
+Rough / Gloss https://www.a23d.co/blog/different-maps-in-pbr-textures/
+Refraction https://www.blender3darchitect.com/textures/index-of-refraction-list-values-for-materials/
+Environment/Reflection https://www.sidefx.com/docs/houdini/render/envmaps.html
+Normal  https://www.a23d.co/blog/different-maps-in-pbr-textures/
+  + displacement https://www.cgdirector.com/normal-vs-displacement-vs-bump-maps/
+Emissive https://docs.unrealengine.com/4.26/en-US/RenderingAndGraphics/Materials/HowTo/EmissiveGlow/
+Opacity https://www.a23d.co/blog/different-maps-in-pbr-textures/
+LightMap  https://developer.unigine.com/devlog/20201124-unigine-2.13
+Detail https://doc.babylonjs.com/features/featuresDeepDive/materials/using/moreMaterials
+Iridescence https://www.artstation.com/artwork/0XqxDK
+Anisotropic https://google.github.io/filament/Filament.html#materialsystem/anisotropicmodel
+Sheen https://help.sketchfab.com/hc/en-us/articles/4402392764561-Sheen
+Specular
+	1 https://www.rayceeartist.com/post/specular-light
+	2 http://www.c-jump.com/bcc/common/Talk3/OpenGL/Wk06_light/Wk06_light.html
+Transmission https://proauto.com.br/como-limpar-vidro-do-carro/
+ClearCoat https://www.kitware.com/pbr-journey-part-3-clear-coat-model-with-vtk/
+Paralax https://doc.babylonjs.com/features/featuresDeepDive/materials/using/parallaxMapping
+Decal https://cgaxis.com/cgaxis_preview/Physical_6_Decals/
+Ambient Occlusion https://www.a23d.co/blog/different-maps-in-pbr-textures/
+Displacement https://www.cgdirector.com/normal-vs-displacement-vs-bump-maps/
+Attenuation no image
+Thickness https://www.a23d.co/product/thick-liquid-162/
+
+
+
+
+
