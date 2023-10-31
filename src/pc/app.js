@@ -104,7 +104,14 @@ function onStartScene() {
 
         const sceneName = config.scene.toLowerCase();
 
-        if (config.shadows) {
+        if (config.scene.toLowerCase().includes("skull")) {
+            const animation = asset.resource.animations[0];
+            scene.addComponent("anim");
+            scene.anim.assignAnimation("Initial State", animation._resources[0]);
+        }
+
+
+        function enableShadows() {
             const lightSettings = app.scene.lighting;
             lightSettings.shadowsEnabled = true;
             lightSettings.shadowAtlasResolution = 512;

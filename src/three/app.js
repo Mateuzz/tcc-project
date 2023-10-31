@@ -8,8 +8,9 @@ import { ExposureShader } from "three/examples/jsm/shaders/ExposureShader.js"
 import { SSAOPass } from "three/examples/jsm/postprocessing/SSAOPass.js"
 import { SSRPass } from "three/examples/jsm/postprocessing/SSRPass.js"
 
-import { createSendInitDataButton, getConfiguration, makeConfigurationGui, makeProfilerController } from "testHelper.js";
+import { createSendInitDataButton, getConfiguration, makeConfigurationGui, makeProfilerController, makeStatsGui } from "testHelper.js";
 import { addGltf, initLoaders } from "./Loader.js";
+import {getInfo, initStats, prepareInfoFrame, renderStatsHtml} from "webglStats.js";
 
 let scene;
 let renderer;
@@ -21,6 +22,8 @@ let width;
 let height;
 let composer;
 
+initStats();
+
 startScene();
 initLoaders(renderer);
 defaultClock.end();
@@ -28,6 +31,10 @@ defaultClock.end();
 const testInfo = {
     library: "Three",
 };
+
+// const statsGui = makeStatsGui();
+// const info = getInfo();
+// initStats();
 
 makeConfigurationGui(onStartScene);
 const button = document.querySelector(".init");
@@ -217,6 +224,8 @@ function startScene() {
 function loop() {
     const delta = clock.getDelta();
 
+    // prepareInfoFrame();
+
     for (const mixer of mixers)
         mixer.update(delta);
 
@@ -228,6 +237,8 @@ function loop() {
         renderer.render(scene, camera);
 
     profilerController.update();
+
+    // statsGui.innerHTML = renderStatsHtml();
 
     requestAnimationFrame(loop);
 }
