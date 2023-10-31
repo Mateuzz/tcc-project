@@ -142,7 +142,7 @@ function onStartScene() {
                 dir.position.set(150, 150, 150);
                 scene.add(dir);
                 if (config.shadows) 
-                    lightConfigShadow(dir, 150);
+                    lightConfigShadow(dir, 230);
             }
         }
 

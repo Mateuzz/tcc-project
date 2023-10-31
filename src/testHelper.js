@@ -19,7 +19,7 @@ export function makeProfilerController({
     return new ProfilerController({
         profilingTimeInSeconds,
         onFinish: (performanceData) => {
-            postJson({ library, scene, browser: BROWSER_NAME, performanceData });
+            postJson({ library, scene, browser: window.BROWSER_NAME, performanceData });
             if (initData) {
                 postJson({ library, scene, ...initData });
             }

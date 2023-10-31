@@ -35,7 +35,7 @@ function addRenderingEntry(mysqli $db, string $library, string $scene, string $b
               values (?,?,?,?,?,?,?,?,?,?)";
 
     $stmt = $db->prepare($query);
-    $stmt->bind_param("ssssssssss", $library, $scene, $fpsLow, $fpsMin, $fpsMax,     
+    $stmt->bind_param("ssdddddiis", $library, $scene, $fpsLow, $fpsMin, $fpsMax,     
                       $fpsTruncatedAvg, $fpsAvg, $totalFrames, $totalMs, $browser);
     return $stmt->execute();
 }
