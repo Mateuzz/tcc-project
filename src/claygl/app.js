@@ -213,8 +213,8 @@ function onStartScene(app) {
             sceneLoadingTime: defaultClock.get("sceneLoadingTime"),
         };
 
-        // createSendInitDataButton(testInfo, initData);
-        testInfo.initData = initData;
+        createSendInitDataButton(testInfo, initData);
+        // testInfo.initData = initData;
         profilerController = makeProfilerController(testInfo);
     }).catch(err => {
         alert(err);

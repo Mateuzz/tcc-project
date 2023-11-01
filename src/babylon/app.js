@@ -141,8 +141,8 @@ function onStartScene() {
             })
         }
 
-        // createSendInitDataButton(testInfo, initData);
-        testInfo.initData = initData;
+        createSendInitDataButton(testInfo, initData);
+        // testInfo.initData = initData;
         profilerController = makeProfilerController(testInfo);
 
         engine.runRenderLoop(() => {
