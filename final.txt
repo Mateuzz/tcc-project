@@ -1,4 +1,12 @@
 
+## Modelos 
+Skull: 1126158 triangles -> Lambert e phong material (apenas reflexao e specular)
+    Florest: 2076694 triangles -> 1 texturas x256 (1228 meshes)
+    FlorestMerged: 2076694 triangles -> 1 texturas x256 (1 meshe)
+    Pirate Ford: 90334 triangles -> 4 1024x 1 512x  (2 fontes de luzes ponto + 1 direcional) (7)
+    desert = 42074389 triangles 10662 objetos
+
+
 TCC
 
 	Terminar resumo
@@ -36,15 +44,33 @@ TESTES a fazer
 	teste 3 - floresta sombra longe pc  1 e 2
 	teste 4 - floresta28 longe pc 1 e 2
 	teste 5 - floresta perto fxaa pc 1 e 2
-    teste 7 -  floresta  perto ssao pc2
-	teste 8 - floresta perto ssr pc2
-	teste 9 - floresta merged pc 1
-	teste 10 - skull ambient pc 1
-	teste 11 - desert 1 directional pc 2
-	teste 12 - desert 1 directional shadow pc 2
-	teste 13 - desert 4 point light + ambient pc 2
+    teste 6 -  floresta  perto ssao pc2
+	teste 7 - floresta perto ssr pc2
+	teste 8 - floresta merged pc 1
+	teste 9 - skull ambient pc 1
+	teste 10 - desert 1 directional pc 2
+	teste 11 - desert 1 directional shadow pc 2
+	teste 12 - desert 4 point light + ambient pc 2
 	chrome - firefox - edge
 	uso de cpu e memoria - somente chrome
+
+IMAGENS
+    pirate_perto pc 1 e 2
+    pirate_longe pc 1 e 2
+    pirate_perto_colors pc 1 e 2
+    pirate_longe_colors pc 1 e 2
+    floresta_perto pc 1 e 2
+    floresta_longe pc 1 e 2
+    floresta_sombra pc 1 e 2
+    floresta28 pc 1 e 2
+    floresta_fxaa e floresta_ssao pc 2
+    floresta_all pc 2
+    floresta_merged 1 e  2
+    skull pc 1 e 2
+    desert 1 pc 2
+    desert4 e desert_sombra pc2
+    
+
 
 Capturar imagens
 	gui dos testes
@@ -79,9 +105,11 @@ obs (babylon com poucas luzes, claygl sem suporte a luzes glb + bug na sombras, 
 USO DE CPU (linux)
 pc
 	pirate 15 12mb
+    pirate _colors void
 	floresta 45 41mb
 	merged 20 11mb
 	sombra 50 38mb
+    all void
 	skull 20 11mb
 three
 	pirate 15 6mb
@@ -113,9 +141,11 @@ USO DE CPU (windows)
 
 pc
 pirate 5 20
+VOID
 floresta 20 37
 sombra 30 52
 28 15 36
+VOID
 skull 5 40
 desert  100 100
 
@@ -242,8 +272,6 @@ Ambient Occlusion https://www.a23d.co/blog/different-maps-in-pbr-textures/
 Displacement https://www.cgdirector.com/normal-vs-displacement-vs-bump-maps/
 Attenuation no image
 Thickness https://www.a23d.co/product/thick-liquid-162/
-
-
 
 
 

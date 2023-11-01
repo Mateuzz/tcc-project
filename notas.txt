@@ -171,13 +171,6 @@ GERAL
     6 - Corrigir Ortografia
     7 - Conclusao
     8 - Anexo com codigo fonte e link do github
-
-## Modelos 
-Skull: 1126158 triangles -> Lambert e phong material (apenas reflexao e specular)
-    Florest: 2076694 triangles -> 1 texturas x256 (1228 meshes)
-    FlorestMerged: 2076694 triangles -> 1 texturas x256 (1 meshe)
-    Pirate Ford: 90334 triangles -> 4 1024x 1 512x  (2 fontes de luzes ponto + 1 direcional) (7)
-    desert = 42074389 triangles 10662 objetos
    
 
 ## Fontes carbon
