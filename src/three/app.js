@@ -187,9 +187,9 @@ function onStartScene() {
             composer.addPass(fxaa);
         }
 
-        testInfo.initData = initData;
+        // testInfo.initData = initData;
 
-        // createSendInitDataButton(testInfo, initData);
+        createSendInitDataButton(testInfo, initData);
         profilerController = makeProfilerController(testInfo);
 
         loop();
