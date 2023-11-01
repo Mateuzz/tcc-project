@@ -1,4 +1,3 @@
-desert = 42074389 triangles 10662 objetos
 
 TCC
 
@@ -77,6 +76,39 @@ PERGUNTAR FABRICIA
 obs (babylon com poucas luzes, claygl sem suporte a luzes glb + bug na sombras, three no chrome bugado com sombra, playcanvas sem specular, claygl com bug no desert)
 
 
+USO DE CPU (linux)
+pc
+	pirate 15 12mb
+	floresta 45 41mb
+	merged 20 11mb
+	sombra 50 38mb
+	skull 20 11mb
+three
+	pirate 15 6mb
+	pirate colors 15 10mb
+	floresta 50 20mb	
+	merged 15 6mb
+	sombra 50 8
+	all 50 25mb
+	skull 15 8mb
+babylon
+	pirate 15 15
+	pirate colors 15 25
+	floresta 50 45
+	merged 15 16
+	sombra 55 30
+	all 50 48
+	skull 20 26mb
+claygl
+	pirate 20 6
+	pirate colors 30 13
+	floresta 50 17	
+	merged 15 8
+	sombra 100 20
+	all 100 29
+	skull 20 24
+    
+
 USO DE CPU (windows)
 
 pc
@@ -117,7 +149,6 @@ sombra 45 30mb
 all 90 37mb
 skull  5 22mb
 desert 100 35mb
-
 
 
 
@@ -168,3 +199,51 @@ https://doc.babylonjs.com/features/featuresDeepDive/postProcesses/usePostProcess
 
 Posterize
 https://www.creativefabrica.com/pt/product/posterize-effect-photoshop-action/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+PBR
+
+
+Albedo https://visao.ca/what-are-pbr-materials/
+Metalness https://www.a23d.co/blog/different-maps-in-pbr-textures/
+Rough / Gloss https://www.a23d.co/blog/different-maps-in-pbr-textures/
+Refraction https://www.blender3darchitect.com/textures/index-of-refraction-list-values-for-materials/
+Environment/Reflection https://www.sidefx.com/docs/houdini/render/envmaps.html
+Normal  https://www.a23d.co/blog/different-maps-in-pbr-textures/
+  + displacement https://www.cgdirector.com/normal-vs-displacement-vs-bump-maps/
+Emissive https://docs.unrealengine.com/4.26/en-US/RenderingAndGraphics/Materials/HowTo/EmissiveGlow/
+Opacity https://www.a23d.co/blog/different-maps-in-pbr-textures/
+LightMap  https://developer.unigine.com/devlog/20201124-unigine-2.13
+Detail https://doc.babylonjs.com/features/featuresDeepDive/materials/using/moreMaterials
+Iridescence https://www.artstation.com/artwork/0XqxDK
+Anisotropic https://google.github.io/filament/Filament.html#materialsystem/anisotropicmodel
+Sheen https://help.sketchfab.com/hc/en-us/articles/4402392764561-Sheen
+Specular
+	1 https://www.rayceeartist.com/post/specular-light
+	2 http://www.c-jump.com/bcc/common/Talk3/OpenGL/Wk06_light/Wk06_light.html
+Transmission https://proauto.com.br/como-limpar-vidro-do-carro/
+ClearCoat https://www.kitware.com/pbr-journey-part-3-clear-coat-model-with-vtk/
+Paralax https://doc.babylonjs.com/features/featuresDeepDive/materials/using/parallaxMapping
+Decal https://cgaxis.com/cgaxis_preview/Physical_6_Decals/
+Ambient Occlusion https://www.a23d.co/blog/different-maps-in-pbr-textures/
+Displacement https://www.cgdirector.com/normal-vs-displacement-vs-bump-maps/
+Attenuation no image
+Thickness https://www.a23d.co/product/thick-liquid-162/
+
+
+
+
+
