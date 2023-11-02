@@ -179,6 +179,7 @@ function onStartScene() {
         }
 
         createSendInitDataButton(testInfo, initData);
+        console.table(initData);
         // testInfo.initData = initData;
         profilerController = makeProfilerController(testInfo);
 
