@@ -146,7 +146,7 @@ floresta 20 37
 sombra 30 52
 28 15 36
 VOID
-skull 5 40
+merged - 3 11
 desert  100 100
 
 
@@ -157,17 +157,17 @@ floresta 20 20mb
 sombra 30 33mb
 28 20 30mb
 all 45 36mb
-skull fazer 5 24mb
+merged - 3 5
 desert 100 42mb
 
 baby
 pirate 5 16
 pirate colors 5 18
-all 35 48
 floresta 20 45
 sombra 45 50
-28 20 67
-skull 5 27
+28 VOID
+all 35 48
+merged - 3 14
 desert 100 126
 
 claygl
@@ -177,7 +177,7 @@ floresta 30 28
 sombra 45 30mb
 28 30 33mb
 all 90 37mb
-skull  5 22mb
+merged - 3 6
 desert 100 35mb
 
 
