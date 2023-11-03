@@ -1,0 +1,462 @@
+jirate_perto
+	
+pirate_longe
+
+floresta_perto
+floresta_longe
+
+floresta longe sombra
+floresta longe 28 luzes
+floresta longe merged
+
+floresta perto fxaa
+floresta longe colors
+
+skull perto
+
+desert field
+
+10662 objetos
+84.148.766 triangulos
+
+
+
+
+
+
+https://developer.download.nvidia.com/SDK/10/direct3d/Source/VarianceShadowMapping/Doc/VarianceShadowMapping.pdf
+https://developer.nvidia.com/gpugems/gpugems/part-ii-lighting-and-shadows/chapter-11-shadow-map-antialiasing
+https://doc.babylonjs.com/features/featuresDeepDive/lights/shadows
+
+
+explicar o que é draw call.
+
+EXPLICAR METODOLOGIA
+    tecnicas de otimizacao (instanced, merging, lod e basis testures compression)
+	propriedades dos materiais pbr, efeitos de pos processamento e filtros de sombras disponiveis, tecnicas de otimizacao, formatos de importacao , e por fim funcionalidades extras
+	animacao, particulas, lightmaps gerar, renderizacao de texto e gui, fisica, realidade virtual, editor de cena, visualizador / depurador, exportador, webgl2, path tracing, navmesh
+	
+    audio, física, realidade virtual, depurador de cena, exportador de cena, suporte a webgl2, navegação de meshes
+
+
+TODO 
+    TESTES
+        pirate longe    pirate_longe
+        pirate perto     pirate_perto
+        florest perto    floresta_perto
+        floresta longe   floreta_longe
+        floresta merged distancia media (merged 1 dir light) floresta_merged 
+        floresta com 28 luzes distancia media - baby       floresta_28 (no baby)
+        floresta dark + directional light + sombra      floresta_sombra 
+        floresta com fxaa  - pc         floresta_fxaa (no pc)
+        skull animation         skull
+
+        + uso de memoria e cpu carregamento
+
+	
+
+
+    REFERENCIAL TEORICO
+        fisica, realidade virtual, webgl2, navegação de meshes
+
+        unity
+            ambient occlusion
+            anti-aliasing
+            bloom
+            chromatic aberration
+            color adjustment
+            color curves
+            fog
+            depth of field
+            lens distortion
+            motion blur
+            screen space reflection
+            tonemapping
+            vignette
+
+            nao temm ssao 
+            nem lookup tables
+
+            fog (); anti-aliasing (); color curves (); depth of field (); chromatic aberration(); bloom (); motion blur (); tonemapping (); vignette (); ssao (); ssr (); color curves ();
+            lens distortion ();
+
+
+Fkog
+Anti-Aliasing (FXAA)
+Anti-Aliasing (MSAA)
+Anti-Aliasing (SMAA)
+Anti-Aliasing (TAA)
+Color Curves
+Exposure
+Bloom
+Vignette
+Depth of Field
+SSAO
+SSR
+Tone Mapping
+Blur
+Motion Blur
+Chromatic Aberration
+Lens Distortion
+Lookup Tables
+
+    CONCLUSOES
+
+    ANEXO
+        explicacao de todos os addons de cada biblioteca
+        link do codigo fonte
+
+
+
+
+PirateFord/pirateFort.glb
+floresta/Demo_01.glb
+Skull.glb
+
+PirateFord
+PirateFordPerto
+Floresta
+Floresta com mais luzes
+
+Cenas
+    # Simples -> pirate Ford (ambient light)
+    # Cena Complexa (floresta) (ambient light)
+        2 -> ambient light + directional light + 5-10 point light
+        3 -> pos processing (fog, motion blur, bloom, bright contrast, fxaa (anti aliasing), hue saturation, sepia, vignetting)
+    # Teste de Animação (skull) => (1 milhao)
+    # teste de sistema de particulas
+
+
+Metricas 
+    dev tools (memoria ram, memoria ram enquanto carrega, cpu, cpu enquanto carrega)
+    tempo de inicializacao
+    fps
+    - tempo medio (100% truncado, 95% truncado, 99% truncado, low 1%)
+        - periodo de 1 minuto
+        - dois computadores
+        - chrome + firefox
+
+GERAL
+    ?? Checar as propriedades dos materiais PBR
+    1 - Referencial Teorico
+        1.1 - PAULO = Capiutlos de funcionalidades 
+        1.2 - PAULO = Capitulo de biblioteca
+    2 - Resumo
+        2.1 - Finalizar com conclusão
+    3 - Testes
+        3.1 - Numero de Triangulos de cada cena + tamanho e quantidade de texturas (OK)
+        3.2 - Criar Library de testar tempo de inicializacao (OK)
+        3.3 - Criar library de fps (fps, medio, 1% low, media truncada) (OK)
+        3.4 - Configurar camera para cada biblitoeca (fov e pos) e gui (OK)
+        3.5 - Checar uso de memória ram e cpu ao inicializar biblioteca ()
+        3.6 - Verificar tempo de inicialização para playcanvas (OK)
+        3.6 - Checar estatisticas de cada biblioteca ao longo de 1 minuto
+            Teste Pirate Ford (perto longe)
+            Teste Floresta (perto longe)
+            Floresta merged (perto longe)
+            Teste Floresta com 5 luzes  (perto)
+            teste Floresta com 5 luzes + sombras? (perto)
+            Teste Floresta com post processing (perto)
+                anti aliasing,
+                algum outro efeito famoso
+            Teste Skull animada
+    4 - Metodologia
+        4.1 - Escrever Capitulo sobre claygl e padronizar o restante (adicionar codigo fonte) (OK)
+    5 - Resultados
+        5.1 - Explicar documentacao (api, guia, exemplos, programas, codigo fonte)
+        5.2 - Explicar estatisticas de Github
+        5.3 - Funcionalidades Presentes (next)
+        5.4 - Explicar tamanho das bibliotecas (+-)
+        5.5 - Testes de performance
+    6 - Corrigir Ortografia
+    7 - Conclusao
+    8 - Anexo com codigo fonte e link do github
+   
+
+## Fontes carbon
+    playcanvas
+    https://developer.mozilla.org/en-US/docs/Games/Techniques/3D_on_the_web/Building_up_a_basic_demo_with_PlayCanvas/engine (2023)
+
+    babylon
+    https://doc.babylonjs.com/features/starterSceneCode (s.d)
+
+    three
+    https://threejs.org/docs/#manual/en/introduction/Creating-a-scene (s.d)
+
+    Claygl
+    https://github.com/pissang/claygl (2018)
+
+## Render Defaults
+	geometrie
+	material
+		light
+			ambient light
+			point light
+		albedo map
+		ambient occlusion map
+		metalic map
+		bump map / normal
+		enviroment map - three
+		displacement map
+		metalness
+		roughtness
+		flatshading
+
+## Referencial Teorico
+- Adicionar bibliotecas
+- Adicionar novos conceitos de programação grafica
+	- animacao esqueletal,
+	- materials
+	- geometries
+	- iluminação
+	- sombras
+	- lightmaps
+	- physical based rendering
+        - Propriedades dos materiais??
+	- pos processing
+		- fog, blur, cores,
+
+## Categorias Funcionalidades
+materiais
+
+
+TABELA 1
+
+PROPRIEDADES MATERIAIS ()
+    transparencia (alpha)
+        trasnparencia mode (opaque, alpha test, alpha blend, alpha blend e test)
+        alpha mode (combine, add, substract, multi, pre multi, one one, maximixed)
+        albedo com alpha
+    stencil - three
+
+    propriedas (sem suporte, parcial (sem textura), total (com textura))
+
+    textures
+        albedo -
+        diffuse - three - claygl - pc
+        alpha map - only three
+        metalic - three - claygl - pc
+        roughness - three - clay -pc
+        refraction - three parcial - pc
+        reflectivity () - three parcial  - pc parcial
+        bump - three
+        emissive - three - claygl - pc
+        opacity - three parcial - pc
+        albedo - no three - pc only color
+        lightmap - three - pc
+        detailmap - no thre - pc 
+        iridesnceMap (+ thick)- three (+ thick)- pc (+iridesnceThick)
+        anisotropic - no three - pc only intensity 
+        sheen (baby + gloss)- three - pc(+ sheengloos, + sheenglossmapUv)
+        specular (baby parcial )- only three -  pc
+        transmissionMap(trasnparencia com reflexao) - only three - 
+        enviromentMap (baby)- only three - pc - 
+        normal map - three - claygl - pc
+        clear coat (+gloss + bump) - three (+ normal + rough)- pc(+ gloss, + glossuv)
+        clear Coat normal map - Babylon n - three sim - pc
+        paralax map - no threee - 
+        decal texture - no three - 
+        (ao) occlusion texture  - three - pc - 
+        displacementMap = only three - 
+        thickNessMap = baby - three parcial - pc
+
+        video texture - no three
+        procedural texture - no three
+
+    other levels
+        directItensity - only baby -no three
+        transludency - baby - 
+        scattering - baby
+
+    custom shader material - baby + three - claygl - pc
+
+# transparent shadow material - baby - three(com material)
+#multi material per mesh - baby
+#material per face = baby
+
+
+TABELA LUZES
+    
+
+TABELA 2
+Sombras
+
+Geração de Lightmaps - pc - babylon(nao gera) - three (nao gera)
+
+Shadow
+    smoothing
+        PCF - three pc babylon claygl
+
+    Splitting
+        CSM - Cascated - pc babylon
+
+    filtering
+        esm - babylon
+        csm
+        vsm - three - claygl
+        savsm
+        smsr
+
+    soft
+        pcss  - babylon
+        vssm
+        ssss
+        fiv
+
+
+Shadow atlas resolution config - pc three claygl babylon
+NUmber of samples (configurable?) - pc - three
+
+
+TABELA 3  EFEITOS
+    blackwhite, blur, fxaa(antialiasing), tonemap
+    imagem (contraste, exposicao, vignette, colorgrading, gamma)
+    outros imagens (inverted, high contrast, posterize)
+    ssao
+    msaa(antialiasing)
+    bloom
+    depth of field
+    chromatic aberration
+    color curve
+    glow
+    grain
+    sharpening
+    motion blur
+    ssr (screen space reflectins)
+    fog
+
+    Anti-aliasing
+        fxxaa, msaa, 
+    Bloom
+    Blur
+    
+
+
+    
+    baby
+        wireframe, flatshading
+    three
+        wireframe, flashading
+    pc
+        wireframe
+    claygl
+
+tabela FUNCIONALIDES EXTRAS
+    animation all
+    particulas babylonjs threejs (plugin)
+    audio (threejs babylonjs playcanvas)
+    gui editor (babylonjs playcanvas)
+    sistema de colisao (babylonjs playcanvas three (plugin))
+    VR (three pc babylon)
+    Path Finding (threejs (plugin), babylonjs)
+    editor grafico ()
+    editor de materials e objetos em nos ()
+    debugger/ inspector 
+
+    
+    
+rendering utilities
+    flatshading
+    renderizar texto
+    particulas
+    fluids rendering
+    path tracing
+
+
+
+
+TABELA 4 PostProcessing
+    tonemapping - babylon three pc
+
+
+TABELA 5 OTHER RENDERING UTILITIES
+    animation all
+    particulas babylonjs, three-js (thirdy parthy),
+
+
+TABELA 6 pos processing
+
+TABELA 7 UNIQUE UTILITIES
+    babylonjs
+    ASSETS
+        video texture
+        dinamic textures (brick, cloud, fire, grass, marble, road wood, road, starfield, perlinnoise, marble,)
+        materials (water, fire, lava, terrain)
+        particles (fluids,)
+
+    MESHES
+        glow,, highlight, morph, explode, trails, logarithm deep buffer
+
+    playcanvas
+        
+        
+
+TABELA 8 Otimizacoes
+    babylonjs
+        oclusion queries, instanced, meshe merging, level of details
+    three
+        meshe merging, instanced, level of details
+    pc
+        texture compression, instanced, meshe mergin, 
+    claygl
+        instanced rendering, 
+
+        
+
+    
+
+    particulas (sim ou nao)
+    animacao esqueletal + blending? + weight?
+    shadows ?
+        transparent material
+        filters
+    
+        texture sizing
+        samples
+        filter (pfc)?
+
+    wegl2 support (sim ou nao)
+    tecnicas de otimizacao?+
+        instanced rendering
+        merge meshes
+        bake lightmaps
+
+    tipos de editores presentes
+        babylon + three + playcanvas
+    pos processamneto disponiveis
+        fog, motion blur, deep of field
+        anti aliasing 2 tipos, bloom, tonemaPapping
+    tipos de luzes suportados
+        point light, spot light, directional light, ambient light
+    geometrias pre disponiveis
+    library assets
+        materiais pre prontos
+        texturas pre prontas
+        
+    utilities
+        config da camera (fov, near, perspecive, far, OrbitControl, freeControl)
+        sistema de colisao presente
+        exportar cena (formatos)
+        renderizacao de fluidos
+        + outros de cada uma
+    bugs observados
+    enviroment
+        skybox?
+        cubemap?
+
+OUTRAS UTILIDADES
+    
+
+ALGUMAS FUNCIONALIDES JA PERCEBIDAS
+    Threejs
+    3d, materials, cameras, lightnings, fogs, animations, shadows, loading
+
+    babylon js
+    3d, amaterial, camera, lights, fogs, animation, post processing, loading, particles
+
+    play
+    3d, materials, animations, lights, shadows, lightmap, occlusion, runtime lightmap, clustered light, particles, loading
+
+
+Calcular fps
+    [https://www.clicktorelease.com/blog/calculating-fps-with-requestIdleCallback/](https://www.clicktorelease.com/blog/calculating-fps-with-requestIdleCallback/)

@@ -1,0 +1,37 @@
+{
+    "private": "true",
+    "type": "module",
+    "scripts": {
+        "build": "node esbuild.js",
+        "watch": "node esbuild.watch.js"
+    },
+    "devDependencies": {
+        "esbuild": "0.19.2",
+        "log-plugin": "file:../../dev/lib/log-plugin"
+    },
+    "dependencies": {
+        "babylonjs": "^6.16.2",
+        "babylonjs-gui": "^6.19.0",
+        "babylonjs-inspector": "^6.19.0",
+        "babylonjs-loaders": "^6.19.0",
+        "babylonjs-materials": "^6.19.0",
+        "babylonjs-post-process": "^6.19.0",
+        "babylonjs-procedural-textures": "^6.19.0",
+        "babylonjs-serializers": "^6.19.0",
+        "babylonjs-viewer": "^6.19.0",
+        "claygl": "^1.3.0",
+        "claygl-advanced-renderer": "^0.1.0",
+        "http-server": "^14.1.1",
+        "playcanvas": "^1.65.1",
+        "postprocessing": "^6.33.2",
+        "three": "^0.157.0"
+    },
+    "prettier": {
+        "semi": true,
+        "bracketSpacing": true,
+        "tabWidth": 4,
+        "singleQuote": false,
+        "useTabs": false,
+        "printWidth": 90
+    }
+}

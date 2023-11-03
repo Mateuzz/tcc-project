@@ -1,0 +1,468 @@
+para iniciante evite claygl
+evite claygl porque desenvolvimento parou 
+
+geracao de bons graficos -> babylon melhor
+    pos processing -> babylon melhor ou talvez three 
+
+funcoes especificas (cientifico, lego, CAD) -> three
+    caso contrario babylon. three  vai servir
+    
+praticidade de uso -> playcanvas
+    geracao de lightmaps
+
+para jogos(iniciantes)
+    playcanvas (pela performance, praticidade de uso, self hosting) exceto se pos processamento
+        babylon
+    playcanvas -> babylon.js
+    para jogos super realistas com path tracing -> babylonjs 
+
+para aplicacoes complexas de alta performance em geral
+    playcanvas -> segundo lugar babylon
+
+para aplicacoes extras, como pequenos efeitos em sites e cenas simplas
+    threejs pelo peso
+
+para cads ou aplicacoes cientificas
+    threejs (com menos funcionalidades de baboseira e ser mais leve)
+    melhor suporte a usuarios com menor conexao e pcs piores
+
+para pcs mais fracos
+    threejs
+
+para evitar bug de sombra evite a threejs
+
+para infraestrutura limitada ou usuarios com conexao lenta
+    threejs, seguidoda playcanvas
+    
+ao utilizar edge, o que muda?
+
+praticidade de uso (editor em gui, geracao de lightmaps)
+    babylonjs ou playcanvas
+
+
+
+conclusoes chrome
+
+cena muito complexa (desert) - pc -> babylon
+    menos complexo (Merged) - three - baby ou pc
+efeitos de pos - baby - three
+cena low poly ou muitos objeto -> pc - three and baby
+sombras - 
+muitas luzes - three depois pc (baby nao faz)
+cena muito simples - de longe claygl é bom, seguido das outras com pouca diferenca
+    em pc potente claygl, mas nao faz sentido pro ser valores absurdos
+        para perto  baby seguido de three e pc faz mais sentido
+skull
+    a analisar
+
+pc 1
+    pc 45 three 35 baby 38 claygl nao perdeu
+pc 2 
+    pc 350 three 120 baby 190 claygl 90
+
+
+playcanvas (1.63) (2)
+Three (1.66) (1.54)
+Baby (1.66) (2.1)
+Claygl (1) (1.5)
+
+floresta longe
+            longe - pc 90 three 90 baby 88 claygl 50
+           28 - pc 15 (4x) - three (4x) e claygl 25 (2x)
+            sombra - pc 55 three 54 baby 53 claygl 50
+floresta sombra
+        longe - pc 2 - pc 500 - baby 350 - three 340 - claygl 250
+        28 -  pc 470 (pouco) - three 350 (menos ainda) - claygl 250 (0)
+        sombra - pc 2 - pc 250 three 220 baby e claygl 160
+
+poucos objetos
+    threejs 9.5
+    baby 10
+    Pc 8
+    CLaygl 7
+
+floresta
+    pc 10
+    three 9.5
+    baby 9
+
+sombras
+    pc 10
+    three 9.8
+    baby 8.5
+
+baby
+    1 - bem
+    2 - bem
+    3 - ok
+    4 - nao foi
+    5 - bem
+    6 - bem
+    7 - bem
+    8 - bem
+    9 - bem
+playcanvas
+    1 - ok
+    2 - bem
+    3 - bem
+    4 - + ou -
+    5 - nao foi
+    6 - nao foi
+    7 - bem
+    8 - bem
+    9 - bem
+three
+    1 - bem
+    2 - bem
+    3 - bem
+    4 - bem
+    5 - bem
+    6 - ok
+    7 - bem
+    8 - mal
+    9 - meh
+claygl
+    1 - + ou -
+    2 - mal
+    3 - bem
+    4 - ok
+    5 - pessimo
+    6 - pessimo
+    7 - bem
+    8 - mal
+    9 - meh
+claygl
+
+conclusao
+    pc 1 babylon bem consistente
+
+desert -> pc 60 - baby 55 - clay 35 - three 33
+desert sombra -> pc 29 - baby 26 - three e clay 19
+desert 4 -> pc 65 - baby 58 - three - 35
+floresta28 - 
+
+floresta all - 
+            baby 30 - three 20 - claygl 10
+    pc 2 - baby 230 - 160 three - 70 claygl
+floresta fxaa
+            baby 75 - Three 68 - claygl 20 ()
+    pc2 - baby 360 - three 340 - claygl 80
+
+
+floresta perto
+        pc 105 three 90 - baby 80 - claygl 40
+    pc 2     pc 600 three 450 baby e claygl 360
+
+
+floresta ssao
+            baby 35 three 30 claygl 15
+    pc 2 - baby 230 three 160 claygl 70
+
+
+
+pirate longe
+            claygl 270 baby e three 240 e pc 220
+    pc 2  -  claygl 2500 baby e three 2000 e pc 1600
+
+pirate perto
+            baby 145 three 130 pc 115 claygl 90
+    pc 2 - claygl 1900 baby 1600 three 1300 pc 1000
+
+pirate longe colors
+            three 240 pc 225 baby 210 claygl 60
+    pc 2  - pc 1600 three e baby 1400 claygl 1200
+
+pirate perto colors
+        baby 120 three 120 pc 110 claygl 30
+    pc 2 - three 1450 baby 1300 claygl 1100 pc 1000
+
+
+merged
+        three 140 - baby pc 120 - claygl 100
+    pc 2 - three 2400 - claygl 1600 - baby 1450 - pc 1000
+
+
+
+
+## Modelos 
+Skull: 1126158 triangles -> Lambert e phong material (apenas reflexao e specular)
+    Florest: 2076694 triangles -> 1 texturas x256 (1228 meshes)
+    FlorestMerged: 2076694 triangles -> 1 texturas x256 (1 meshe)
+    Pirate Ford: 90334 triangles -> 4 1024x 1 512x  (2 fontes de luzes ponto + 1 direcional) (7)
+    desert = 42074389 triangles 10662 objetos
+
+
+TCC
+
+	Terminar resumo
+	ortografia + revisao
+	conclusao
+	resultados (testes no computador da sala)
+		adicionar merged, fxaa, colors na sala
+		teste com newModels
+
+FORMATAÇÃO
+	unir lista em uma linha
+	adicionar negrito tabela (Fonte e titulo)
+	codigo fonte branco (ou como elemento textual)
+	transformar tabelas em graficos (com borda e tudo)
+	colocar parentes entre datas das fontes das tabelas
+RETIRAR
+	tirar imagens de codigo-fonte
+	remover certas referencias inuteis
+	sumario
+	
+ADICIONAR
+	Explicar todos os testes em anexo
+	colocar imagems para todos os teste em anexo
+	colocar imagem da gui do teste (incluindo bugs)
+	adicionar grafico em linha do fps
+	apresentar erros e bugs
+	falar quais testes foram excluidos e porque
+	uso de memoria ram e cpu nos testes (windows e linux) (grafico de linha)
+	Imagens de mais pos efeitos no ANEXO??
+TESTES a fazer
+    pirate  longe e perto
+    pirate_colors longe e perto
+    floresta - sombra - 28 - fxaa - all -- merged
+    desert - sombra -> 4
+
+	Teste 1 - pirate perto e longe pc 1
+	Teste 1 - pirate perto e longe pc 1 com color correction
+	Teste 2 - floresta longe pc 1 e 2
+	teste 2 - floresta perto pc 1 e 2
+	teste 3 - floresta sombra longe pc  1 e 2
+	teste 4 - floresta28 longe pc 1 e 2
+	teste 5 - floresta perto fxaa pc 1 e 2
+    teste 6 -  floresta  perto ssao pc2
+	teste 7 - floresta perto ssr pc2
+	teste 8 - floresta merged pc 1
+	teste 9 - skull ambient pc 1
+	teste 10 - desert 1 directional pc 2
+	teste 11 - desert 1 directional shadow pc 2
+	teste 12 - desert 4 point light + ambient pc 2
+	chrome - firefox - edge
+	uso de cpu e memoria - somente chrome
+
+IMAGENS
+    pirate_perto pc 1 e 2
+    pirate_longe pc 1 e 2
+    pirate_perto_colors pc 1 e 2
+    pirate_longe_colors pc 1 e 2
+    floresta_perto pc 1 e 2
+    floresta_longe pc 1 e 2
+    floresta_sombra pc 1 e 2
+    floresta28 pc 1 e 2
+    floresta_fxaa e floresta_ssao pc 2
+    floresta_all pc 2
+    floresta_merged 1 e  2
+    skull pc 1 e 2
+    desert 1 pc 2
+    desert4 e desert_sombra pc2
+    
+
+
+Capturar imagens
+	gui dos testes
+	testes para cada biblioteca
+	efeitos de pos processing na internet
+anexo
+	funcionalidades presentes
+		tabela pbr
+		tabela efeitos
+		imagens dos efeitos
+	Informação dos testes de desempenho
+		tabela config testes
+		gui 
+	Testes realizados no firefox
+		tabelas
+	Testes Realizados no Edge
+		tabela
+	Cenas renderizadas
+		imagens para cada teste
+	Falhas de Renderização
+
+	link do github para meu projeto
+
+	
+PERGUNTAR FABRICIA
+	codigo fonte como elemento textual
+	
+
+obs (babylon com poucas luzes, claygl sem suporte a luzes glb + bug na sombras, three no chrome bugado com sombra, playcanvas sem specular, claygl com bug no desert)
+
+
+USO DE CPU (linux)
+pc
+	pirate 15 12mb
+    pirate _colors void
+	floresta 45 41mb
+    28 15 32
+	sombra 50 38mb
+    all void
+	merged 20 11mb
+three
+	pirate 15 6mb
+	pirate colors 15 10mb
+	floresta 50 20mb	
+	sombra 50 8
+    28 25 26
+	all 50 25mb
+	merged 15 6mb
+babylon
+	pirate 15 15
+	pirate colors 15 25
+	floresta 50 45
+	sombra 55 30
+    28 VOID
+	all 50 48
+	merged 15 16
+claygl
+	pirate 20 6
+	pirate colors 30 13
+	floresta 50 17	
+	sombra 100 20
+    28 40 20
+	all 100 29
+	merged 15 8
+    
+
+'windows' => ['FP', 'FP-C', 'FL', 'FL-SO', 'FL-28', 'FL-C-FX-S', 'FL-CO', 'DE'],
+USO DE CPU (windows)
+
+pc
+pirate 5 20
+colors VOID
+floresta 20 37
+sombra 30 52
+28 15 36
+all VOID
+merged - 3 11
+desert  100 100
+
+
+three
+pirate 5 6.6mb
+pirate_colors 5  8mb
+floresta 20 20mb	
+sombra 30 33mb
+28 20 30mb
+all 45 36mb
+merged - 3 5
+desert 100 42mb
+
+baby
+pirate 5 16
+pirate colors 5 18
+floresta 20 45
+sombra 45 50
+28 VOID
+all 35 48
+merged - 3 14
+desert 100 126
+
+claygl
+pirate 5 15
+pirate_colors 5  28mb
+floresta 30 28
+sombra 45 30mb
+28 30 33mb
+all 90 37mb
+merged - 3 6
+desert 100 35mb
+
+
+
+
+
+
+
+imagens dos efeito
+
+
+fog
+https://www.mcmiddleearth.com/community/media/movie-cave.6781/
+ssr
+https://docs.flaxengine.com/manual/graphics/post-effects/screen-space-reflections.html
+
+dof
+https://www.lightstalking.com/depth-of-field/
+
+anti aliasing
+https://wiki.batocera.org/anti-aliasing
+
+color curves
+https://www.researchgate.net/profile/Vaibhav-Patel-14/publication/321062066/figure/fig2/AS:612857204994048@1523127952038/Subjective-and-objective-comparison-with-other-tone-mapping-operators.png
+
+bloom
+https://docs.unrealengine.com/udk/Three/Bloom.html
+
+vignete
+https://docs.unrealengine.com/4.27/en-US/RenderingAndGraphics/PostProcessEffects/Vignette/
+
+ssao
+https://dev.epicgames.com/community/learning/tutorials/5PkM/unreal-engine-how-to-use-ssao-with-lumen
+
+motion
+https://motionarray.com/learn/premiere-pro/premiere-pro-motion-blur-tutorial/
+
+blur
+https://unsplash.com/pt-br/fotografias/efeito-bokeh-das-luzes-da-rua-a-noite-l1sqXJXBgd0
+
+chromatic
+https://optography.org/1420-2/
+
+lens
+https://help.shopmoment.com/article/181-superfish-distortion-correction
+
+tables
+https://doc.babylonjs.com/features/featuresDeepDive/postProcesses/usePostProcesses
+
+Posterize
+https://www.creativefabrica.com/pt/product/posterize-effect-photoshop-action/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+PBR
+
+
+Albedo https://visao.ca/what-are-pbr-materials/
+Metalness https://www.a23d.co/blog/different-maps-in-pbr-textures/
+Rough / Gloss https://www.a23d.co/blog/different-maps-in-pbr-textures/
+Refraction https://www.blender3darchitect.com/textures/index-of-refraction-list-values-for-materials/
+Environment/Reflection https://www.sidefx.com/docs/houdini/render/envmaps.html
+Normal  https://www.a23d.co/blog/different-maps-in-pbr-textures/
+  + displacement https://www.cgdirector.com/normal-vs-displacement-vs-bump-maps/
+Emissive https://docs.unrealengine.com/4.26/en-US/RenderingAndGraphics/Materials/HowTo/EmissiveGlow/
+Opacity https://www.a23d.co/blog/different-maps-in-pbr-textures/
+LightMap  https://developer.unigine.com/devlog/20201124-unigine-2.13
+Detail https://doc.babylonjs.com/features/featuresDeepDive/materials/using/moreMaterials
+Iridescence https://www.artstation.com/artwork/0XqxDK
+Anisotropic https://google.github.io/filament/Filament.html#materialsystem/anisotropicmodel
+Sheen https://help.sketchfab.com/hc/en-us/articles/4402392764561-Sheen
+Specular
+	1 https://www.rayceeartist.com/post/specular-light
+	2 http://www.c-jump.com/bcc/common/Talk3/OpenGL/Wk06_light/Wk06_light.html
+Transmission https://proauto.com.br/como-limpar-vidro-do-carro/
+ClearCoat https://www.kitware.com/pbr-journey-part-3-clear-coat-model-with-vtk/
+Paralax https://doc.babylonjs.com/features/featuresDeepDive/materials/using/parallaxMapping
+Decal https://cgaxis.com/cgaxis_preview/Physical_6_Decals/
+Ambient Occlusion https://www.a23d.co/blog/different-maps-in-pbr-textures/
+Displacement https://www.cgdirector.com/normal-vs-displacement-vs-bump-maps/
+Attenuation no image
+Thickness https://www.a23d.co/product/thick-liquid-162/
+
+
+

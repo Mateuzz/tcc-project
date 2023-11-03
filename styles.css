@@ -1,0 +1,60 @@
+* {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+canvas {
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+}
+
+.stats {
+    background-color: #222222;
+    z-index: 1;
+    color: white;
+    border: 2px solid white;
+    position: absolute;
+    padding: 1.0em;
+}
+
+fieldset {
+    padding: 0 1em 1em 1em;
+    margin-bottom: 0.5em;
+    --flow-space: 0.6em;
+}
+
+input {
+    display: block;
+}
+
+.flow > * + * {
+    margin-top: var(--flow-space, 1em);
+}
+
+.profiler-stats {
+    right: 0;
+    top: 0;
+}
+
+.webgl-stats {
+    right: 0;
+    bottom: 0;
+}
+
+.stats button {
+    font-size: 1.1em;
+    background-color: red;
+    border-radius: 4px;
+    color: white;
+    padding: 0.4em;
+    text-shadow: black 1px 1px 1px;
+    border: 1px solid white;
+    width: 100%;
+}
+
+.stats button[disabled] {
+    background-color: grey;
+}
