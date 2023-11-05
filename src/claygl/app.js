@@ -38,6 +38,7 @@ Clay.application.create(canvas, {
 
     init(app) {
         app.renderer.antialias = false;
+        app.renderer.preserveDrawingBuffer = false;
 
         camera = app.createCamera([0, 2, 5], [0, 0, 0]);
         camera.near = 0.1;

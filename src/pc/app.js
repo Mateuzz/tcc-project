@@ -45,7 +45,7 @@ app.setCanvasResolution(pc.RESOLUTION_AUTO);
 
 window.addEventListener("resize", () => app.resizeCanvas());
 
-app.assets.loadFromUrl("models/OrbitCamera.js", "script", (err) => {
+app.assets.loadFromUrl("nup-models/OrbitCamera.js", "script", (err) => {
     camera = new pc.Entity("camera");
     camera.addComponent("camera", {
         clearColor: new pc.Color(0.1, 0.1, 0.1),
@@ -104,6 +104,9 @@ function onStartScene() {
 
         const sceneName = config.scene.toLowerCase();
 
+        if (config.shadows) {
+            enableShadows();
+        }
 
         function enableShadows() {
             const lightSettings = app.scene.lighting;
@@ -121,15 +124,17 @@ function onStartScene() {
             ];
 
             positions.forEach(pos => {
-                const lightComponent = newLight(pos, "omni").light
-                lightComponent.range = 1000;
-                lightComponent.intensity = 1;
+                // const lightComponent = 
+                    newLight(pos, "omni", undefined, { range: 1000, intensity: 1})
+                    // .light
+                // lightComponent.range = 1000;
+                // lightComponent.intensity = 1;
             });
 
             app.scene.ambientLight = new pc.Color(0, 0, 0.3, 0);
         }
 
-        function newLight(pos, type = "directional", color = new pc.Color(1, 1, 1)) {
+        function newLight(pos, type = "directional", color = new pc.Color(1, 1, 1), options = {}) {
             const light = new pc.Entity("light");
             light.addComponent("light", {
                 type,
@@ -138,6 +143,8 @@ function onStartScene() {
                 castShadows: config.shadows,
                 shadowDistance: 500,
                 normalBias: 1,
+                shadowResolution: 512,
+                ...options
             });
             light.setPosition(pos[0], pos[1], pos[2]);
             app.root.addChild(light);

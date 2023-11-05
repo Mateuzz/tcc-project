@@ -8,6 +8,8 @@ const canvas = document.querySelector("#canvas");
 const engine = new Babylon.Engine(canvas, false, {
     antialias: false,
     powerPreference: "high-performance",
+    alpha: false,
+    preserveDrawingBuffer: false,
 });
 
 let camera;
@@ -120,7 +122,7 @@ function onStartScene() {
                 shadowLight = new Babylon.DirectionalLight("light", new Babylon.Vector3(0.3, -0.5, -0.2), scene);
                 shadowLight.position.set(150, 150, 150);
             }
-        } else if (sceneName.includes("florest") && config.shadows)  {
+        } else if (sceneName.includes("florest") && config.shadows) {
             shadowLight = new Babylon.DirectionalLight("light", new Babylon.Vector3(0.3, -0.5, -0.2), scene);
             shadowLight.position.set(150, 150, 150);
         }

@@ -20,10 +20,15 @@ export function initLoaders(renderer) {
 }
 
 export function addGltf(path, scene) {
+    let n = 0;
     return new Promise((resolve, reject) => {
         loader.load(
             path,
             (gltf) => {
+                gltf.scene.traverse(node => {
+                    if (node.isMesh) ++n
+                })
+                console.log("n is", n);
                 scene.add(gltf.scene);
                 resolve(gltf);
             },

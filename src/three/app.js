@@ -1,16 +1,16 @@
 import * as Three from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
-import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
-import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
-import { FXAAShader } from "three/examples/jsm/shaders/FXAAShader.js";
-import { ExposureShader } from "three/examples/jsm/shaders/ExposureShader.js"
-import { SSAOPass } from "three/examples/jsm/postprocessing/SSAOPass.js"
-import { SSRPass } from "three/examples/jsm/postprocessing/SSRPass.js"
+// import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
+// import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
+// import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
+// import { FXAAShader } from "three/examples/jsm/shaders/FXAAShader.js";
+// import { ExposureShader } from "three/examples/jsm/shaders/ExposureShader.js"
+// import { SSAOPass } from "three/examples/jsm/postprocessing/SSAOPass.js"
+// import { SSRPass } from "three/examples/jsm/postprocessing/SSRPass.js"
 
 import { createSendInitDataButton, getConfiguration, makeConfigurationGui, makeProfilerController, makeStatsGui } from "testHelper.js";
 import { addGltf, initLoaders } from "./Loader.js";
-import {getInfo, initStats, prepareInfoFrame, renderStatsHtml} from "webglStats.js";
+import { initStats, prepareInfoFrame, renderStatsHtml } from "webglStats.js";
 
 let scene;
 let renderer;
@@ -32,9 +32,7 @@ const testInfo = {
     library: "Three",
 };
 
-// const statsGui = makeStatsGui();
-// const info = getInfo();
-// initStats();
+const statsGui = makeStatsGui();
 
 makeConfigurationGui(onStartScene);
 const button = document.querySelector(".init");
@@ -146,6 +144,8 @@ function onStartScene() {
                 if (config.shadows) 
                     lightConfigShadow(dir, 230);
             }
+        } else if (/ion|dragon/.test(sceneName)) {
+            scene.add(new Three.DirectionalLight(0xffffff, 1));
         }
 
         function createComposer() {
@@ -228,7 +228,7 @@ function startScene() {
 function loop() {
     const delta = clock.getDelta();
 
-    // prepareInfoFrame();
+    prepareInfoFrame();
 
     for (const mixer of mixers)
         mixer.update(delta);
@@ -242,7 +242,7 @@ function loop() {
 
     profilerController.update();
 
-    // statsGui.innerHTML = renderStatsHtml();
+    statsGui.innerHTML = renderStatsHtml();
 
     requestAnimationFrame(loop);
 }
