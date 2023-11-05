@@ -26,7 +26,7 @@ export function addGltf(path, scene) {
             path,
             (gltf) => {
                 gltf.scene.traverse(node => {
-                    if (node.isMesh) ++n
+                    if (node.isLight) ++n;
                 })
                 console.log("n is", n);
                 scene.add(gltf.scene);

@@ -87,7 +87,6 @@ function onStartScene() {
 
     camera.setPosition(config.camerax, config.cameray, config.cameraz);
 
-    console.log(new Date());
     defaultClock.begin("sceneLoadingTime");
 
     app.assets.loadFromUrl(modelPath, "container", (error, asset) => {
@@ -168,23 +167,23 @@ function onStartScene() {
             } else {
                 newLight([150, 150, 150]);
             }
-        } else {
-            const lights = scene.findComponents("light");
-            lights.forEach(light => {
-                light.isStatic = true;
-                light.enabled = true;
-                light.castShadows = false;
-            });
+        } else if (/ion|dragon/.test(sceneName)) {
+            newLight([150, 150, 150]);
         }
+
+        const lights = scene.findComponents("light");
+        lights.forEach(light => {
+            light.isStatic = true;
+            light.enabled = true;
+            light.castShadows = false;
+        });
 
         const initData = {
             startupTime: defaultClock.get("startupTime"),
             sceneLoadingTime: defaultClock.get("sceneLoadingTime"),
         }
 
-        console.table(initData);
         createSendInitDataButton(testInfo, initData);
-        console.table(initData);
         // testInfo.initData = initData;
         profilerController = makeProfilerController(testInfo);
 

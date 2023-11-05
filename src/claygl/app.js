@@ -16,7 +16,6 @@ const testInfo = {
     library: "claygl",
 };
 
-let light;
 let camera;
 let control;
 let button;
@@ -149,18 +148,40 @@ function onStartScene(app) {
             lights.push(app.createAmbientLight("#00f", 1));
         }
 
+        function makeLight(info) {
+            let light;
+
+            switch (info.type) {
+            case "omni": 
+                light = app.createPointLight([info.pos.x, info.pos.y, info.pos.y], info.range, "#fff", info.intensity)
+                break;
+            }
+
+            if (light) lights.push(light);
+        }
+
+        function makeUnity1Lights() {
+            // const info = [{"intensity":1.79070783,"range":9999,"pos":{"x":0,"y":6.190000057220459,"z":-1.899999976158142}},{"intensity":2,"range":5.51,"pos":{"x":11.899999618530273,"y":2.7982592582702637,"z":-5.590000152587891}},{"intensity":2,"range":5.51,"pos":{"x":11.899999618530273,"y":2.7982592582702637,"z":-11.390000343322754}},{"intensity":2,"range":8.528391,"pos":{"x":-15.86496639251709,"y":1.851745367050171,"z":4.526785850524902}},{"intensity":2,"range":5.51,"pos":{"x":11.899999618530273,"y":2.7982592582702637,"z":-0.5877537727355957}},{"intensity":2,"range":7.740295,"pos":{"x":-12.219869613647461,"y":2.7413454055786133,"z":-0.07446928322315216}},{"intensity":2,"range":8.528391,"pos":{"x":-15.784964561462402,"y":1.851745367050171,"z":-4.491087436676025}},{"intensity":2,"range":13.6133184,"pos":{"x":-11.513349533081055,"y":2.79825496673584,"z":0.06958034634590149}},{"intensity":2,"range":8.528391,"pos":{"x":-7.78000020980835,"y":1.851745367050171,"z":-4.491087436676025}},{"intensity":2,"range":8.528391,"pos":{"x":-7.860002517700195,"y":1.851745367050171,"z":4.526785850524902}},{"intensity":2,"range":13.6133184,"pos":{"x":0.689267098903656,"y":2.7879436016082764,"z":-0.0635664314031601}},{"intensity":2,"range":8.528391,"pos":{"x":-4.667327404022217,"y":1.7700001001358032,"z":-2.8502309322357178}},{"intensity":2,"range":8.528391,"pos":{"x":1.7576282024383545,"y":1.8600000143051147,"z":-4.749517440795898}},{"intensity":2,"range":8.528391,"pos":{"x":7.509692668914795,"y":1.8600000143051147,"z":-13.816478729248047}},{"intensity":2,"range":8.528391,"pos":{"x":1.350000023841858,"y":1.8600000143051147,"z":-13.816478729248047}}];
+            // info.forEach(info => makeLight(info));
+        }
+
+        function makeUnity2Lights() {
+            // const info = [{"intensity":2,"range":9999,"pos":{"x":16.540002822875977,"y":40.80000305175781,"z":-11.920000076293945},"type":"directional"}]
+            // info.forEach(info => makeLight(info));
+        }
+
         if (sceneName.includes("pirate")) {
             lights.push(
                 app.createPointLight([2, 3, -4.5], 28, "#fff", 1),
                 app.createPointLight([1, 4.5, -1.1], 28, "#fff", 1)
             );
-            light = app.createDirectionalLight([0, 0, -1], "#fff", 1);
+            const light = app.createDirectionalLight([0, 0, -1], "#fff", 1);
             lights.push(light);
         } else if (sceneName.includes("florest")) {
             if (config.manyLights) {
                 add28FlorestLights(app);
             } else {
-                light = app.createDirectionalLight([0.3, -0.5, -0.2], "#fff", 1);
+                const light = app.createDirectionalLight([0.3, -0.5, -0.2], "#fff", 1);
                 lights.push(light);
             }
         } else if (sceneName.includes("skull")) {
@@ -171,7 +192,18 @@ function onStartScene(app) {
             } else {
                 lights.push(app.createDirectionalLight([0, 0, 1], "#fff", 1));
             }
+        } else if (sceneName.includes("unity1")) {
+            makeUnity1Lights();
+            const light = app.createDirectionalLight([0.3, -0.5, -0.2], "#fff", 1);
+            lights.push(light);
+        } else if (sceneName.includes("unity2")) {
+            const light = app.createDirectionalLight([0.3, -0.5, -0.2], "#fff", 1);
+            lights.push(light);
+        } else if (/ion|dragon/.test(sceneName)) {
+            const light = app.createDirectionalLight([0.3, -0.5, -0.2], "#fff", 1);
+            lights.push(light);
         }
+
 
         function makeAdvancedRenderer() {
             return new ClayAdvancedRenderer(app.renderer, app.scene, app.timeline, {
@@ -210,6 +242,9 @@ function onStartScene(app) {
                 light.shadowResolution = 512;
             });
         }
+
+        console.log(lights);
+        console.log(lights.length);
 
         const initData = {
             startupTime: defaultClock.get("startupTime"),

@@ -125,6 +125,11 @@ function onStartScene() {
         } else if (sceneName.includes("florest") && config.shadows) {
             shadowLight = new Babylon.DirectionalLight("light", new Babylon.Vector3(0.3, -0.5, -0.2), scene);
             shadowLight.position.set(150, 150, 150);
+        } else if (/ion|dragon/.test(sceneName)) {
+            const dir = new Babylon.DirectionalLight("light", new Babylon.Vector3(0, 0, -1), scene);
+        } else if (sceneName.includes("sponza")) {
+            const point = new Babylon.PointLight("light", Babylon.Vector3.Zero(), scene);
+            point.range = 1000;
         }
 
         if (config.shadows) {

@@ -146,6 +146,9 @@ function onStartScene() {
             }
         } else if (/ion|dragon/.test(sceneName)) {
             scene.add(new Three.DirectionalLight(0xffffff, 1));
+        } else if (sceneName.includes("sponza")) {
+            const point = new Three.PointLight(0xffffff, 1, 1000, 0);
+            scene.add(point);
         }
 
         function createComposer() {
