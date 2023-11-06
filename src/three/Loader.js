@@ -17,18 +17,14 @@ export function initLoaders(renderer) {
     draco.preload();
     loader.setDRACOLoader(draco);
     loader.setKTX2Loader(ktx2Loader);
+
 }
 
 export function addGltf(path, scene) {
-    let n = 0;
     return new Promise((resolve, reject) => {
         loader.load(
             path,
             (gltf) => {
-                gltf.scene.traverse(node => {
-                    if (node.isLight) ++n;
-                })
-                console.log("n is", n);
                 scene.add(gltf.scene);
                 resolve(gltf);
             },

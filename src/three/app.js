@@ -10,7 +10,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
 import { createSendInitDataButton, getConfiguration, makeConfigurationGui, makeProfilerController, makeStatsGui } from "testHelper.js";
 import { addGltf, initLoaders } from "./Loader.js";
-import { initStats, prepareInfoFrame, renderStatsHtml } from "webglStats.js";
+// import { initStats, prepareInfoFrame, renderStatsHtml } from "webglStats.js";
 
 let scene;
 let renderer;
@@ -22,7 +22,7 @@ let width;
 let height;
 let composer;
 
-initStats();
+// initStats();
 
 startScene();
 initLoaders(renderer);
@@ -32,7 +32,7 @@ const testInfo = {
     library: "Three",
 };
 
-const statsGui = makeStatsGui();
+// const statsGui = makeStatsGui();
 
 makeConfigurationGui(onStartScene);
 const button = document.querySelector(".init");
@@ -49,7 +49,6 @@ function onStartScene() {
 
     camera.position.set(config.camerax, config.cameray, config.cameraz);
 
-    console.log(new Date());
     defaultClock.begin("sceneLoadingTime");
 
     addGltf(modelPath, scene).then((gltf) => {
@@ -124,7 +123,8 @@ function onStartScene() {
                 scene.add(dir);
             }
         } else if (sceneName.includes("skull")) {
-            const light = new Three.AmbientLight(0xffffff, 1);
+            const light = new Three.DirectionalLight(0xffffff, 1);
+            light.position.set(7.7, 15.8, 4.1);
             scene.add(light);
 
             if (config.animation) {
@@ -231,7 +231,7 @@ function startScene() {
 function loop() {
     const delta = clock.getDelta();
 
-    prepareInfoFrame();
+    // prepareInfoFrame();
 
     for (const mixer of mixers)
         mixer.update(delta);
@@ -245,7 +245,7 @@ function loop() {
 
     profilerController.update();
 
-    statsGui.innerHTML = renderStatsHtml();
+    // statsGui.innerHTML = renderStatsHtml();
 
     requestAnimationFrame(loop);
 }

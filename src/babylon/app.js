@@ -114,7 +114,7 @@ function onStartScene() {
         let shadowLight;
 
         if (sceneName.includes("skull")) {
-            new Babylon.HemisphericLight("light", new Babylon.Vector3(0, 0, 0), scene);
+            new Babylon.DirectionalLight("light", new Babylon.Vector3(0.2, 0.8, -1), scene);
         } else if (sceneName.includes("desert")) {
             if (config.manyLights) {
                 makeDesertLights();

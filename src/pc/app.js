@@ -153,14 +153,13 @@ function onStartScene() {
         if (sceneName.includes("florest") && config.shadows) {
             newLight([150, 150, 150]);
         } else if (sceneName.includes("skull")) {
-
             if (config.animation) {
                 const animation = asset.resource.animations[0];
                 scene.addComponent("anim");
                 scene.anim.assignAnimation("Initial State", animation._resources[0]);
             }
 
-            app.scene.ambientLight = new pc.Color(1, 1, 1);
+            newLight([0, 0, 0]);
         } else if (sceneName.includes("desert")) {
             if (config.manyLights) {
                 makeDesertLights();
@@ -172,6 +171,7 @@ function onStartScene() {
         }
 
         const lights = scene.findComponents("light");
+
         lights.forEach(light => {
             light.isStatic = true;
             light.enabled = true;
