@@ -55,7 +55,7 @@ function addSceneLoadingEntry(mysqli $db, string $library, string $scene, int $l
 }
 
 function addEntries(string $json) : string {
-    $db = connect("localhost", "root", "123", "t2");
+    $db = connect("localhost", "root", "123", "tcc");
     $data = json_decode($json, true);
     $result = "";
     $library = $data["library"];

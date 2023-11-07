@@ -32,3 +32,4 @@ window.defaultClock.begin("startupTime");
 
 window.PC_SCENE_NAME = "pirate_perto";
 window.BROWSER_NAME = 'chrome';
+window.MONITOR_HZ = 60;

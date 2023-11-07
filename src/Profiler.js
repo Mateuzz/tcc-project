@@ -19,7 +19,7 @@ export class Profiler {
         this.deltaList = [];
         this.deltaMinList = [];
         this.deltaMaxList = [];
-        this.elapsedGoal = 1000 / 60;
+        this.elapsedGoal = 1000 / window.MONITOR_HZ;
         this.startTime = performance.now();
         this.timestamp = this.startTime;
         this.deltaMin = Infinity;
