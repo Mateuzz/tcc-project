@@ -1,5 +1,4 @@
 import * as Clay from "claygl";
-import ClayAdvancedRenderer from "claygl-advanced-renderer";
 
 import {
     getConfiguration,

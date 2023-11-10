@@ -57,7 +57,10 @@ export function makeConfigurationGui(callback) {
             <input type="text" name="path" id="path" required>
 
             <label for="time">Profiling Time in seconds</label>
-            <input type="number" name="time" id="time" value="12" required>
+            <input type="number" name="time" id="time" value="30" required>
+
+            <label for="shadows">Shadows</label>
+            <input type="checkbox" name="config[]" id="shadows" value="shadows">
 
             <label for="animation">Animation</label>
             <input type="checkbox" name="config[]" id="animation" value="animation">
@@ -73,12 +76,6 @@ export function makeConfigurationGui(callback) {
 
             <label for="ssr">SSR</label>
             <input type="checkbox" name="config[]" id="ssr" value="ssr">
-
-            <label for="colors">Color Curves (like pc)</label>
-            <input type="checkbox" name="config[]" id="colors" value="colors">
-
-            <label for="shadows">Shadows</label>
-            <input type="checkbox" name="config[]" id="shadows" value="shadows">
         </fieldset>
         <button type"submit" class="init">Start Application</button>
     </form>
@@ -107,7 +104,6 @@ export function getConfiguration() {
         ssao : options.querySelector("#ssao").checked,
         ssr : options.querySelector("#ssr").checked,
         shadows : options.querySelector("#shadows").checked,
-        colors : options.querySelector("#colors").checked,
         animation : options.querySelector("#animation").checked,
     }
 }

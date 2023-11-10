@@ -1,16 +1,8 @@
 import * as Three from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-// import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
-// import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
-// import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
-// import { FXAAShader } from "three/examples/jsm/shaders/FXAAShader.js";
-// import { ExposureShader } from "three/examples/jsm/shaders/ExposureShader.js"
-// import { SSAOPass } from "three/examples/jsm/postprocessing/SSAOPass.js"
-// import { SSRPass } from "three/examples/jsm/postprocessing/SSRPass.js"
 
-import { createSendInitDataButton, getConfiguration, makeConfigurationGui, makeProfilerController, makeStatsGui } from "testHelper.js";
+import { createSendInitDataButton, getConfiguration, makeConfigurationGui, makeProfilerController } from "testHelper.js";
 import { addGltf, initLoaders } from "./Loader.js";
-// import { initStats, prepareInfoFrame, renderStatsHtml } from "webglStats.js";
 
 let scene;
 let renderer;
@@ -222,10 +214,6 @@ function startScene() {
 
     renderer.setSize(width, height);
     document.body.appendChild(renderer.domElement);
-
-    // dirLight.castShadow = true;
-    // dirLight.shadow.mapSize.width = 1024;
-    // dirLight.shadow.mapSize.height = 1024;
 }
 
 function loop() {

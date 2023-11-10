@@ -43,9 +43,9 @@ function onStartScene() {
     console.log(new Date());
     defaultClock.begin("sceneLoadingTime");
 
-    Babylon.SceneLoader.ImportMesh("", modelPath, modelName, scene, (meshes, particles, skeletons, animation) => {
+    Babylon.SceneLoader.ImportMesh("", modelPath, modelName, scene, (meshes, particleSystems, skeletons, animations) => {
         if (!config.animation)
-            animation.forEach(anim => anim.stop());
+            animations.forEach(anim => anim.stop());
 
         defaultClock.end();
 
@@ -127,9 +127,6 @@ function onStartScene() {
             shadowLight.position.set(150, 150, 150);
         } else if (/ion|dragon/.test(sceneName)) {
             const dir = new Babylon.DirectionalLight("light", new Babylon.Vector3(0, 0, -1), scene);
-        } else if (sceneName.includes("sponza")) {
-            const point = new Babylon.PointLight("light", Babylon.Vector3.Zero(), scene);
-            point.range = 1000;
         }
 
         if (config.shadows) {
@@ -161,7 +158,7 @@ function onStartScene() {
             scene.render();
             profilerController.update();
         });
-    }, undefined, (scene, message, exception) => {
+    }, undefined, (_scene, message, _exception) => {
         alert(message);
         button.disabled = false;
     });

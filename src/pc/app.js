@@ -46,6 +46,10 @@ app.setCanvasResolution(pc.RESOLUTION_AUTO);
 window.addEventListener("resize", () => app.resizeCanvas());
 
 app.assets.loadFromUrl("nup-models/OrbitCamera.js", "script", (err) => {
+    if (err) { 
+        alert("Failed to load script OrbitCamera.js:", err);
+    }
+
     camera = new pc.Entity("camera");
     camera.addComponent("camera", {
         clearColor: new pc.Color(0.1, 0.1, 0.1),

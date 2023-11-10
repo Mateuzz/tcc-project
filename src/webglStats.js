@@ -55,16 +55,6 @@ export function initStats() {
             const ctx = oldFn.call(this, type, args);
 
             if (ctx && (type === "webgl2" || type == "webgl")) {
-                // if (!prmMap) {
-                    // primMap = {};
-                    // primMap[ctx.POINTS] = {ndx: 0, fn: count => count, };
-                    // primMap[ctx.LINE_LOOP] = {ndx: 1, fn: count => count, };
-                    // primMap[ctx.LINE_STRIP] = {ndx: 1, fn: count => count - 1, };
-                    // primMap[ctx.LINES] = {ndx: 1, fn: count => count / 2 | 0, };
-                    // primMap[ctx.TRIANGLE_STRIP] = {ndx: 2, fn: count => count - 2, };
-                    // primMap[ctx.TRIANGLE_FAN] = {ndx: 2, fn: count => count - 2, };
-                    // primMap[ctx.TRIANGLES] = {ndx: 2, fn: count => count / 3 | 0, };
-                // };
                 info = ctx.info = {
                     vertCount: 0,
                     primCount: [0, 0, 0],
@@ -100,9 +90,7 @@ export function initStats() {
 
 function addCount(ctx, type, count) {
     const ctxInfo = ctx.info;
-    // const primInfo = primMap[type];
     ctxInfo.vertCount += count;
-    // ctxInfo.primCount[primInfo.ndx] += primInfo.fn(count);
 
     switch (type) {
         case ctx.POINTS:
