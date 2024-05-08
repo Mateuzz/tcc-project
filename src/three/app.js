@@ -1,8 +1,16 @@
 import * as Three from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+// import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
+// import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
+// import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
+// import { FXAAShader } from "three/examples/jsm/shaders/FXAAShader.js";
+// import { ExposureShader } from "three/examples/jsm/shaders/ExposureShader.js"
+// import { SSAOPass } from "three/examples/jsm/postprocessing/SSAOPass.js"
+// import { SSRPass } from "three/examples/jsm/postprocessing/SSRPass.js"
 
-import { createSendInitDataButton, getConfiguration, makeConfigurationGui, makeProfilerController } from "testHelper.js";
+import { createSendInitDataButton, getConfiguration, makeConfigurationGui, makeProfilerController, makeStatsGui } from "testHelper.js";
 import { addGltf, initLoaders } from "./Loader.js";
+import { initStats, prepareInfoFrame, renderStatsHtml } from "webglStats.js";
 
 let scene;
 let renderer;
@@ -13,18 +21,21 @@ let clock;
 let width;
 let height;
 let composer;
+let statsGui;
 
-// initStats();
+if (DEBUG_MODE)
+    initStats();
 
 startScene();
 initLoaders(renderer);
 defaultClock.end();
 
 const testInfo = {
-    library: "Three",
+    library: "Three_fastest",
 };
 
-// const statsGui = makeStatsGui();
+if (DEBUG_MODE)
+    statsGui = makeStatsGui();
 
 makeConfigurationGui(onStartScene);
 const button = document.querySelector(".init");
@@ -44,15 +55,24 @@ function onStartScene() {
     defaultClock.begin("sceneLoadingTime");
 
     addGltf(modelPath, scene).then((gltf) => {
+        if (config.clones) {
+            createClones(gltf);
+        }
+
         defaultClock.end();
 
         button.remove();
         options.remove();
 
-        const initData = {
+       const initData = {
             startupTime: defaultClock.get("startupTime"),
             sceneLoadingTime: defaultClock.get("sceneLoadingTime"),
         }
+
+        gltf.scene.traverse(node => {
+            if (node.isMesh)
+                node.frustumCulled = false;
+        })
 
         function enableShadows() {
             renderer.shadowMap.enabled = true;
@@ -107,7 +127,12 @@ function onStartScene() {
 
         const sceneName = config.scene.toLowerCase();
 
-        if (sceneName.includes("florest")) {
+        if (sceneName.includes("merged") && config.shadows) {
+            gltf.scene.traverse(node => {
+                if (node.isLight) 
+                    lightConfigShadow(node, 150);
+            })
+        } else if (sceneName.includes("florest")) {
             if (config.shadows) {
                 const dir = new Three.DirectionalLight(0xffffff, 1);
                 dir.position.set(150, 150, 150);
@@ -136,15 +161,17 @@ function onStartScene() {
                 if (config.shadows) 
                     lightConfigShadow(dir, 230);
             }
-        } else if (/ion|dragon/.test(sceneName)) {
-            scene.add(new Three.DirectionalLight(0xffffff, 1));
+        } else if (/ion|dragon|car/.test(sceneName)) {
+            const dir = new Three.DirectionalLight(0xffffff, 1);
+            dir.position.set(150, 150, 150);
+            scene.add(dir);
         } else if (sceneName.includes("sponza")) {
             const point = new Three.PointLight(0xffffff, 1, 1000, 0);
             scene.add(point);
         }
 
         function createComposer() {
-            const composer = new EffectComposer(renderer);
+            const composer = new EfectComposer(renderer);
             composer.addPass(new RenderPass(scene, camera));
             return composer;
         }
@@ -191,7 +218,18 @@ function onStartScene() {
         createSendInitDataButton(testInfo, initData);
         profilerController = makeProfilerController(testInfo);
 
-        loop();
+        if (DEBUG_MODE) {
+            let n = 0;
+            let l = [];
+            gltf.scene.traverse(node => {
+                if (node.isMesh) ++n;
+                if (node.isLight) l.push(node);
+            })
+            console.log("Objects count =", n);
+            console.log("lights =", l);
+            loopDebug();
+        } else
+            loop();
 
     }).catch((error) => {
         button.disabled = false;
@@ -213,13 +251,20 @@ function startScene() {
     clock = new Three.Clock();
 
     renderer.setSize(width, height);
+    renderer.autoClear = false;
+    renderer.autoClearColor = false;
+    renderer.autoClearDepth = false;
+    renderer.autoClearStencil = false;
     document.body.appendChild(renderer.domElement);
+
+
+    // dirLight.castShadow = true;
+    // dirLight.shadow.mapSize.width = 1024;
+    // dirLight.shadow.mapSize.height = 1024;
 }
 
 function loop() {
     const delta = clock.getDelta();
-
-    // prepareInfoFrame();
 
     for (const mixer of mixers)
         mixer.update(delta);
@@ -233,7 +278,39 @@ function loop() {
 
     profilerController.update();
 
-    // statsGui.innerHTML = renderStatsHtml();
+    requestAnimationFrame(loop);
+}
+
+function loopDebug() {
+    const delta = clock.getDelta();
+
+    prepareInfoFrame();
+
+    for (const mixer of mixers)
+        mixer.update(delta);
+
+    controls.update(0.16);
+
+    if (composer) 
+        composer.render()
+    else
+        renderer.render(scene, camera);
+
+    profilerController.update();
+
+    statsGui.innerHTML = renderStatsHtml();
 
     requestAnimationFrame(loop);
+}
+
+function createClones(gltf) {
+    let positions = [ [5, 0], [10, 0], [15, 0], [0, 10], [5, 10], [10, 10], [15, 10], [0, -10], [5, -10], [10, -10], [15, -10], ]
+    const models = [];
+
+    for (let i = 0; i < positions.length; ++i)
+        models.push(gltf.scene.clone());
+    for (let i = 0; i < models.length; ++i) {
+        models[i].position.set(positions[i][0], 0, positions[i][1]);
+        scene.add(models[i]);
+    }
 }

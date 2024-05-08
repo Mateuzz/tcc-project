@@ -1,6 +1,7 @@
 import * as Babylon from "babylonjs";
 import { GLTFFileLoader } from "babylonjs-loaders";
 import { createSendInitDataButton, getConfiguration, makeConfigurationGui, makeProfilerController } from "testHelper";
+// import {initStats, renderStatsHtml, prepareInfoFrame} from "webglStats";
 
 Babylon.SceneLoader.RegisterPlugin(new GLTFFileLoader());
 
@@ -17,10 +18,8 @@ const scene = createScene();
 
 defaultClock.end();
 
-window.addEventListener("resize", () => engine.resize);
-
 const testInfo = {
-    library: "Babylon",
+    library: "Babylon_fastest",
 };
 
 makeConfigurationGui(onStartScene);
@@ -40,128 +39,187 @@ function onStartScene() {
 
     camera.setPosition(new Babylon.Vector3(config.camerax, config.cameray, config.cameraz));
 
-    console.log(new Date());
+    const otimizerOpts = new Babylon.SceneOptimizerOptions(5000);
+    otimizerOpts.addOptimization(new Babylon.MergeMeshesOptimization(0));
+    otimizerOpts.addOptimization(new Babylon.PostProcessesOptimization(0));
+    otimizerOpts.addOptimization(new Babylon.ParticlesOptimization(0));
+    otimizerOpts.addOptimization(new Babylon.LensFlaresOptimization(0));
+    otimizerOpts.addOptimization(new Babylon.RenderTargetsOptimization(0));
+
+    const optimizer = new Babylon.SceneOptimizer(scene, otimizerOpts);
+
+    scene.performancePriority = Babylon.ScenePerformancePriority.Aggressive;
+
     defaultClock.begin("sceneLoadingTime");
 
-    Babylon.SceneLoader.ImportMesh("", modelPath, modelName, scene, (meshes, particleSystems, skeletons, animations) => {
-        if (!config.animation)
-            animations.forEach(anim => anim.stop());
+    if (config.clones) {
+        Babylon.SceneLoader.LoadAssetContainer(modelPath, modelName, scene, (container) => {
+            const dir = new Babylon.DirectionalLight("light", new Babylon.Vector3(0, 0, 1), scene);
 
-        defaultClock.end();
+            let positions = [ [5, 0], [10, 0], [15, 0], [0, 10], [5, 10], [10, 10], [15, 10], [0, -10], [5, -10], [10, -10], [15, -10], ]
 
-        button.remove();
-        options.remove();
+            for (let i = 0; i < positions.length; ++i) {
+                const instance = container.instantiateModelsToScene(undefined, true, { doNotInstantiate: false });
+                instance.rootNodes.forEach(root => {
+                    root.position.x = positions[i][0];
+                    root.position.z = positions[i][1];
+                })
+            }
 
-        const initData = {
-            startupTime: defaultClock.get("startupTime"),
-            sceneLoadingTime: defaultClock.get("sceneLoadingTime"),
-        }
+            container.addAllToScene();
 
-        const sceneName = config.scene.toLowerCase();
+            defaultClock.end();
 
-        if (config.colors) {
-            // scene.imageProcessingConfiguration.toneMappingEnabled = true;
-            // scene.imageProcessingConfiguration.toneMappingType = Babylon.ImageProcessingConfiguration.TONEMAPPING_ACES;
+            button.remove();
+            options.remove();
 
-            const post = new Babylon.ImageProcessingPostProcess("imageProcessing", 1.0, camera);
-            post.colorCurvesEnabled = true;
-            post.toneMappingType = Babylon.ImageProcessingConfiguration.TONEMAPPING_ACES;
-            post.toneMappingEnabled = true;
-            post.colorCurves.globalSaturation = 1.5;
+            const initData = {
+                startupTime: defaultClock.get("startupTime"),
+                sceneLoadingTime: defaultClock.get("sceneLoadingTime"),
+            }
 
-            // scene.imageProcessingConfiguration.exposure = 2;
-            // scene.imageProcessingConfiguration.colorCurves.globalExposure = 2;
-            // scene.imageProcessingConfiguration.colorCurves.globalHue = 0;
-            // scene.imageProcessingConfiguration.colorGradingEnabled = true;
-            // scene.imageProcessingConfiguration.colorCurvesEnabled = true;
-            // scene.imageProcessingConfiguration.isEnabled = true;
-        }
+            createSendInitDataButton(testInfo, initData);
+            profilerController = makeProfilerController(testInfo);
 
+            if (config.clearVertex)
+                scene.clearCachedVertexData();
 
-        if (config.ssao) {
-            new Babylon.SSAORenderingPipeline("ssao", scene, 1.0, [camera]);
-        }
-
-        if (config.ssr) {
-            const ssr = new Babylon.SSRRenderingPipeline("ssr", scene, [camera], false);
-            if (DEBUG_MODE) 
-                ssr.debug = true;
-        }
-
-
-        if (config.fxaa) {
-            new Babylon.FxaaPostProcess("fxaa", 1.0, camera);
-        }
-
-        function makeDesertLights() {
-            const positions = [
-                [120, 30, 120],
-                [-120, 30, 120],
-                [-120, 30, -120],
-                [120, 30, -120],
-            ];
-
-            positions.forEach(pos => {
-                const point = new Babylon.PointLight("light", new Babylon.Vector3(...pos), scene);
-                point.range = 1000;
-                point.intensity = 100;
+            engine.runRenderLoop(() => {
+                scene.render();
+                profilerController.update();
             });
+        }, undefined, (scene, message) => {
+            alert(message);
+            button.disabled = false;
+        })
 
-            const ambient = new Babylon.HemisphericLight("light", new Babylon.Vector3(0, 0, -1), scene);
-            ambient.diffuse = new Babylon.Color3(0, 0, 1);
-        }
+    } else {
+        Babylon.SceneLoader.ImportMesh("", modelPath, modelName, scene, (meshes, particlesSystems, skeletons, animation, transforms, geometries, lights) => {
+            if (!config.animation)
+                animation.forEach(anim => anim.stop());
 
-        let shadowLight;
+            defaultClock.end();
 
-        if (sceneName.includes("skull")) {
-            new Babylon.DirectionalLight("light", new Babylon.Vector3(0.2, 0.8, -1), scene);
-        } else if (sceneName.includes("desert")) {
-            if (config.manyLights) {
-                makeDesertLights();
-            } else {
+            button.remove();
+            options.remove();
+
+            const initData = {
+                startupTime: defaultClock.get("startupTime"),
+                sceneLoadingTime: defaultClock.get("sceneLoadingTime"),
+            }
+
+            const sceneName = config.scene.toLowerCase();
+
+            if (config.colors) {
+                // scene.imageProcessingConfiguration.toneMappingEnabled = true;
+                // scene.imageProcessingConfiguration.toneMappingType = Babylon.ImageProcessingConfiguration.TONEMAPPING_ACES;
+
+                const post = new Babylon.ImageProcessingPostProcess("imageProcessing", 1.0, camera);
+                post.colorCurvesEnabled = true;
+                post.toneMappingType = Babylon.ImageProcessingConfiguration.TONEMAPPING_ACES;
+                post.toneMappingEnabled = true;
+                post.colorCurves.globalSaturation = 1.5;
+
+                // scene.imageProcessingConfiguration.exposure = 2;
+                // scene.imageProcessingConfiguration.colorCurves.globalExposure = 2;
+                // scene.imageProcessingConfiguration.colorCurves.globalHue = 0;
+                // scene.imageProcessingConfiguration.colorGradingEnabled = true;
+                // scene.imageProcessingConfiguration.colorCurvesEnabled = true;
+                // scene.imageProcessingConfiguration.isEnabled = true;
+            }
+
+
+            if (config.ssao) {
+                new Babylon.SSAORenderingPipeline("ssao", scene, 1.0, [camera]);
+            }
+
+            if (config.ssr) {
+                const ssr = new Babylon.SSRRenderingPipeline("ssr", scene, [camera], false);
+                if (DEBUG_MODE) 
+                    ssr.debug = true;
+            }
+
+
+            if (config.fxaa) {
+                new Babylon.FxaaPostProcess("fxaa", 1.0, camera);
+            }
+
+            function makeDesertLights() {
+                const positions = [
+                    [120, 30, 120],
+                    [-120, 30, 120],
+                    [-120, 30, -120],
+                    [120, 30, -120],
+                ];
+
+                positions.forEach(pos => {
+                    const point = new Babylon.PointLight("light", new Babylon.Vector3(...pos), scene);
+                    point.range = 1000;
+                    point.intensity = 100;
+                });
+
+                const ambient = new Babylon.HemisphericLight("light", new Babylon.Vector3(0, 0, -1), scene);
+                ambient.diffuse = new Babylon.Color3(0, 0, 1);
+            }
+
+            let shadowLight;
+
+            if (sceneName.includes("skull")) {
+                new Babylon.DirectionalLight("light", new Babylon.Vector3(0.2, 0.8, -1), scene);
+            } else if (sceneName.includes("desert")) {
+                if (config.manyLights) {
+                    makeDesertLights();
+                } else {
+                    shadowLight = new Babylon.DirectionalLight("light", new Babylon.Vector3(0.3, -0.5, -0.2), scene);
+                    shadowLight.position.set(150, 150, 150);
+                }
+            } else if (sceneName.includes("florest") && config.shadows) {
                 shadowLight = new Babylon.DirectionalLight("light", new Babylon.Vector3(0.3, -0.5, -0.2), scene);
                 shadowLight.position.set(150, 150, 150);
+            } else if (/ion|dragon|car/.test(sceneName)) {
+                const dir = new Babylon.DirectionalLight("light", new Babylon.Vector3(0, 0, 1), scene);
+            } else if (sceneName.includes("sponza")) {
+                const point = new Babylon.PointLight("light", Babylon.Vector3.Zero(), scene);
+                point.range = 1000;
+            } else if (sceneName.includes("merged") && config.shadows) {
+                shadowLight = lights[0];
             }
-        } else if (sceneName.includes("florest") && config.shadows) {
-            shadowLight = new Babylon.DirectionalLight("light", new Babylon.Vector3(0.3, -0.5, -0.2), scene);
-            shadowLight.position.set(150, 150, 150);
-        } else if (/ion|dragon/.test(sceneName)) {
-            const dir = new Babylon.DirectionalLight("light", new Babylon.Vector3(0, 0, -1), scene);
-        }
 
-        if (config.shadows) {
-            let shadowGenerator = new Babylon.ShadowGenerator(512, shadowLight);
-            shadowGenerator.normalBias = 1;
-            shadowGenerator.useExponentialShadowMap = false;
-            shadowGenerator.usePercentageCloserFiltering = true;
-            shadowGenerator.useBlurExponentialShadowMap = false;
-            shadowGenerator.usePoissonSampling = false;
-            shadowGenerator.useKernelBlur = false;
-            shadowGenerator.useContactHardeningShadow = false;
-            shadowGenerator.useCloseExponentialShadowMap = false;
-            shadowGenerator.useBlurCloseExponentialShadowMap = false;
-            shadowGenerator.useOpacityTextureForTransparentShadow = false;
-            shadowGenerator.filteringQuality = Babylon.ShadowGenerator.QUALITY_MEDIUM;
-            meshes.forEach(mesh => {
-                shadowGenerator.getShadowMap().renderList.push(mesh);
-                mesh.receiveShadows = true;
-            })
-        }
+            if (config.shadows) {
+                let shadowGenerator = new Babylon.ShadowGenerator(512, shadowLight);
+                shadowGenerator.normalBias = 1;
+                shadowGenerator.useExponentialShadowMap = false;
+                shadowGenerator.usePercentageCloserFiltering = true;
+                shadowGenerator.useBlurExponentialShadowMap = false;
+                shadowGenerator.usePoissonSampling = false;
+                shadowGenerator.useKernelBlur = false;
+                shadowGenerator.useContactHardeningShadow = false;
+                shadowGenerator.useCloseExponentialShadowMap = false;
+                shadowGenerator.useBlurCloseExponentialShadowMap = false;
+                shadowGenerator.useOpacityTextureForTransparentShadow = false;
+                shadowGenerator.filteringQuality = Babylon.ShadowGenerator.QUALITY_MEDIUM;
+                meshes.forEach(mesh => {
+                    shadowGenerator.getShadowMap().renderList.push(mesh);
+                    mesh.receiveShadows = true;
+                })
+            }
 
-        console.table(initData);
-        createSendInitDataButton(testInfo, initData);
-        console.table(initData);
-        // testInfo.initData = initData;
-        profilerController = makeProfilerController(testInfo);
+            if (config.clearVertex)
+                scene.clearCachedVertexData();
 
-        engine.runRenderLoop(() => {
-            scene.render();
-            profilerController.update();
+            createSendInitDataButton(testInfo, initData);
+            // testInfo.initData = initData;
+            profilerController = makeProfilerController(testInfo);
+
+            engine.runRenderLoop(() => {
+                scene.render();
+                profilerController.update();
+            });
+        }, undefined, (scene, message, exception) => {
+            alert(message);
+            button.disabled = false;
         });
-    }, undefined, (_scene, message, _exception) => {
-        alert(message);
-        button.disabled = false;
-    });
+    }
 }
 
 function createScene() {

@@ -25,12 +25,16 @@ export function renderStatsHtml() {
         <p>Triangles: ${info.primCount[2]}</p>
         <p>Lines: ${info.primCount[1]}</p>
         <p>Points: ${info.primCount[0]}</p>
+        <p>Has instanced: ${info.hasInstanced}</p>
+        <p>Has draw Arrays : ${info.hasDrawArrays}</p>
+        <p>Has non instanced: ${info.hasDrawElements}</p>
     `;
 }
 
 export function initStats() {
     WebGL2RenderingContext.prototype.drawArrays = (function (oldFn) {
         return function (type, offset, count) {
+            info.hasDrawArrays = true;
             addCount(this, type, count);
             oldFn.call(this, type, offset, count);
         };
@@ -38,6 +42,7 @@ export function initStats() {
 
     WebGL2RenderingContext.prototype.drawArraysInstanced = (function (oldFn) {
         return function (mode, first, count, instanceCount) {
+            info.hasInstanced = true;
             addCount(this, mode, count);
             oldFn.call(this, mode, first, count, instanceCount);
         };
@@ -45,6 +50,7 @@ export function initStats() {
 
     WebGL2RenderingContext.prototype.drawElements = (function (oldFn) {
         return function (type, count, indexType, offset) {
+            info.hasDrawElements = true;
             addCount(this, type, count);
             oldFn.call(this, type, count, indexType, offset);
         };
@@ -55,9 +61,21 @@ export function initStats() {
             const ctx = oldFn.call(this, type, args);
 
             if (ctx && (type === "webgl2" || type == "webgl")) {
+                // if (!prmMap) {
+                    // primMap = {};
+                    // primMap[ctx.POINTS] = {ndx: 0, fn: count => count, };
+                    // primMap[ctx.LINE_LOOP] = {ndx: 1, fn: count => count, };
+                    // primMap[ctx.LINE_STRIP] = {ndx: 1, fn: count => count - 1, };
+                    // primMap[ctx.LINES] = {ndx: 1, fn: count => count / 2 | 0, };
+                    // primMap[ctx.TRIANGLE_STRIP] = {ndx: 2, fn: count => count - 2, };
+                    // primMap[ctx.TRIANGLE_FAN] = {ndx: 2, fn: count => count - 2, };
+                    // primMap[ctx.TRIANGLES] = {ndx: 2, fn: count => count / 3 | 0, };
+                // };
                 info = ctx.info = {
                     vertCount: 0,
                     primCount: [0, 0, 0],
+                    hasInstanced: false,
+                    hasNonInstanced: false,
                 };
             }
 
@@ -90,7 +108,9 @@ export function initStats() {
 
 function addCount(ctx, type, count) {
     const ctxInfo = ctx.info;
+    // const primInfo = primMap[type];
     ctxInfo.vertCount += count;
+    // ctxInfo.primCount[primInfo.ndx] += primInfo.fn(count);
 
     switch (type) {
         case ctx.POINTS:

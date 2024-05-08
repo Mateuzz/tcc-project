@@ -12,8 +12,10 @@ export class Profiler {
     deltaMaxList;
     onCalcMeanCallback;
     handleHighFps;
+    active;
 
     constructor(onCalcMeanCallback, { handleHighFps = true }) {
+        this.active = true;
         this.onCalcMeanCallback = onCalcMeanCallback;
         this.delta = 0;
         this.deltaList = [];
@@ -68,7 +70,14 @@ export class Profiler {
         this.#updatePerformanceData(this.delta);
     }
 
+    continue() {
+        this.active = true;
+    }
+
     update() {
+        if (!this.active)
+            return;
+
         const delta = performance.now() - this.timestamp;
         this.timestamp = performance.now();
 
@@ -105,6 +114,8 @@ export class Profiler {
 
             return 1000 / (total / count);
         })();
+
+        this.active = false;
 
         return {
             profilingTime,

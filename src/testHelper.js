@@ -59,23 +59,14 @@ export function makeConfigurationGui(callback) {
             <label for="time">Profiling Time in seconds</label>
             <input type="number" name="time" id="time" value="30" required>
 
-            <label for="shadows">Shadows</label>
-            <input type="checkbox" name="config[]" id="shadows" value="shadows">
+            <label for="clones">Clones</label>
+            <input type="checkbox" name="config[]" id="clones" value="clones">
 
             <label for="animation">Animation</label>
             <input type="checkbox" name="config[]" id="animation" value="animation">
 
-            <label for="many-lights">Many Lights</label>
-            <input type="checkbox" name="config[]" id="many-lights" value="many-lights">
-
-            <label for="fxaa">FXAA</label>
-            <input type="checkbox" name="config[]" id="fxaa" value="fxaa">
-
-            <label for="ssao">SSAO</label>
-            <input type="checkbox" name="config[]" id="ssao" value="ssao">
-
-            <label for="ssr">SSR</label>
-            <input type="checkbox" name="config[]" id="ssr" value="ssr">
+            <label for="shadows">Shadows</label>
+            <input type="checkbox" name="config[]" id="shadows" value="shadows">
         </fieldset>
         <button type"submit" class="init">Start Application</button>
     </form>
@@ -99,11 +90,8 @@ export function getConfiguration() {
         camerax : options.querySelector("#camera-x").value,
         cameray : options.querySelector("#camera-y").value,
         cameraz : options.querySelector("#camera-z").value,
-        manyLights : options.querySelector("#many-lights").checked,
-        fxaa : options.querySelector("#fxaa").checked,
-        ssao : options.querySelector("#ssao").checked,
-        ssr : options.querySelector("#ssr").checked,
         shadows : options.querySelector("#shadows").checked,
+        clones : options.querySelector("#clones").checked,
         animation : options.querySelector("#animation").checked,
     }
 }

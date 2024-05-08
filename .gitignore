@@ -3,3 +3,7 @@ dist
 node_modules
 oldModels
 new
+pc3-*
+*backup*
+**/*.glb
+pc3-*

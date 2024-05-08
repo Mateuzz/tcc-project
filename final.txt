@@ -1,93 +1,21 @@
-para iniciante evite claygl
-evite claygl porque desenvolvimento parou 
-
-geracao de bons graficos -> babylon melhor
-    pos processing -> babylon melhor ou talvez three 
-
-funcoes especificas (cientifico, lego, CAD) -> three
-    caso contrario babylon. three  vai servir
-    
-praticidade de uso -> playcanvas
-    geracao de lightmaps
-
-para jogos(iniciantes)
-    playcanvas (pela performance, praticidade de uso, self hosting) exceto se pos processamento
-        babylon
-    playcanvas -> babylon.js
-    para jogos super realistas com path tracing -> babylonjs 
-
-para aplicacoes complexas de alta performance em geral
-    playcanvas -> segundo lugar babylon
-
-para aplicacoes extras, como pequenos efeitos em sites e cenas simplas
-    threejs pelo peso
-
-para cads ou aplicacoes cientificas
-    threejs (com menos funcionalidades de baboseira e ser mais leve)
-    melhor suporte a usuarios com menor conexao e pcs piores
-
-para pcs mais fracos
-    threejs
-
-para evitar bug de sombra evite a threejs
-
-para infraestrutura limitada ou usuarios com conexao lenta
-    threejs, seguidoda playcanvas
-    
-ao utilizar edge, o que muda?
-
-praticidade de uso (editor em gui, geracao de lightmaps)
-    babylonjs ou playcanvas
-
-
-
-
-
-
 ## Modelos 
-Skull: 1126158 triangles -> Lambert e phong material (apenas reflexao e specular)
-    Florest: 2076694 triangles -> 1 texturas x256 (1228 meshes)
     FlorestMerged: 2076694 triangles -> 1 texturas x256 (1 meshe)
     Pirate Ford: 90334 triangles -> 4 1024x 1 512x  (2 fontes de luzes ponto + 1 direcional) (7)
-    desert = 42074389 triangles 10662 objetos
     ion 52072 triangles 6 objetos (1 directional light adicionada)
     unity1 83665 608 objetos (1 direcional + 14 points ja vem)
     unity2 139557 393 objetos (1 directional light ja vem)
     skull 1126158 triangles 25 objetos(1 direcional light adicionada)
+    tank 3.514.247 -> 21 objetos
 
 
-Testes
-    Pirate perto
-    pirate longe
-    floresta perto
-    floresta longe
-    floresta sombra
-    floresta 28
-    floresta merged
-    ion
-    unity1
-    unity2
-    desert
-    desertSombra
-    desert4
-
-    sponza a calcular (1? point light)
+    Florest: 2076694 triangles -> 1 texturas x256 (1228 meshes)
+    car -> 1.544.351 triangles 140 objetos
+    brokencar -> 10.390.252 -> 206 objetos
+    12 cars - 18.532.212 -> 1680 objetos
+    desert = 42074389 triangles 10662 objetos
 
 
-cpu e ram
-
-pc
-
-
-
-
-
-
-    // dragon 178774 2 objetos ()
-
-
-
-
+    pirate, ion, unity, unity2, 
 
 
 

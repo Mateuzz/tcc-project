@@ -6,8 +6,7 @@
         "watch": "node esbuild.watch.js"
     },
     "devDependencies": {
-        "esbuild": "0.19.2",
-        "log-plugin": "file:../../dev/lib/log-plugin"
+        "esbuild": "0.19.2"
     },
     "dependencies": {
         "babylonjs": "^6.16.2",

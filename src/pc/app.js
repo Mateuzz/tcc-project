@@ -46,10 +46,6 @@ app.setCanvasResolution(pc.RESOLUTION_AUTO);
 window.addEventListener("resize", () => app.resizeCanvas());
 
 app.assets.loadFromUrl("nup-models/OrbitCamera.js", "script", (err) => {
-    if (err) { 
-        alert("Failed to load script OrbitCamera.js:", err);
-    }
-
     camera = new pc.Entity("camera");
     camera.addComponent("camera", {
         clearColor: new pc.Color(0.1, 0.1, 0.1),
@@ -100,8 +96,17 @@ function onStartScene() {
             return;
         }
 
+        let positions = [ [5, 0], [10, 0], [15, 0], [0, 10], [5, 10], [10, 10], [15, 10], [0, -10], [5, -10], [10, -10], [15, -10], ]
+        const models = [];
+
         const scene = asset.resource.instantiateRenderEntity();
         app.root.addChild(scene);
+
+        for (let i = 0; i < positions.length; ++i) {
+            const clone = scene.clone();
+            clone.setPosition(positions[i][0], 0, positions[i][1]);
+            app.root.addChild(clone);
+        }
 
         defaultClock.end();
 
@@ -170,7 +175,7 @@ function onStartScene() {
             } else {
                 newLight([150, 150, 150]);
             }
-        } else if (/ion|dragon/.test(sceneName)) {
+        } else if (/ion|dragon|car/.test(sceneName)) {
             newLight([150, 150, 150]);
         }
 
@@ -179,7 +184,10 @@ function onStartScene() {
         lights.forEach(light => {
             light.isStatic = true;
             light.enabled = true;
-            light.castShadows = false;
+            light.castShadows = config.shadows;
+            light.shadowDistance = 500;
+            light.normalBias = 1;
+            light.shadowResolution = 512;
         });
 
         const initData = {
